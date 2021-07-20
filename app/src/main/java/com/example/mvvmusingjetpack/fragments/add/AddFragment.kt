@@ -9,32 +9,37 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.EditText
 import android.widget.ImageButton
-import android.widget.Toast
-import androidx.fragment.app.viewModels
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import com.example.mvvmusingjetpack.R
 import com.example.mvvmusingjetpack.db.DiaryData
-import com.example.mvvmusingjetpack.db.DiaryViewModel
+import com.example.mvvmusingjetpack.viewmodel.DiaryViewModel
+import java.util.ArrayList
 
 
 class addFragment : Fragment() {
 
     lateinit var mDiaryViewModel : DiaryViewModel
-    var dataList = emptyList<DiaryData>()
+    val allNote = ArrayList<DiaryData>()
     lateinit var note: EditText;
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        // Inflate the layout for this fragment
         val view = inflater.inflate(R.layout.fragment_add, container, false)
-        mDiaryViewModel = ViewModelProvider(this).get(DiaryViewModel::class.java)
+        mDiaryViewModel = ViewModelProvider(this,
+        ViewModelProvider.AndroidViewModelFactory.getInstance(requireActivity().application)).get(DiaryViewModel::class.java)
         val imageButton = view.findViewById<ImageButton>(R.id.imageButton2);
         note = view.findViewById(R.id.note)
 
         imageButton.setOnClickListener {
-         //   Log.d("sadasdasdsa", dataList.size.toString())
+            mDiaryViewModel.allNotes.observe(viewLifecycleOwner
+                ,  {list ->
+                    list?.let {
+                        Log.d("sadasdasdsa", it.toString())
+                    }
+
+                })
             insertDataToDb()
            findNavController().navigate(R.id.action_addFragment_to_dashboardFragment)
         }
@@ -44,19 +49,26 @@ class addFragment : Fragment() {
 
     private fun insertDataToDb() {
         val mNote = note.text.toString()
-
-        val validation = DataVerify(mNote)
-        if (validation){
-            val newData= DiaryData(
-                0,
-                mNote
-            )
-            mDiaryViewModel.insertData(newData)
-            Toast.makeText(requireContext(),"Successfully Added", Toast.LENGTH_SHORT).show()
-        }else{
-            Toast.makeText(requireContext(),"Sorry", Toast.LENGTH_SHORT).show()
-
+        if(mNote.isNotEmpty()){
+            mDiaryViewModel.insertNote(DiaryData(0,mNote))
         }
+
+
+
+//        val mNote = note.text.toString()
+//
+//        val validation = DataVerify(mNote)
+//        if (validation){
+//            val newData= DiaryData(
+//                0,
+//                mNote
+//            )
+//            mDiaryViewModel.insertNote(newData)
+//            Toast.makeText(requireContext(),"Successfully Added", Toast.LENGTH_SHORT).show()
+//        }else{
+//            Toast.makeText(requireContext(),"Sorry", Toast.LENGTH_SHORT).show()
+//
+//        }
 
 
     }

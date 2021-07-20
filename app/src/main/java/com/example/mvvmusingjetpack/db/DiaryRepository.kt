@@ -2,12 +2,21 @@ package com.example.mvvmusingjetpack.db
 
 import androidx.lifecycle.LiveData
 
+
 class DiaryRepository(private val diaryDao: DiaryDao) {
 
-    val getAllData: LiveData<List<DiaryData>> = diaryDao.getAllData()
+    var id:String = "1"
 
-    suspend fun insertData(diaryData: DiaryData){
-        diaryDao.insertData(diaryData)
+    val allNote: LiveData<List<DiaryData>> = diaryDao.getAllNotes()
+
+    val allNoteById: LiveData<List<DiaryData>> = diaryDao.getNotesByID(id)
+
+
+    suspend fun insert(diaryData: DiaryData){
+        diaryDao.insert(diaryData)
+    }
+    suspend fun delete(diaryData: DiaryData){
+        diaryDao.delete(diaryData)
     }
 
 }

@@ -5,6 +5,7 @@ import android.content.Intent
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.example.mvvmusingjetpack.model.LoginData
+import com.example.mvvmusingjetpack.tempActivity
 import com.example.mvvmusingjetpack.view.HomeActivity
 
 class LoginViewModel : ViewModel() {
@@ -22,8 +23,7 @@ class LoginViewModel : ViewModel() {
         }else{
             loginLiveData.value = "Please enter Valid Details"
         }
-       // isvalide.value = LoginData(user,password).isValid()
-       // loginLiveData.value = LoginData(user,password).isValid().toString()
+
 
     }
     fun doNavigateToHome(context: Context) {
