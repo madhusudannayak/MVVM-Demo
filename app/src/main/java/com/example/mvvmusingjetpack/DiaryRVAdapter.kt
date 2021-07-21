@@ -4,8 +4,10 @@ import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
+import com.example.mvvmusingjetpack.db.Color
 import com.example.mvvmusingjetpack.db.DiaryData
 import com.example.mvvmusingjetpack.fragments.dashboard.DashboardFragment
 import java.util.ArrayList
@@ -16,6 +18,7 @@ class DiaryRVAdapter(val context: Context?, val listener: IDiaryRVAdapter) : Rec
 
     inner class DiaryViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView){
         val textView = itemView.findViewById<TextView>(R.id.note)
+        val Bgcolor = itemView.findViewById<LinearLayout>(R.id.color)
     }
 
 
@@ -32,6 +35,11 @@ class DiaryRVAdapter(val context: Context?, val listener: IDiaryRVAdapter) : Rec
     override fun onBindViewHolder(holder: DiaryViewHolder, position: Int) {
         val currentNote = allNote[position]
         holder.textView.text = currentNote.text
+        when(currentNote.color){
+            Color.WHITE -> holder.Bgcolor.setBackgroundColor(android.graphics.Color.WHITE)
+            Color.BLUE -> holder.Bgcolor.setBackgroundColor(android.graphics.Color.parseColor("#87CDFF"))
+        }
+
     }
 
     override fun getItemCount(): Int {

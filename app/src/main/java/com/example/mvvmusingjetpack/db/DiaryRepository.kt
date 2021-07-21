@@ -5,11 +5,11 @@ import androidx.lifecycle.LiveData
 
 class DiaryRepository(private val diaryDao: DiaryDao) {
 
-    var id:String = "1"
+    lateinit var id:String
 
     val allNote: LiveData<List<DiaryData>> = diaryDao.getAllNotes()
 
-    val allNoteById: LiveData<List<DiaryData>> = diaryDao.getNotesByID(id)
+  //  val allNoteById: LiveData<List<DiaryData>> = diaryDao.getNotesByID(id)
 
 
     suspend fun insert(diaryData: DiaryData){

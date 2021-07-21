@@ -50,11 +50,11 @@ class tempActivity : AppCompatActivity(), INotesRVAdapter {
         viewModel.deleteNode(note)
     }
 
-    fun Submit(view: View) {
-        val noteText = editText.text.toString()
-        if(noteText.isNotEmpty()){
-            viewModel.insertNote(DiaryData(0,noteText))
-
-        }
-    }
+//    fun Submit(view: View) {
+//        val noteText = editText.text.toString()
+//        if(noteText.isNotEmpty()){
+//            viewModel.insertNote(DiaryData(0,noteText))
+//
+//        }
+//    }
 }

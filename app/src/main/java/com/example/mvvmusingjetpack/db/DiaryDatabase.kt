@@ -1,11 +1,10 @@
 package com.example.mvvmusingjetpack.db
 
 import android.content.Context
-import androidx.room.Database
-import androidx.room.Room
-import androidx.room.RoomDatabase
+import androidx.room.*
 
 @Database(entities = arrayOf(DiaryData::class), version = 1, exportSchema = false)
+@TypeConverters(Converter::class)
 abstract class DiaryDatabase : RoomDatabase() {
 
     abstract fun getDiaryDao(): DiaryDao

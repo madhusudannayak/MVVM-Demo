@@ -36,7 +36,8 @@
                 android:layout_width="22sp"
                 android:layout_height="22sp"
                 android:layout_gravity="center"
-                android:background="@drawable/layout_bg"
+                android:entries="@array/color"
+                android:background="@drawable/ic_baseline_color_lens_24"
                 android:layout_marginRight="15dp"
                 android:backgroundTint="@color/black"
                 />
@@ -52,6 +53,7 @@
         </LinearLayout>
 
         <androidx.cardview.widget.CardView
+            android:id="@+id/bgCard"
             xmlns:android="http://schemas.android.com/apk/res/android"
             android:layout_width="fill_parent"
             android:layout_height="match_parent"

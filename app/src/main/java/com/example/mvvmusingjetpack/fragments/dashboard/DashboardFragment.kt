@@ -6,6 +6,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageButton
+import android.widget.TextView
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
@@ -23,6 +24,8 @@ class DashboardFragment : Fragment(), IDiaryRVAdapter {
 
     lateinit var viewModel: DiaryViewModel
     lateinit var recyclerView: RecyclerView
+    lateinit var numberofpage: TextView
+    lateinit var Page: String
 
     override fun onCreateView(
             inflater: LayoutInflater, container: ViewGroup?,
@@ -31,6 +34,8 @@ class DashboardFragment : Fragment(), IDiaryRVAdapter {
 
         // Inflate the layout for this fragment
         val view = inflater.inflate(R.layout.fragment_dashboard, container, false)
+
+        numberofpage = view.findViewById(R.id.numberofpage)
 
         recyclerView= view.findViewById(R.id.Recylerview1)
        // recyclerView.layoutManager = LinearLayoutManager(context)
@@ -56,7 +61,8 @@ class DashboardFragment : Fragment(), IDiaryRVAdapter {
         })
         manager.setItemChangedListener(object : StackLayoutManager.ItemChangedListener {
             override fun onItemChanged(position: Int) {
-                Toast.makeText(context,position.toString(),Toast.LENGTH_SHORT).show();
+                numberofPage(position+1,Page.toInt())
+            //    Toast.makeText(context,position.toString(),Toast.LENGTH_SHORT).show();
             }
         })
 
@@ -80,7 +86,13 @@ class DashboardFragment : Fragment(), IDiaryRVAdapter {
     }
 
     override fun size(size: String) {
-        Toast.makeText(context, size.toString(), Toast.LENGTH_SHORT).show();
+        //Toast.makeText(context, size.toString()+"5", Toast.LENGTH_SHORT).show();
+        Page = size
+        numberofPage(1,size.toInt())
+    }
+    fun numberofPage(CurrentPage:Int,TotalPage:Int)
+    {
+        numberofpage.text = "Page - $CurrentPage of $TotalPage"
     }
 
 
