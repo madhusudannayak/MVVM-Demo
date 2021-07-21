@@ -13,7 +13,7 @@ import kotlinx.coroutines.launch
 class DiaryViewModel (application: Application) : AndroidViewModel(application) {
 
 
-    val dao = DiaryDatabase.getDatabase(application).getDiaryDao()
+    //val dao = DiaryDatabase.getDatabase(application).getDiaryDao()
 
     val repository : DiaryRepository = DiaryRepository(application.baseContext)
 
