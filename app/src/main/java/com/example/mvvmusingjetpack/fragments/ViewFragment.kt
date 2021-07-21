@@ -1,6 +1,6 @@
 
 
-package com.example.mvvmusingjetpack
+package com.example.mvvmusingjetpack.fragments
 
 import android.os.Bundle
 import android.util.Log
@@ -16,7 +16,7 @@ import java.util.ArrayList
 
 class ViewFragment : Fragment() {
     lateinit var viewModel: DiaryViewModel
-    val allNote = ArrayList<DiaryData>()
+    val Note = ArrayList<DiaryData>()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -27,16 +27,16 @@ class ViewFragment : Fragment() {
 
         viewModel = ViewModelProvider(this,ViewModelProvider.AndroidViewModelFactory.getInstance(requireActivity().application)).get(DiaryViewModel::class.java)
 
-//        viewModel.getNotesByID("1").observe(viewLifecycleOwner,{
-//            list ->
-//           list?.let {
-//            val current = allNote[1]
-//              Log.d("kkkkkkkkkkkkk", current.text+"saedas")
-//
-//
-//               Log.d("kkkkkkkkkkkkk", it.toString())
-//        }
-//        })
+        viewModel.getNotesByID().observe(viewLifecycleOwner,{
+            list ->
+           list?.let {
+            Note.addAll(it)
+
+
+
+                         Log.d("kkkkkkkkkkkkk1", Note[0].text)
+        }
+        })
 
 
 //

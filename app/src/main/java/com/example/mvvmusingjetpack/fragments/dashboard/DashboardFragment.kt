@@ -11,6 +11,7 @@ import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
+import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.mvvmusingjetpack.DiaryRVAdapter
 import com.example.mvvmusingjetpack.IDiaryRVAdapter
@@ -18,9 +19,13 @@ import com.example.mvvmusingjetpack.R
 import com.example.mvvmusingjetpack.db.DiaryData
 import com.example.mvvmusingjetpack.viewmodel.DiaryViewModel
 import com.littlemango.stacklayoutmanager.StackLayoutManager
+import java.util.ArrayList
 
 
 class DashboardFragment : Fragment(), IDiaryRVAdapter {
+ //   class DashboardFragment : Fragment(), IDiaryRVAdapter {
+    val allNote = ArrayList<DiaryData>()
+
 
     lateinit var viewModel: DiaryViewModel
     lateinit var recyclerView: RecyclerView
@@ -38,7 +43,7 @@ class DashboardFragment : Fragment(), IDiaryRVAdapter {
         numberofpage = view.findViewById(R.id.numberofpage)
 
         recyclerView= view.findViewById(R.id.Recylerview1)
-       // recyclerView.layoutManager = LinearLayoutManager(context)
+        recyclerView.layoutManager = LinearLayoutManager(context)
         val adapter = DiaryRVAdapter(context, this)
         recyclerView.adapter = adapter
 
@@ -56,12 +61,13 @@ class DashboardFragment : Fragment(), IDiaryRVAdapter {
         viewModel.allNotes.observe(viewLifecycleOwner, { list ->
             list?.let {
                 adapter.updateList(it)
-                Log.d("sadasdasdsa", it.toString())
+//                val currentNote = allNote[0]
+//                          Log.d("sadasdasdsa", currentNote.text.toString())
             }
         })
         manager.setItemChangedListener(object : StackLayoutManager.ItemChangedListener {
             override fun onItemChanged(position: Int) {
-                numberofPage(position+1,Page.toInt())
+               numberofPage(position+1,Page.toInt())
             //    Toast.makeText(context,position.toString(),Toast.LENGTH_SHORT).show();
             }
         })
@@ -84,7 +90,7 @@ class DashboardFragment : Fragment(), IDiaryRVAdapter {
         Log.d("aaaaaaaaaaaa", "AAAAAAAAAAAAAAA")
       //  Toast.makeText(context,size.toString(),Toast.LENGTH_SHORT).show();
     }
-
+//
     override fun size(size: String) {
         //Toast.makeText(context, size.toString()+"5", Toast.LENGTH_SHORT).show();
         Page = size

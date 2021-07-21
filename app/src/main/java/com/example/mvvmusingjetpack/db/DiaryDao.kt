@@ -24,8 +24,8 @@ interface DiaryDao {
 
     fun getAllNotes() : LiveData<List<DiaryData>>
 
-//    @Query("Select * from Diary_table WHERE id=:id ")
-//    fun getNotesByID(id: String) : LiveData<List<DiaryData>>
+    @Query("Select * from Diary_table WHERE id=:id ")
+    fun getNotesByID(id: String) : LiveData<List<DiaryData>>
 
 
 }

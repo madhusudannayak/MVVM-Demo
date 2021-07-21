@@ -40,7 +40,7 @@
     </fragment>
     <fragment
         android:id="@+id/viewFragment"
-        android:name="com.example.mvvmusingjetpack.ViewFragment"
+        android:name="com.example.mvvmusingjetpack.fragments.ViewFragment"
         android:label="fragment_view"
         tools:layout="@layout/fragment_view" >
         <action

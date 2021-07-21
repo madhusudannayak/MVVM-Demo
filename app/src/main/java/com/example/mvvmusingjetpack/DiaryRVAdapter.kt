@@ -52,7 +52,7 @@ class DiaryRVAdapter(val context: Context?, val listener: IDiaryRVAdapter) : Rec
     }
 }
 interface IDiaryRVAdapter{
-    fun onItemClicked(note: DiaryData,size:String)
+   fun onItemClicked(note: DiaryData,size:String)
 
     fun size(size:String)
 }

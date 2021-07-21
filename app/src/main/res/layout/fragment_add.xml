@@ -58,12 +58,9 @@
             android:layout_width="fill_parent"
             android:layout_height="match_parent"
             xmlns:app="http://schemas.android.com/apk/res-auto"
-            app:cardElevation="4dp"
-            android:layout_marginLeft="18px"
-            android:layout_marginRight="18px"
-            android:layout_marginTop="40px"
-            android:layout_marginBottom="60px"
-            app:cardCornerRadius="23px">
+            app:cardElevation="10dp"
+            android:layout_margin="20dp"
+            app:cardCornerRadius="20sp">
             <EditText
                 android:padding="20sp"
                 android:id="@+id/note"
@@ -73,8 +70,8 @@
                 android:gravity="top|left"
                 android:background="@null"
                 android:inputType="textMultiLine"
-                android:layout_height="wrap_content"
-                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_width="match_parent"
                 android:scrollHorizontally="false"
                 />
 
