@@ -27,7 +27,7 @@ class ViewFragment : Fragment() {
 
         viewModel = ViewModelProvider(this,ViewModelProvider.AndroidViewModelFactory.getInstance(requireActivity().application)).get(DiaryViewModel::class.java)
 
-        viewModel.getNotesByID().observe(viewLifecycleOwner,{
+        viewModel.getNotesByID("2").observe(viewLifecycleOwner,{
             list ->
            list?.let {
             Note.addAll(it)

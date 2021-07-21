@@ -6,6 +6,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageButton
+import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast
 import androidx.fragment.app.Fragment
@@ -72,13 +73,13 @@ class DashboardFragment : Fragment(), IDiaryRVAdapter {
             }
         })
 
-        val imageButton = view.findViewById<ImageButton>(R.id.imageButton);
+        val imageButton = view.findViewById<ImageView>(R.id.imageButton)
 
         imageButton.setOnClickListener {
             findNavController().navigate(R.id.action_dashboardFragment_to_addFragment)
         }
 
-        return view;
+        return view
     }
 
 //    override fun onItemClicked(note: DiaryData) {

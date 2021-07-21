@@ -16,15 +16,14 @@ class DiaryViewModel (application: Application) : AndroidViewModel(application) 
     //val dao = DiaryDatabase.getDatabase(application).getDiaryDao()
     //
 
-    val repository : DiaryRepository = DiaryRepository(application.baseContext)
+    val repository : DiaryRepository = DiaryRepository.getInstance((application.baseContext))
 
   //  val NotesByID : LiveData<List<DiaryData>> = repository.allNoteById
 
     val allNotes: LiveData<List<DiaryData>> = repository.allNote
 
-    fun getNotesByID() : LiveData<List<DiaryData>>{
-        repository.id = "8"
-        return repository.allNoteById
+    fun getNotesByID(id:String) : LiveData<List<DiaryData>>{
+        return repository.allNoteById(id)
     }
 
     fun deleteNode(diaryData: DiaryData)   = viewModelScope.launch(Dispatchers.IO) {
