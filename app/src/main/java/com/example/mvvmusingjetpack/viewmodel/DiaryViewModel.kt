@@ -1,16 +1,17 @@
 package com.example.mvvmusingjetpack.viewmodel
 
 import android.app.Application
-import androidx.lifecycle.AndroidViewModel
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.viewModelScope
+import android.content.ClipData.Item
+import androidx.lifecycle.*
 import com.example.mvvmusingjetpack.db.DiaryData
-import com.example.mvvmusingjetpack.db.DiaryDatabase
 import com.example.mvvmusingjetpack.db.DiaryRepository
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
-class DiaryViewModel (application: Application) : AndroidViewModel(application) {
+
+class DiaryViewModel(application: Application) : AndroidViewModel(application) {
+
+
 
 
     //val dao = DiaryDatabase.getDatabase(application).getDiaryDao()
@@ -22,15 +23,21 @@ class DiaryViewModel (application: Application) : AndroidViewModel(application) 
 
     val allNotes: LiveData<List<DiaryData>> = repository.allNote
 
-    fun getNotesByID(id:String) : LiveData<List<DiaryData>>{
+    fun getNotesByID(id: String) : LiveData<List<DiaryData>>{
         return repository.allNoteById(id)
     }
 
     fun deleteNode(diaryData: DiaryData)   = viewModelScope.launch(Dispatchers.IO) {
         repository.delete(diaryData)
     }
-    fun insertNote(diaryData: DiaryData) = viewModelScope.launch (Dispatchers.IO){
+    fun insertNote(diaryData: DiaryData) = viewModelScope.launch(Dispatchers.IO){
         repository.insert(diaryData)
+    }
+
+    fun updateData(diaryData: DiaryData) {
+        viewModelScope.launch(Dispatchers.IO) {
+            repository.updateData(diaryData)
+        }
     }
 
 

@@ -10,7 +10,6 @@ class DiaryRepository( context: Context) {
     val diaryDao = DiaryDatabase.getDatabase(context).getDiaryDao()
 
 
-
     companion object{
         var instance:DiaryRepository?=null
 
@@ -23,20 +22,6 @@ class DiaryRepository( context: Context) {
             }
         }
     }
-//    companion object {
-//        @Volatile
-//        private var INSTANCE: DiaryRepository? = null
-//
-//        fun getDiaryRepo(context: Context): DiaryRepository {
-//            return INSTANCE ?: synchronized(this) {
-//                val diaryDao: DiaryDao
-//                val instance = DiaryRepository(context)
-//                INSTANCE = instance
-//                instance
-//            }
-//        }
-//    }
-
 
     val allNote: LiveData<List<DiaryData>> = diaryDao.getAllNotes()
 
@@ -51,6 +36,9 @@ class DiaryRepository( context: Context) {
     }
     suspend fun delete(diaryData: DiaryData){
         diaryDao.delete(diaryData)
+    }
+    suspend fun updateData(diaryData: DiaryData){
+        diaryDao.updateData(diaryData)
     }
 
 }

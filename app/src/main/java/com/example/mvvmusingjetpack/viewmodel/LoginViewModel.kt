@@ -1,9 +1,12 @@
 package com.example.mvvmusingjetpack.viewmodel
 
+import android.app.Activity
 import android.content.Context
 import android.content.Intent
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import androidx.navigation.fragment.NavHostFragment.findNavController
+import com.example.mvvmusingjetpack.R
 import com.example.mvvmusingjetpack.model.LoginData
 import com.example.mvvmusingjetpack.tempActivity
 import com.example.mvvmusingjetpack.view.HomeActivity
@@ -27,6 +30,9 @@ class LoginViewModel : ViewModel() {
 
     }
     fun doNavigateToHome(context: Context) {
+//                  findNavController(context as Activity).navigate(R.id.action_addFragment_to_dashboardFragment)
+
         context.startActivity(Intent(context,HomeActivity::class.java))
     }
+
 }

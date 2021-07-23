@@ -40,11 +40,14 @@
     </fragment>
     <fragment
         android:id="@+id/viewFragment"
-        android:name="com.example.mvvmusingjetpack.fragments.ViewFragment"
+        android:name="com.example.mvvmusingjetpack.fragments.view.ViewFragment"
         android:label="fragment_view"
         tools:layout="@layout/fragment_view" >
         <action
             android:id="@+id/action_viewFragment_to_dashboardFragment"
             app:destination="@id/dashboardFragment" />
+        <action
+            android:id="@+id/action_viewFragment_to_updateFragment"
+            app:destination="@id/updateFragment" />
     </fragment>
 </navigation>

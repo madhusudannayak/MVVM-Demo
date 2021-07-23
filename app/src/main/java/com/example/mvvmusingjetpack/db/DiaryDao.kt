@@ -27,5 +27,7 @@ interface DiaryDao {
     @Query("Select * from Diary_table WHERE id=:id ")
     fun getNotesByID(id: String) : LiveData<List<DiaryData>>
 
+    @Update
+    suspend fun updateData(diaryData: DiaryData)
 
 }
