@@ -10,7 +10,8 @@ import androidx.room.PrimaryKey
 //                     var note:String)
 
 data class DiaryData(
-        @PrimaryKey(autoGenerate = true) val id:Int,
+        @PrimaryKey(autoGenerate = true)
+        val id: Int,
         val text:String,
         val color: Color
 )

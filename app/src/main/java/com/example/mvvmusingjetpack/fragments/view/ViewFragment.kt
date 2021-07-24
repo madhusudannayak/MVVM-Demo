@@ -51,17 +51,17 @@ class ViewFragment : Fragment() {
         Edit.setOnClickListener {
             Update = Bundle()
             Update.putInt("position",UpdatePosition)
-            Update.putString("UpdateText", viewText.text as String)
+        //    Update.putString("UpdateText", viewText.text as String)
 
-            findNavController().navigate(R.id.action_viewFragment_to_updateFragment)
+            findNavController().navigate(R.id.action_viewFragment_to_updateFragment,Update)
         }
 
         viewModel.allNotes.observe(viewLifecycleOwner, { list ->
                 list?.let {
                     val index = args?.getInt("position")
+                    UpdatePosition = it[index!!].id
                     viewText.text = it[index!!].text
                     SetbackgroundColor(it[index!!].color.toString())
-
                     Log.d("111111111",it[index!!].text)
 
                     Note.addAll(it)
@@ -71,7 +71,6 @@ class ViewFragment : Fragment() {
 
         val index = args?.getInt("position")
         val TotalPages = args?.getInt("TotalPages")
-        val Text = args?.getString("Text")
         var position = index?.toInt()
 
         Next.setOnClickListener {
@@ -81,9 +80,15 @@ class ViewFragment : Fragment() {
                     if (position.equals(TotalPages-1)){
                         Toast.makeText(context,"Sorry No Data Found",Toast.LENGTH_SHORT).show()
                     }else{
+
                         position++
+                        Log.d("totalPage",TotalPages.toString())
+                        Log.d("totalPageposition",position.toString())
                         nextNote(position)
-                        UpdatePosition = position
+                        Log.d("update11",position.toString())
+
+                        //                       UpdatePosition
+//                        UpdatePosition = Note[position-1].id
 
                     }
                 }
@@ -97,8 +102,8 @@ class ViewFragment : Fragment() {
 
     private fun nextNote(Position: Int) {
         viewText.text = Note[Position].text
+        UpdatePosition = Note[Position].id
         SetbackgroundColor(Note[Position].color.toString())
-
 
     }
 

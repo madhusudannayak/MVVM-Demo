@@ -34,11 +34,10 @@ class DiaryViewModel(application: Application) : AndroidViewModel(application) {
         repository.insert(diaryData)
     }
 
-    fun updateData(diaryData: DiaryData) {
-        viewModelScope.launch(Dispatchers.IO) {
+    fun updateData(diaryData: DiaryData) = viewModelScope.launch(Dispatchers.IO) {
             repository.updateData(diaryData)
-        }
     }
+
 
 
 }

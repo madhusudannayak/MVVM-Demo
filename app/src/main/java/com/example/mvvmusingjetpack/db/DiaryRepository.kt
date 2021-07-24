@@ -31,7 +31,7 @@ class DiaryRepository( context: Context) {
     suspend fun insert(diaryData: DiaryData){
         diaryDao.insert(diaryData)
 
-        Log.d("kkkkkkkkkkkkk1","sfdsdf")
+
 
     }
     suspend fun delete(diaryData: DiaryData){
@@ -39,6 +39,7 @@ class DiaryRepository( context: Context) {
     }
     suspend fun updateData(diaryData: DiaryData){
         diaryDao.updateData(diaryData)
+        Log.d("kkkkkkkkkkkkk1","sfdsdf")
     }
 
 }

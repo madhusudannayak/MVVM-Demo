@@ -1,7 +1,5 @@
 package com.example.mvvmusingjetpack.fragments.add
 
-import android.content.Context
-import android.graphics.Color.parseColor
 import android.os.Bundle
 import android.text.TextUtils
 import android.util.Log

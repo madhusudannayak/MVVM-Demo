@@ -30,27 +30,13 @@ import java.util.ArrayList
 
 
 class DashboardFragment : Fragment() , IDiaryRVAdapter{
- //   class DashboardFragment : Fragment(), IDiaryRVAdapter {
     val allNote = ArrayList<DiaryData>()
-
     lateinit var viewModel: DiaryViewModel
     lateinit var numberofpage: TextView
     lateinit var Page: String
     lateinit var args : Bundle
 
     private val dashBoardViewModel: DashBoardViewModel by lazy { ViewModelProvider(this).get(DashBoardViewModel::class.java) }
-
-//    override fun onCreateView(
-//            inflater: LayoutInflater, container: ViewGroup?,
-//            savedInstanceState: Bundle?
-//    ): View? {
-//        val binding = DataBindingUtil.setContentView<FragmentDashboardBinding>(context as Activity, R.layout.fragment_dashboard)
-//        binding.dashboardviewModel = dashBoardViewModel
-//        binding.lifecycleOwner = this
-//        return binding.root
-//    }
-
-
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -61,15 +47,9 @@ class DashboardFragment : Fragment() , IDiaryRVAdapter{
            binding.lifecycleOwner = this
 
             args = Bundle()
+            numberofpage = binding.numberofpage
 
-           numberofpage = binding.numberofpage
-
-
-
-
-
-
-        val recyclerView = binding.Recylerview1
+           val recyclerView = binding.Recylerview1
            recyclerView.layoutManager = LinearLayoutManager(context)
            val adapter = DiaryRVAdapter(context, this)
            recyclerView.adapter = adapter
@@ -82,19 +62,16 @@ class DashboardFragment : Fragment() , IDiaryRVAdapter{
             list?.let {
                 adapter.updateList(it)
                 allNote.addAll(it)
-//                val currentNote = allNote[0]
-//                          Log.d("sadasdasdsa", currentNote.text.toString())
             }
-//                    viewModel.setMsgCommunicator("Hi Value Updated")
-
                     manager.setItemChangedListener(object : StackLayoutManager.ItemChangedListener {
-                        override fun onItemChanged(position: Int) {
+                        override fun onItemChanged(position: Int)
+                        {
                             numberofPage(position+1,Page.toInt())
                             args.putInt("position", position)
-                            args.putInt("TotalPages", Page.toInt())
-                            args.putString("Text",allNote[position].text)
+ //                           args.putString("Text",allNote[position].text)
+                            Log.d("position",position.toString())
+                            Log.d("position",allNote[position].text)
 
- //                           Toast.makeText(context,position.toString(),Toast.LENGTH_SHORT).show();
                         }
               })
        })
@@ -117,11 +94,8 @@ class DashboardFragment : Fragment() , IDiaryRVAdapter{
     }
 
     fun openAddFragment(){
-//        toast("done")
-//        getNavController()
       findNavController().navigate(R.id.action_dashboardFragment_to_addFragment)
 
-//        Toast.makeText(requireContext(),"Done",Toast.LENGTH_SHORT).show()
 
     }
     fun Fragment.getNavController(){
@@ -136,22 +110,7 @@ class DashboardFragment : Fragment() , IDiaryRVAdapter{
 
     override fun onItemClicked(note: DiaryData, size: String) {
 
-
         findNavController().navigate(R.id.action_dashboardFragment_to_viewFragment,args)
-
-
-
-        // communicator.passDataCom()
-        Log.d("aaaaaaaaaaaa", "AAAAAAAAAAAAAAA")
-
-
-
-
-
-
-
-      // numberofpage.text = "Page - $size of $size"
-      //  Toast.makeText(context, size.toString()+"5", Toast.LENGTH_SHORT).show();
 
     }
 
@@ -159,8 +118,9 @@ class DashboardFragment : Fragment() , IDiaryRVAdapter{
       //  Toast.makeText(context, size.toString()+"5", Toast.LENGTH_SHORT).show();
         numberofPage(1,size.toInt())
         Page = size
+        args.putInt("TotalPages", Page.toInt())
 
-        //  numberofpage.text = "Page - $size of $size"
+
     }
 
     fun numberofPage(CurrentPage:Int,TotalPage:Int)
@@ -172,55 +132,3 @@ class DashboardFragment : Fragment() , IDiaryRVAdapter{
 
 }
 
-//        recyclerView.layoutManager = LinearLayoutManager(context)
-//        val adapter = DiaryRVAdapter(context, this)
-//        recyclerView.adapter = adapter
-//
-//        val manager = StackLayoutManager(StackLayoutManager.ScrollOrientation.RIGHT_TO_LEFT)
-//        manager.setPagerMode(true)
-//        manager.setPagerFlingVelocity(3000)
-//        recyclerView.layoutManager = manager
-//
-//
-//        viewModel = ViewModelProvider(
-//                this,
-//                ViewModelProvider.AndroidViewModelFactory.getInstance(requireActivity().application)
-//        ).get(DiaryViewModel::class.java)
-//
-//        viewModel.allNotes.observe(viewLifecycleOwner, { list ->
-//            list?.let {
-//                adapter.updateList(it)
-////                val currentNote = allNote[0]
-////                          Log.d("sadasdasdsa", currentNote.text.toString())
-//            }
-//        })
-
-//
-//        val imageButton = view.findViewById<ImageView>(R.id.imageButton)
-//
-//        imageButton.setOnClickListener {
-//            findNavController().navigate(R.id.action_dashboardFragment_to_addFragment)
-//        }
-//
-//        return view
-//    }
-//
-////    override fun onItemClicked(note: DiaryData) {
-////
-////    }
-//
-//    override fun onItemClicked(note: DiaryData, size: String) {
-//        findNavController().navigate(R.id.action_dashboardFragment_to_viewFragment)
-//        Log.d("aaaaaaaaaaaa", "AAAAAAAAAAAAAAA")
-//      //  Toast.makeText(context,size.toString(),Toast.LENGTH_SHORT).show();
-//    }
-////
-//    override fun size(size: String) {
-//        //Toast.makeText(context, size.toString()+"5", Toast.LENGTH_SHORT).show();
-//        Page = size
-//        numberofPage(1,size.toInt())
-//    }
-
-//
-//
-//}

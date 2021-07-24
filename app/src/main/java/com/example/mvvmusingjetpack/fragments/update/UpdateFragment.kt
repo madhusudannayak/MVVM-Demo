@@ -2,6 +2,7 @@ package com.example.mvvmusingjetpack.fragments.update
 
 import android.os.Bundle
 import android.text.Editable
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -10,13 +11,10 @@ import android.widget.*
 import androidx.cardview.widget.CardView
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.ViewModelProvider
-import androidx.navigation.fragment.findNavController
 import com.example.mvvmusingjetpack.R
-import com.example.mvvmusingjetpack.databinding.FragmentAddBinding
 import com.example.mvvmusingjetpack.databinding.FragmentUpdateBinding
 import com.example.mvvmusingjetpack.db.Color
 import com.example.mvvmusingjetpack.db.DiaryData
-import com.example.mvvmusingjetpack.fragments.add.AddViewModel
 import com.example.mvvmusingjetpack.viewmodel.DiaryViewModel
 
 class UpdateFragment : Fragment() {
@@ -33,7 +31,7 @@ class UpdateFragment : Fragment() {
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View{
         val binding: FragmentUpdateBinding = DataBindingUtil.inflate(inflater,
                 R.layout.fragment_update, container, false)
         val args = arguments
@@ -46,10 +44,37 @@ class UpdateFragment : Fragment() {
         note = binding.note
         edit = binding.edit
         close = binding.close
+        val index = args?.getInt("position")
+
+        mDiaryViewModel.allNotes.observe(viewLifecycleOwner, { list ->
+            list?.let {
+              //  viewText.text = it[index!!].text
+ //               val index = args?.getInt("position")
+//               SetbackgroundColor(it[index!!].color.toString())
+               Log.d("111111111",index!!.toString())
+//               Log.d("111111111",it[index!!].text.toString())
+
+                //                  ViewDataByID()
+            }
+        })
+
+
+
+
+
+
+
         val languages = resources.getStringArray(R.array.color)
         val updateText = args?.getString("UpdateText")
 
         fun String.toEditable(): Editable =  Editable.Factory.getInstance().newEditable(this)
+
+        close.setOnClickListener {
+            Toast.makeText(context,"Done",Toast.LENGTH_SHORT).show()
+            if (index != null) {
+                UpdateDataToDb(index)
+            }
+        }
 
 
         if (updateText != null) {
@@ -141,12 +166,18 @@ class UpdateFragment : Fragment() {
             else -> Color.WHITE
         }
     }
-    private fun UpdateDataToDb() {
+    private fun UpdateDataToDb(index: Int) {
+       // val index = args?.getInt("position")
+
         val mNote = note.text.toString()
         val color= spinner.selectedItem.toString()
-        if(mNote.isNotEmpty()){
-            mDiaryViewModel.updateData(DiaryData(0,"mNote", parseColor(color)))
-        }
+      //  if(mNote.isNotEmpty()){
+        Log.d("update1",index.toString())
+        Log.d("update2",color)
+        mDiaryViewModel.updateData(DiaryData(index,mNote, parseColor(color)))
+
+
+       // }
 
     }
 
