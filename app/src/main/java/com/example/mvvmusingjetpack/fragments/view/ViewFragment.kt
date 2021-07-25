@@ -11,55 +11,56 @@ import android.widget.ImageButton
 import android.widget.TextView
 import android.widget.Toast
 import androidx.cardview.widget.CardView
+import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import com.example.mvvmusingjetpack.R
+import com.example.mvvmusingjetpack.databinding.FragmentDashboardBinding
+import com.example.mvvmusingjetpack.databinding.FragmentViewBinding
 import com.example.mvvmusingjetpack.db.DiaryData
+import com.example.mvvmusingjetpack.fragments.dashboard.DashBoardViewModel
 import com.example.mvvmusingjetpack.viewmodel.DiaryViewModel
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import java.util.*
 
 class ViewFragment : Fragment() {
+
     lateinit var viewModel: DiaryViewModel
     val Note = ArrayList<DiaryData>()
     lateinit var id: String
     lateinit var viewText : TextView
     lateinit var BgCard : CardView
-    lateinit var Next : FloatingActionButton
-    lateinit var Edit : ImageButton
     lateinit var Update : Bundle
+    lateinit var Next : FloatingActionButton
     var UpdatePosition : Int = 0
+    lateinit var UpdateNote : String
 
+
+    private val viewViewModel: ViewViewModel by lazy { ViewModelProvider(this).get(ViewViewModel::class.java) }
 
     override fun onCreateView(
             inflater: LayoutInflater, container: ViewGroup?,
             savedInstanceState: Bundle?
-    ): View? {
-        val view = inflater.inflate(R.layout.fragment_view, container, false)
+    ): View{
+        val binding: FragmentViewBinding = DataBindingUtil.inflate(inflater,
+        R.layout.fragment_view, container, false)
+        binding.viewviewModel = viewViewModel
+        binding.lifecycleOwner = this
         val args = arguments
+        Next = binding.next
+        BgCard = binding.bgCard
+        viewText = binding.Viewtext
+ //       val args = arguments
+ //       var index = args?.getInt("position")
+ //       val TotalPages = args?.getInt("TotalPages")
 
-
-        viewText =view.findViewById<TextView>(R.id.Viewtext);
-        BgCard =view.findViewById<CardView>(R.id.bgCard);
-        Next = view.findViewById(R.id.next)
-        Edit = view.findViewById(R.id.edit)
-        viewModel = ViewModelProvider(this, ViewModelProvider.AndroidViewModelFactory.getInstance(requireActivity().application)).get(DiaryViewModel::class.java)
-
-
-
-        Edit.setOnClickListener {
-            Update = Bundle()
-            Update.putInt("position",UpdatePosition)
-        //    Update.putString("UpdateText", viewText.text as String)
-
-            findNavController().navigate(R.id.action_viewFragment_to_updateFragment,Update)
-        }
-
+        viewModel = ViewModelProvider(this,ViewModelProvider.AndroidViewModelFactory.getInstance(requireActivity().application)).get(DiaryViewModel::class.java)
         viewModel.allNotes.observe(viewLifecycleOwner, { list ->
                 list?.let {
                     val index = args?.getInt("position")
                     UpdatePosition = it[index!!].id
+                    UpdateNote = it[index!!].text
                     viewText.text = it[index!!].text
                     SetbackgroundColor(it[index!!].color.toString())
                     Log.d("111111111",it[index!!].text)
@@ -69,40 +70,83 @@ class ViewFragment : Fragment() {
                 }
             })
 
+//        Next.setOnClickListener {
+//            var position = index?.toInt()
+//            if (position != null) {
+//                if (TotalPages != null) {
+//                    if (position.equals(TotalPages-1)){
+//                        Toast.makeText(context,"Sorry No Data Found",Toast.LENGTH_SHORT).show()
+//                    }else{
+//
+//                        position++
+//                        Log.d("totalPage",TotalPages.toString())
+//                        Log.d("totalPageposition",position.toString())
+//                        nextNote(position)
+//                        Log.d("update11",position.toString())
+//
+//                        //                       UpdatePosition
+////                        UpdatePosition = Note[position-1].id
+//
+//                    }
+//                }
+//            }
+//
+//        }
+
+
+        onActionPerform()
+        return binding.root
+    }
+
+    private fun onActionPerform() {
+        val args = arguments
         val index = args?.getInt("position")
         val TotalPages = args?.getInt("TotalPages")
         var position = index?.toInt()
 
-        Next.setOnClickListener {
+        activity?.let {
+            viewViewModel.NextItem.observe(it,{
+                var position = index?.toInt()
+                if (position != null) {
+                    if (TotalPages != null) {
+                        if (position.equals(TotalPages-1)){
+                            Toast.makeText(context,"Sorry No Data Found",Toast.LENGTH_SHORT).show()
+                        }else{
 
-            if (position != null) {
-                if (TotalPages != null) {
-                    if (position.equals(TotalPages-1)){
-                        Toast.makeText(context,"Sorry No Data Found",Toast.LENGTH_SHORT).show()
-                    }else{
+                            position++
+                            Log.d("totalPage",TotalPages.toString())
+                            Log.d("totalPageposition",position.toString())
+                            nextNote(position)
+                            Log.d("update11",position.toString())
 
-                        position++
-                        Log.d("totalPage",TotalPages.toString())
-                        Log.d("totalPageposition",position.toString())
-                        nextNote(position)
-                        Log.d("update11",position.toString())
-
-                        //                       UpdatePosition
+                            //                       UpdatePosition
 //                        UpdatePosition = Note[position-1].id
 
+                        }
                     }
                 }
+            })
 
-            }
+            viewViewModel.EditNote.observe(it,{
+                EditNote()
+            })
+            viewViewModel.BackToDashBoardFragment.observe(it,{
+                findNavController().navigate(R.id.action_viewFragment_to_dashboardFragment)
 
+            })
         }
 
-        return view;
+
+
+
     }
 
     private fun nextNote(Position: Int) {
+        Log.d("update111",Note[Position].text)
+
         viewText.text = Note[Position].text
         UpdatePosition = Note[Position].id
+        UpdateNote = Note[Position].text
         SetbackgroundColor(Note[Position].color.toString())
 
     }
@@ -115,6 +159,12 @@ class ViewFragment : Fragment() {
 
         }
 
+    }
+    fun EditNote(){
+        Update = Bundle()
+        Update.putInt("position",UpdatePosition)
+        Update.putString("updateNote",UpdateNote)
+        findNavController().navigate(R.id.action_viewFragment_to_updateFragment,Update)
     }
 
 

@@ -1,8 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+        <variable
+            name="viewviewModel"
+            type="com.example.mvvmusingjetpack.fragments.view.ViewViewModel" />
+    </data>
+
+<FrameLayout
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".fragments.view.ViewFragment">
@@ -21,6 +28,7 @@
             <ImageButton
                 android:id="@+id/close"
                 android:layout_width="wrap_content"
+                android:onClick="@{()->viewviewModel.BackToDashBoard()}"
                 android:layout_height="wrap_content"
                 android:background="@null"
                 android:src="@drawable/ic_baseline_arrow_back_24" />
@@ -35,6 +43,7 @@
 
             <ImageButton
                 android:id="@+id/edit"
+                android:onClick="@{()->viewviewModel.EditNote()}"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:background="@null"
@@ -83,8 +92,10 @@
         android:layout_marginEnd="8dp"
         android:layout_marginRight="8dp"
         android:layout_marginBottom="8dp"
+        android:onClick="@{()->viewviewModel.NextItem()}"
         android:clickable="true"
         android:src="@drawable/ic_vector" />
 
 
 </FrameLayout>
+</layout>
