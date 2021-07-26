@@ -27,6 +27,7 @@ class DiaryRepository( context: Context) {
         }
     }
 
+
     val allNote: LiveData<List<DiaryData>> = diaryDao.getAllNotes()
 
     val allNoteById: (String) -> LiveData<List<DiaryData>> = {diaryDao.getNotesByID(it)}
