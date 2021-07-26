@@ -51,14 +51,6 @@
                 />
 
 
-            <ImageButton
-                android:id="@+id/edit"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:background="@null"
-                android:src="@drawable/ic_baseline_remove_red_eye_24" />
-
-
         </LinearLayout>
 
         <androidx.cardview.widget.CardView

@@ -35,6 +35,7 @@ class ViewFragment : Fragment() {
     lateinit var Next : FloatingActionButton
     var UpdatePosition : Int = 0
     lateinit var UpdateNote : String
+    lateinit var UpdateColor : String
 
 
     private val viewViewModel: ViewViewModel by lazy { ViewModelProvider(this).get(ViewViewModel::class.java) }
@@ -61,6 +62,7 @@ class ViewFragment : Fragment() {
                     val index = args?.getInt("position")
                     UpdatePosition = it[index!!].id
                     UpdateNote = it[index!!].text
+                    UpdateColor = it[index!!].color.toString()
                     viewText.text = it[index!!].text
                     SetbackgroundColor(it[index!!].color.toString())
                     Log.d("111111111",it[index!!].text)
@@ -93,7 +95,6 @@ class ViewFragment : Fragment() {
 //
 //        }
 
-
         onActionPerform()
         return binding.root
     }
@@ -112,15 +113,8 @@ class ViewFragment : Fragment() {
                         if (position.equals(TotalPages-1)){
                             Toast.makeText(context,"Sorry No Data Found",Toast.LENGTH_SHORT).show()
                         }else{
-
                             position++
-                            Log.d("totalPage",TotalPages.toString())
-                            Log.d("totalPageposition",position.toString())
                             nextNote(position)
-                            Log.d("update11",position.toString())
-
-                            //                       UpdatePosition
-//                        UpdatePosition = Note[position-1].id
 
                         }
                     }
@@ -164,31 +158,9 @@ class ViewFragment : Fragment() {
         Update = Bundle()
         Update.putInt("position",UpdatePosition)
         Update.putString("updateNote",UpdateNote)
+        Update.putString("updateColor",UpdateColor)
         findNavController().navigate(R.id.action_viewFragment_to_updateFragment,Update)
     }
-
-
-
-
-
-
-
-
-
-
-//    override fun onActivityCreated(savedInstanceState: Bundle?) {
-//        super.onActivityCreated(savedInstanceState)
-//        viewModel.getText().observe(viewLifecycleOwner, { charSequence -> // textView.setText(charSequence);
-//
-//            viewText.setText(charSequence);
-//         //  viewText.text = charSequence
-//
-//            //       Log.d("wwwwwww",charSequence as String)
-//
-//
-//        })
-//    }
-
 
 
 

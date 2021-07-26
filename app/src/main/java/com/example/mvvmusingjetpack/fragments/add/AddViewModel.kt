@@ -18,15 +18,11 @@ class AddViewModel : ViewModel() {
     fun Edit()
     {
         if(id.equals(1)){
-
             ChangeIcon.value = true
-            Log.d("aaaaaaaaaaaaaaaaaaaa","true")
             id = 0
 
         }else if(id.equals(0)){
-
             ChangeIcon.value = false
-            Log.d("aaaaaaaaaaaaaaaaaaaa","false")
             id = 1
 
         }

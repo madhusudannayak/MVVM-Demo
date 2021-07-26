@@ -7,11 +7,10 @@ class ViewViewModel: ViewModel() {
     val NextItem = MutableLiveData<Boolean>()
     val BackToDashBoardFragment = MutableLiveData<Boolean>()
     val EditNote = MutableLiveData<Boolean>()
-    val Switch = 0
 
 
-
-    fun NextItem(){
+    fun NextItem()
+    {
         NextItem.value = true
     }
 

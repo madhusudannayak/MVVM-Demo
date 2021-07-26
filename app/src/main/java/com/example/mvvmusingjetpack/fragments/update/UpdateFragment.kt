@@ -20,16 +20,13 @@ import com.example.mvvmusingjetpack.viewmodel.DiaryViewModel
 import java.util.ArrayList
 
 class UpdateFragment : Fragment() {
-    val allNote = ArrayList<DiaryData>()
 
     private val updateViewModel: UpdateViewModel by lazy { ViewModelProvider(this).get(UpdateViewModel::class.java) }
     lateinit var viewModel: DiaryViewModel
     lateinit var spinner: Spinner
     lateinit var bgCard: CardView
-    lateinit var edit: ImageButton
-    lateinit var close: ImageButton
     lateinit var note: EditText
-    var a:String =""
+//    var Switch = 0
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -45,28 +42,24 @@ class UpdateFragment : Fragment() {
         spinner = binding.color
         bgCard = binding.bgCard
         note = binding.note
-        edit = binding.edit
-        close = binding.close
-   val index = args?.getInt("position")
-   val Note = args?.getString("updateNote")
+        val Note = args?.getString("updateNote")
+        val Color = args?.getString("updateColor")
+        note.setText(Note.toString())
+ //       if(Switch.equals(0)){
+            SetbackgroundColor(Color.toString())
+          //  Switch = 1
+  //      }
 
 
-        viewModel.allNotes.observe(viewLifecycleOwner, { list ->
-            list?.let {
-                allNote.addAll(it)
-//                val index = args?.getInt("position")
-              Log.d("111111111a",index!!.toString())
-
-              Log.d("111111111",Note.toString())
-                note.setText(Note.toString())
+             Log.d("111111111",Color.toString())
 
 
-//                SetbackgroundColor(it[index!!].color.toString())
-//                Log.d("111111111",it[index!!].text)
-
-                //                  ViewDataByID()
-            }
-        })
+////                SetbackgroundColor(it[index!!].color.toString())
+////                Log.d("111111111",it[index!!].text)
+//
+//                //                  ViewDataByID()
+//            }
+//        })
 
 //        mDiaryViewModel.allNotes.observe(viewLifecycleOwner, { list ->
 //            list?.let {
@@ -82,21 +75,10 @@ class UpdateFragment : Fragment() {
 
 
 
-
-
-
-
         val languages = resources.getStringArray(R.array.color)
         val updateText = args?.getString("UpdateText")
 
         fun String.toEditable(): Editable =  Editable.Factory.getInstance().newEditable(this)
-
-        close.setOnClickListener {
-//            Toast.makeText(context,"Done",Toast.LENGTH_SHORT).show()
-//            if (index != null) {
-//                UpdateDataToDb(index)
-//            }
-        }
 
 
         if (updateText != null) {
@@ -113,20 +95,18 @@ class UpdateFragment : Fragment() {
                 AdapterView.OnItemSelectedListener {
             override fun onItemSelected(parent: AdapterView<*>,
                                         view: View, position: Int, id: Long) {
-                SetbackgroundColor(languages[position])
+     //           if(Switch.equals(1)){
+                   SetbackgroundColor(languages[position])
+      //          }
 
             }
 
             override fun onNothingSelected(parent: AdapterView<*>) {
+
             }
         }
-
-
      onActionPerform()
-
-
-
-        return binding.root
+     return binding.root
     }
 
     private fun onActionPerform() {
@@ -134,8 +114,6 @@ class UpdateFragment : Fragment() {
             updateViewModel.BackToViewFragment.observe(it,{
                 val args = arguments
                 val index = args?.getInt("position")
-                Log.d("111111111111",index.toString())
-                Log.d("111111111111a",a.toString())
                 Toast.makeText(context,"Update Done",Toast.LENGTH_SHORT).show()
                 if (index != null) {
                     UpdateDataToDb(index)
@@ -143,27 +121,6 @@ class UpdateFragment : Fragment() {
                 findNavController().navigate(R.id.action_updateFragment_to_dashboardFragment)
             })
         }
-
-
-    }
-    fun DisableEdit(){
-        close.setImageResource(R.drawable.ic_baseline_arrow_back_24)
-        edit.setImageResource(R.drawable.ic_baseline_edit_note_24)
-        note.setFocusable(false);
-        note.setEnabled(false);
-        note.setCursorVisible(false);
-
-    }
-    fun EnableEdit(){
-        close.setImageResource(R.drawable.ic_baseline_close_24)
-        edit.setImageResource(R.drawable.ic_baseline_remove_red_eye_24)
-        note.isEnabled =true
-        note.setFocusable(true);
-        note.setEnabled(true);
-        note.setCursorVisible(true);
-        note.setFocusableInTouchMode(true);
-
-
     }
 
     private fun SetbackgroundColor(s: String) {
@@ -173,9 +130,7 @@ class UpdateFragment : Fragment() {
             bgCard.setCardBackgroundColor(android.graphics.Color.parseColor("#87CDFF"))
 
         }
-
     }
-
 
     private fun parseColor(color: String): Color {
         return when(color){
@@ -187,80 +142,16 @@ class UpdateFragment : Fragment() {
         }
     }
     private fun UpdateDataToDb(index: Int) {
-       // val index = args?.getInt("position")
-
         val mNote = note.text.toString()
         val color= spinner.selectedItem.toString()
-      //  if(mNote.isNotEmpty()){
-        Log.d("update1",index.toString())
-        Log.d("update2",color)
-        viewModel.updateData(DiaryData(index,mNote, parseColor(color)))
 
+        if(mNote.isNotEmpty()){
+           viewModel.updateData(DiaryData(index,mNote, parseColor(color)))
 
-       // }
+        }
 
     }
 
-//        val imageButton = view.findViewById<ImageButton>(R.id.imageButton2);
-//        note = view.findViewById(R.id.note)
-//        spinner = view.findViewById(R.id.color)
-//        bgCard = view.findViewById(R.id.bgCard)
-//
-//
-////          spinner.onItemClickListener = object:
-////          AdapterView.OnItemSelectedListener, AdapterView.OnItemClickListener {
-////              override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
-////
-////              }
-////
-////              override fun onNothingSelected(parent: AdapterView<*>?) {
-////              }
-////
-////              override fun onItemClick(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
-////                  Toast.makeText(requireContext(),position.toString(), Toast.LENGTH_SHORT).show()
-////              }
-////
-////          }
-//
-//        imageButton.setOnClickListener {
-//            mDiaryViewModel.allNotes.observe(viewLifecycleOwner
-//                ,  {list ->
-//                    list?.let {
-//                        Log.d("sadasdasdsa", it.toString())
-//                    }
-//
-//                })
-//            insertDataToDb()
-//           findNavController().navigate(R.id.action_addFragment_to_dashboardFragment)
-//        }
-//
-//        return view
-//    }
-//
-//
-//
-//
-//
-////        val mNote = note.text.toString()
-////
-////        val validation = DataVerify(mNote)
-////        if (validation){
-////            val newData= DiaryData(
-////                0,
-////                mNote
-////            )
-////            mDiaryViewModel.insertNote(newData)
-////            Toast.makeText(requireContext(),"Successfully Added", Toast.LENGTH_SHORT).show()
-////        }else{
-////            Toast.makeText(requireContext(),"Sorry", Toast.LENGTH_SHORT).show()
-////
-////        }
-//
-//
-//    }
-//    private fun DataVerify(note : String):Boolean{
-//        return !TextUtils.isEmpty(note)
-//    }
 
 
 
