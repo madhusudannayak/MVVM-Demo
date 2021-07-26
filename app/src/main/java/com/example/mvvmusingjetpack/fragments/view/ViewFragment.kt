@@ -59,13 +59,12 @@ class ViewFragment : Fragment() {
         viewModel = ViewModelProvider(this,ViewModelProvider.AndroidViewModelFactory.getInstance(requireActivity().application)).get(DiaryViewModel::class.java)
         viewModel.allNotes.observe(viewLifecycleOwner, { list ->
                 list?.let {
-                    val index = args?.getInt("position")
-                    UpdatePosition = it[index!!].id
-                    UpdateNote = it[index!!].text
-                    UpdateColor = it[index!!].color.toString()
-                    viewText.text = it[index!!].text
-                    SetbackgroundColor(it[index!!].color.toString())
-                    Log.d("111111111",it[index!!].text)
+                    val diaryId = args?.getInt("position")
+                    UpdatePosition = it[diaryId!!].id
+                    UpdateNote = it[diaryId!!].text
+                    UpdateColor = it[diaryId!!].color.toString()
+                    viewText.text = it[diaryId!!].text
+                    SetbackgroundColor(it[diaryId!!].color.toString())
 
                     Note.addAll(it)
                     //                  ViewDataByID()
@@ -101,34 +100,30 @@ class ViewFragment : Fragment() {
 
     private fun onActionPerform() {
         val args = arguments
-        val index = args?.getInt("position")
+        var index = args?.getInt("position")
         val TotalPages = args?.getInt("TotalPages")
-        var position = index?.toInt()
 
-        activity?.let {
-            viewViewModel.NextItem.observe(it,{
-                var position = index?.toInt()
-                if (position != null) {
-                    if (TotalPages != null) {
-                        if (position.equals(TotalPages-1)){
+            viewViewModel.NextItem.observe(requireActivity(),{
+                    if(it){
+                        if (index?.equals(TotalPages?.minus(1))!!){
                             Toast.makeText(context,"Sorry No Data Found",Toast.LENGTH_SHORT).show()
                         }else{
-                            position++
-                            nextNote(position)
+                            index++
+                            nextNote(index)
 
                         }
                     }
-                }
+
             })
 
-            viewViewModel.EditNote.observe(it,{
+            viewViewModel.EditNote.observe(requireActivity(),{
                 EditNote()
             })
-            viewViewModel.BackToDashBoardFragment.observe(it,{
+            viewViewModel.BackToDashBoardFragment.observe(requireActivity(),{
                 findNavController().navigate(R.id.action_viewFragment_to_dashboardFragment)
 
             })
-        }
+
 
 
 
