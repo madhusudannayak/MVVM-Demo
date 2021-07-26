@@ -1,4 +1,4 @@
-package com.example.mvvmusingjetpack.fragments.update
+package com.example.mvvmusingjetpack.view.fragments.update
 
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel

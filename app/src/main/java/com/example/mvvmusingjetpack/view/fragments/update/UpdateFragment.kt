@@ -1,4 +1,4 @@
-package com.example.mvvmusingjetpack.fragments.update
+package com.example.mvvmusingjetpack.view.fragments.update
 
 import android.os.Bundle
 import android.text.Editable
@@ -17,7 +17,6 @@ import com.example.mvvmusingjetpack.databinding.FragmentUpdateBinding
 import com.example.mvvmusingjetpack.db.Color
 import com.example.mvvmusingjetpack.db.DiaryData
 import com.example.mvvmusingjetpack.viewmodel.DiaryViewModel
-import java.util.ArrayList
 
 class UpdateFragment : Fragment() {
 
@@ -26,12 +25,11 @@ class UpdateFragment : Fragment() {
     lateinit var spinner: Spinner
     lateinit var bgCard: CardView
     lateinit var note: EditText
-//    var Switch = 0
 
     override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View{
+            inflater: LayoutInflater, container: ViewGroup?,
+            savedInstanceState: Bundle?
+    ): View {
         val binding: FragmentUpdateBinding = DataBindingUtil.inflate(inflater,
                 R.layout.fragment_update, container, false)
         val args = arguments
@@ -45,40 +43,13 @@ class UpdateFragment : Fragment() {
         val Note = args?.getString("updateNote")
         val Color = args?.getString("updateColor")
         note.setText(Note.toString())
- //       if(Switch.equals(0)){
-            SetbackgroundColor(Color.toString())
-          //  Switch = 1
-  //      }
-
-
-             Log.d("111111111",Color.toString())
-
-
-////                SetbackgroundColor(it[index!!].color.toString())
-////                Log.d("111111111",it[index!!].text)
-//
-//                //                  ViewDataByID()
-//            }
-//        })
-
-//        mDiaryViewModel.allNotes.observe(viewLifecycleOwner, { list ->
-//            list?.let {
-//              //  viewText.text = it[index!!].text
-// //               val index = args?.getInt("position")
-////               SetbackgroundColor(it[index!!].color.toString())
-//               Log.d("111111111",index!!.toString())
-//               Log.d("111111111",it[index!!].text.toString())
-//
-//                //                  ViewDataByID()
-//            }
-//        })
-
+        SetbackgroundColor(Color.toString())
 
 
         val languages = resources.getStringArray(R.array.color)
         val updateText = args?.getString("UpdateText")
 
-        fun String.toEditable(): Editable =  Editable.Factory.getInstance().newEditable(this)
+        fun String.toEditable(): Editable = Editable.Factory.getInstance().newEditable(this)
 
 
         if (updateText != null) {
@@ -95,9 +66,7 @@ class UpdateFragment : Fragment() {
                 AdapterView.OnItemSelectedListener {
             override fun onItemSelected(parent: AdapterView<*>,
                                         view: View, position: Int, id: Long) {
-     //           if(Switch.equals(1)){
-                   SetbackgroundColor(languages[position])
-      //          }
+                SetbackgroundColor(languages[position])
 
             }
 
@@ -105,16 +74,16 @@ class UpdateFragment : Fragment() {
 
             }
         }
-     onActionPerform()
-     return binding.root
+        onActionPerform()
+        return binding.root
     }
 
     private fun onActionPerform() {
         activity?.let {
-            updateViewModel.BackToViewFragment.observe(it,{
+            updateViewModel.BackToViewFragment.observe(it, {
                 val args = arguments
                 val index = args?.getInt("position")
-                Toast.makeText(context,"Update Done",Toast.LENGTH_SHORT).show()
+                Toast.makeText(context, "Update Done", Toast.LENGTH_SHORT).show()
                 if (index != null) {
                     UpdateDataToDb(index)
                 }
@@ -124,35 +93,36 @@ class UpdateFragment : Fragment() {
     }
 
     private fun SetbackgroundColor(s: String) {
-        if (s.equals("WHITE")){
+        if (s.equals("WHITE")) {
             bgCard.setCardBackgroundColor(android.graphics.Color.parseColor("#FFFFFF"))
-        }else if(s.equals("BLUE")){
+        } else if (s.equals("BLUE")) {
             bgCard.setCardBackgroundColor(android.graphics.Color.parseColor("#87CDFF"))
 
         }
     }
 
     private fun parseColor(color: String): Color {
-        return when(color){
+        return when (color) {
             "WHITE" -> {
-                Color.WHITE}
+                Color.WHITE
+            }
             "BLUE" -> {
-                Color.BLUE}
+                Color.BLUE
+            }
             else -> Color.WHITE
         }
     }
+
     private fun UpdateDataToDb(index: Int) {
         val mNote = note.text.toString()
-        val color= spinner.selectedItem.toString()
+        val color = spinner.selectedItem.toString()
 
-        if(mNote.isNotEmpty()){
-           viewModel.updateData(DiaryData(index,mNote, parseColor(color)))
+        if (mNote.isNotEmpty()) {
+            viewModel.updateData(DiaryData(index, mNote, parseColor(color)))
 
         }
 
     }
-
-
 
 
 }

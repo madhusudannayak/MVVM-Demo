@@ -6,13 +6,13 @@
     <data>
         <variable
             name="dashboardviewModel"
-            type="com.example.mvvmusingjetpack.fragments.dashboard.DashBoardViewModel" />
+            type="com.example.mvvmusingjetpack.view.fragments.dashboard.DashBoardViewModel" />
     </data>
 
     <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context=".fragments.dashboard.DashboardFragment">
+        tools:context=".view.fragments.dashboard.DashboardFragment">
 
 
         <LinearLayout

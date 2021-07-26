@@ -1,7 +1,5 @@
-package com.example.mvvmusingjetpack.fragments.add
+package com.example.mvvmusingjetpack.view.fragments.add
 
-import android.util.Log
-import android.widget.Switch
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 

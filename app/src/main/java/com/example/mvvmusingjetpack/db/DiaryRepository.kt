@@ -3,7 +3,11 @@ package com.example.mvvmusingjetpack.db
 import android.content.Context
 import android.util.Log
 import androidx.lifecycle.LiveData
+import androidx.paging.LivePagedListBuilder
+import androidx.paging.PagedList
 import androidx.room.Room
+import java.util.concurrent.Executor
+import java.util.concurrent.Executors
 
 
 class DiaryRepository( context: Context) {
@@ -22,6 +26,7 @@ class DiaryRepository( context: Context) {
             }
         }
     }
+
 
     val allNote: LiveData<List<DiaryData>> = diaryDao.getAllNotes()
 
