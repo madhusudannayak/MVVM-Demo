@@ -88,6 +88,14 @@ class ViewFragment : Fragment() {
             findNavController().navigate(R.id.action_viewFragment_to_dashboardFragment)
 
         })
+        viewViewModel.openSettingFragment.observe(requireActivity(), {
+            findNavController().navigate(R.id.action_viewFragment_to_settingFragment)
+
+        })
+        viewViewModel.openSearchFragment.observe(requireActivity(), {
+            findNavController().navigate(R.id.action_viewFragment_to_searchFragment)
+
+        })
 
     }
 

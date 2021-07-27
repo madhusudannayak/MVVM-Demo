@@ -4,98 +4,114 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
+
         <variable
             name="viewviewModel"
             type="com.example.mvvmusingjetpack.view.fragments.view.ViewViewModel" />
     </data>
 
-<FrameLayout
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context=".view.fragments.view.ViewFragment">
-
-    <LinearLayout
+    <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="vertical">
+        tools:context=".view.fragments.view.ViewFragment">
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:padding="10dp"
-            android:orientation="horizontal">
+            android:layout_height="match_parent"
+            android:orientation="vertical">
 
-            <ImageButton
-                android:id="@+id/close"
-                android:layout_width="wrap_content"
-                android:onClick="@{()->viewviewModel.BackToDashBoard()}"
+            <LinearLayout
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="@null"
-                android:src="@drawable/ic_baseline_arrow_back_24" />
+                android:orientation="horizontal"
+                android:padding="10dp">
 
-            <View
-                android:id="@+id/view2"
-                android:layout_width="wrap_content"
-                android:layout_height="0dp"
-                android:layout_weight="1" />
+                <ImageButton
+                    android:id="@+id/close"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@null"
+                    android:onClick="@{()->viewviewModel.BackToDashBoard()}"
+                    android:src="@drawable/ic_baseline_arrow_back_24" />
+
+                <View
+                    android:id="@+id/view2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="0dp"
+                    android:layout_weight="1" />
+
+                <ImageButton
+                    android:id="@+id/search"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginRight="10dp"
+                    android:background="@null"
+                    android:onClick="@{()->viewviewModel.searchNote()}"
+                    android:src="@drawable/ic_baseline_search_24" />
 
 
+                <ImageButton
+                    android:id="@+id/edit"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginRight="10dp"
+                    android:background="@null"
+                    android:onClick="@{()->viewviewModel.EditNote()}"
+                    android:src="@drawable/ic_baseline_edit_note_24" />
 
-            <ImageButton
-                android:id="@+id/edit"
-                android:onClick="@{()->viewviewModel.EditNote()}"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:background="@null"
-                android:src="@drawable/ic_baseline_edit_note_24" />
+                <ImageButton
+                    android:id="@+id/settings"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@null"
+                    android:onClick="@{()->viewviewModel.setting()}"
+                    android:src="@drawable/ic_baseline_settings_24" />
 
+
+            </LinearLayout>
+
+            <androidx.cardview.widget.CardView
+                android:id="@+id/bgCard"
+                android:layout_width="fill_parent"
+                android:layout_height="match_parent"
+                android:layout_marginStart="20dp"
+                android:layout_marginLeft="20dp"
+                android:layout_marginTop="20dp"
+                android:layout_marginEnd="20dp"
+                android:layout_marginRight="20dp"
+                android:layout_marginBottom="65dp"
+                app:cardCornerRadius="20sp"
+                app:cardElevation="10dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent">
+
+                <TextView
+                    android:id="@+id/Viewtext"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:background="@null"
+                    android:descendantFocusability="blocksDescendants"
+                    android:gravity="top|left"
+                    android:padding="20sp"
+                    android:scrollHorizontally="false" />
+
+            </androidx.cardview.widget.CardView>
 
         </LinearLayout>
 
-        <androidx.cardview.widget.CardView
-            android:id="@+id/bgCard"
-            android:layout_width="fill_parent"
-            android:layout_height="match_parent"
-            android:layout_marginStart="20dp"
-            android:layout_marginLeft="20dp"
-            android:layout_marginTop="20dp"
-            android:layout_marginEnd="20dp"
-            android:layout_marginRight="20dp"
-            android:layout_marginBottom="65dp"
-            app:cardCornerRadius="20sp"
-            app:cardElevation="10dp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent">
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/next"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom|end"
+            android:layout_marginEnd="8dp"
+            android:layout_marginRight="8dp"
+            android:layout_marginBottom="8dp"
+            android:clickable="true"
+            android:onClick="@{()->viewviewModel.NextItem()}"
+            android:src="@drawable/ic_vector" />
 
-            <TextView
-                android:id="@+id/Viewtext"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:background="@null"
-                android:descendantFocusability="blocksDescendants"
-                android:gravity="top|left"
-                android:padding="20sp"
-                android:scrollHorizontally="false" />
-
-        </androidx.cardview.widget.CardView>
-
-
-    </LinearLayout>
-
-<com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/next"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="bottom|end"
-        android:layout_marginEnd="8dp"
-        android:layout_marginRight="8dp"
-        android:layout_marginBottom="8dp"
-        android:onClick="@{()->viewviewModel.NextItem()}"
-        android:clickable="true"
-        android:src="@drawable/ic_vector" />
-
-
-</FrameLayout>
+    </FrameLayout>
 </layout>

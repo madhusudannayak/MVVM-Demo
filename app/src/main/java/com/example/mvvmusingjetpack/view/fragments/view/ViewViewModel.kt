@@ -8,6 +8,9 @@ class ViewViewModel : ViewModel() {
     val NextItem = MutableLiveData<Boolean>()
     val BackToDashBoardFragment = MutableLiveData<Boolean>()
     val EditNote = MutableLiveData<Boolean>()
+    val openSettingFragment = MutableLiveData<Boolean>()
+    val openSearchFragment = MutableLiveData<Boolean>()
+
     var currentID: Int = 0
     var totalPage: Int = 0
 
@@ -25,16 +28,20 @@ class ViewViewModel : ViewModel() {
         EditNote.value = true
     }
 
+    fun searchNote() {
+        openSettingFragment.value = true
+    }
+
+    fun setting() {
+        openSearchFragment.value = true
+    }
+
 
     fun BackToDashBoard() {
         BackToDashBoardFragment.value = true
     }
-//    fun nextNote(){
-//        viewText.text = Note[Position].text
-//        UpdatePosition = Note[Position].id
-//        UpdateNote = Note[Position].text
-//        SetbackgroundColor(Note[Position].color.toString())
-//    }
+
+
     fun nextItemId(): Int = currentID
 
 

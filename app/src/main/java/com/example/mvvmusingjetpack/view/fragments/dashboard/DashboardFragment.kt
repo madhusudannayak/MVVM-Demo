@@ -29,13 +29,20 @@ class DashboardFragment : Fragment(), IDiaryRVAdapter {
     lateinit var Page: String
     lateinit var args: Bundle
 
-    private val dashBoardViewModel: DashBoardViewModel by lazy { ViewModelProvider(this).get(DashBoardViewModel::class.java) }
+    private val dashBoardViewModel: DashBoardViewModel by lazy {
+        ViewModelProvider(this).get(
+            DashBoardViewModel::class.java
+        )
+    }
+
     override fun onCreateView(
-            inflater: LayoutInflater, container: ViewGroup?,
-            savedInstanceState: Bundle?
+        inflater: LayoutInflater, container: ViewGroup?,
+        savedInstanceState: Bundle?
     ): View {
-        val binding: FragmentDashboardBinding = DataBindingUtil.inflate(inflater,
-                R.layout.fragment_dashboard, container, false)
+        val binding: FragmentDashboardBinding = DataBindingUtil.inflate(
+            inflater,
+            R.layout.fragment_dashboard, container, false
+        )
         binding.dashboardviewModel = dashBoardViewModel
         binding.lifecycleOwner = this
 
@@ -50,7 +57,12 @@ class DashboardFragment : Fragment(), IDiaryRVAdapter {
         manager.setPagerMode(true)
         manager.setPagerFlingVelocity(3000)
         recyclerView.layoutManager = manager
-        viewModel = ViewModelProvider(this, ViewModelProvider.AndroidViewModelFactory.getInstance(requireActivity().application)).get(DiaryViewModel::class.java)
+
+        viewModel = ViewModelProvider(
+            this,
+            ViewModelProvider.AndroidViewModelFactory.getInstance(requireActivity().application)
+        ).get(DiaryViewModel::class.java)
+
         viewModel.allNotes.observe(viewLifecycleOwner, { list ->
             list?.let {
                 adapter.updateList(it)
@@ -89,7 +101,8 @@ class DashboardFragment : Fragment(), IDiaryRVAdapter {
     }
 
     fun Fragment.getNavController() {
-        NavHostFragment.findNavController(this).navigate(R.id.action_dashboardFragment_to_addFragment)
+        NavHostFragment.findNavController(this)
+            .navigate(R.id.action_dashboardFragment_to_addFragment)
 
 
     }
@@ -100,10 +113,13 @@ class DashboardFragment : Fragment(), IDiaryRVAdapter {
     }
 
     override fun onItemClicked(note: DiaryData, size: String) {
+
         findNavController().navigate(R.id.action_dashboardFragment_to_viewFragment, args)
+
     }
 
     override fun size(size: String) {
+        //  Toast.makeText(context, size.toString()+"5", Toast.LENGTH_SHORT).show();
         numberofPage(1, size.toInt())
         Page = size
         args.putInt("TotalPages", Page.toInt())
