@@ -29,11 +29,13 @@ class ViewViewModel : ViewModel() {
     }
 
     fun searchNote() {
-        openSettingFragment.value = true
+        openSearchFragment.value = true
+
     }
 
     fun setting() {
-        openSearchFragment.value = true
+        openSettingFragment.value = true
+
     }
 
 
