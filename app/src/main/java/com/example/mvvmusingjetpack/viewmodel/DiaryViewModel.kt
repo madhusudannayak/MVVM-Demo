@@ -6,6 +6,7 @@ import androidx.lifecycle.*
 import com.example.mvvmusingjetpack.db.DiaryData
 import com.example.mvvmusingjetpack.db.DiaryRepository
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.Job
 import kotlinx.coroutines.launch
 
 
@@ -37,6 +38,20 @@ class DiaryViewModel(application: Application) : AndroidViewModel(application) {
     fun updateData(diaryData: DiaryData) = viewModelScope.launch(Dispatchers.IO) {
             repository.updateData(diaryData)
     }
+
+//    fun getUnSyncData(isSync: Boolean):LiveData<List<DiaryData>> {
+//        viewModelScope.launch(Dispatchers.IO) {
+//            return repository.getUnSyncData(isSync)
+//        }
+//    }
+    suspend fun getUnSyncData(isSync: Boolean):LiveData<List<DiaryData>> {
+        return repository.getUnSyncData(isSync)
+    }
+
+
+
+
+
 
 
 

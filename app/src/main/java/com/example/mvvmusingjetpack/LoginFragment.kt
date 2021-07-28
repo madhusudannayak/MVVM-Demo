@@ -49,8 +49,6 @@ class LoginFragment : Fragment() {
                         if (task.isSuccessful) {
                             Toast.makeText(this.requireContext(), "You are Logged in Sucessfully", Toast.LENGTH_SHORT).show()
                             startActivity(Intent(context, HomeActivity::class.java))
-
-
                         }
                     }
 

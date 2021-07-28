@@ -13,7 +13,6 @@ interface DiaryDao {
 //    suspend fun insertData(diaryData: DiaryData)
 
 
-
     @Insert(onConflict = OnConflictStrategy.IGNORE)
     suspend fun insert(diaryData: DiaryData)
 
@@ -21,13 +20,18 @@ interface DiaryDao {
     suspend fun delete(diaryData: DiaryData)
 
     @Query("Select * from Diary_table order by id desc")
-
-    fun getAllNotes() : LiveData<List<DiaryData>>
+    fun getAllNotes(): LiveData<List<DiaryData>>
 
     @Query("Select * from Diary_table WHERE id=:id ")
-    fun getNotesByID(id: String) : LiveData<List<DiaryData>>
+    fun getNotesByID(id: String): LiveData<List<DiaryData>>
 
     @Update
     suspend fun updateData(diaryData: DiaryData)
+
+    @Query("Select * from Diary_table WHERE isSync=:isSync ")
+    suspend fun getUnSyncData(isSync :Boolean) : LiveData<List<DiaryData>>
+
+
+
 
 }

@@ -1,6 +1,7 @@
 package com.example.mvvmusingjetpack.view.fragments.add
 
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -15,6 +16,9 @@ import com.example.mvvmusingjetpack.databinding.FragmentAddBinding
 import com.example.mvvmusingjetpack.db.Color
 import com.example.mvvmusingjetpack.db.DiaryData
 import com.example.mvvmusingjetpack.viewmodel.DiaryViewModel
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.firestore.DocumentReference
+import com.google.firebase.firestore.FirebaseFirestore
 
 
 class addFragment : Fragment() {
@@ -26,16 +30,26 @@ class addFragment : Fragment() {
     lateinit var edit: ImageButton
     lateinit var close: ImageButton
     lateinit var note: EditText
+    lateinit var db: FirebaseFirestore
+
 
     override fun onCreateView(
-            inflater: LayoutInflater, container: ViewGroup?,
-            savedInstanceState: Bundle?
+        inflater: LayoutInflater, container: ViewGroup?,
+        savedInstanceState: Bundle?
     ): View {
-        val binding: FragmentAddBinding = DataBindingUtil.inflate(inflater,
-                R.layout.fragment_add, container, false)
+        val binding: FragmentAddBinding = DataBindingUtil.inflate(
+            inflater,
+            R.layout.fragment_add, container, false
+        )
         binding.addviewModel = addViewModel
         binding.lifecycleOwner = this
-        mDiaryViewModel = ViewModelProvider(this, ViewModelProvider.AndroidViewModelFactory.getInstance(requireActivity().application)).get(DiaryViewModel::class.java)
+        db = FirebaseFirestore.getInstance()
+
+
+        mDiaryViewModel = ViewModelProvider(
+            this,
+            ViewModelProvider.AndroidViewModelFactory.getInstance(requireActivity().application)
+        ).get(DiaryViewModel::class.java)
         spinner = binding.color
         bgCard = binding.bgCard
         note = binding.note
@@ -45,15 +59,18 @@ class addFragment : Fragment() {
 
 
         spinner.adapter = activity?.let {
-            ArrayAdapter(it,
-                    R.layout.support_simple_spinner_dropdown_item,
-                    resources.getStringArray(R.array.color)
+            ArrayAdapter(
+                it,
+                R.layout.support_simple_spinner_dropdown_item,
+                resources.getStringArray(R.array.color)
             )
         }
         spinner.onItemSelectedListener = object :
-                AdapterView.OnItemSelectedListener {
-            override fun onItemSelected(parent: AdapterView<*>,
-                                        view: View, position: Int, id: Long) {
+            AdapterView.OnItemSelectedListener {
+            override fun onItemSelected(
+                parent: AdapterView<*>,
+                view: View, position: Int, id: Long
+            ) {
                 SetbackgroundColor(languages[position])
             }
 
@@ -126,10 +143,30 @@ class addFragment : Fragment() {
     }
 
     private fun insertDataToDb() {
+
+
         val mNote = note.text.toString()
         val color = spinner.selectedItem.toString()
+
+//        val user: MutableMap<String, Any> = HashMap()
+//        user["note"] = mNote
+//        user["color"] = color
+//        user["id"] = 0
+
         if (mNote.isNotEmpty()) {
-            mDiaryViewModel.insertNote(DiaryData(0, mNote, parseColor(color)))
+            mDiaryViewModel.insertNote(DiaryData(0, mNote, parseColor(color),false))
+//            db.collection(FirebaseAuth.getInstance().uid.toString())
+//                .add(user)
+//                .addOnSuccessListener {
+//                    Toast.makeText(context, "record added successfully ", Toast.LENGTH_SHORT).show()
+//                }
+//                .addOnFailureListener {
+//                    Toast.makeText(context, "record Failed to add ", Toast.LENGTH_SHORT).show()
+//                }
+
         }
+
     }
+
 }
+

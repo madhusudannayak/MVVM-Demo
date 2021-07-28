@@ -1,6 +1,8 @@
 package com.example.mvvmusingjetpack.view.fragments.dashboard
 
 import android.os.Bundle
+import android.os.Handler
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -18,7 +20,12 @@ import com.example.mvvmusingjetpack.adapter.IDiaryRVAdapter
 import com.example.mvvmusingjetpack.databinding.FragmentDashboardBinding
 import com.example.mvvmusingjetpack.db.DiaryData
 import com.example.mvvmusingjetpack.viewmodel.DiaryViewModel
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.firestore.FirebaseFirestore
+import com.google.firebase.firestore.ktx.firestore
+import com.google.firebase.ktx.Firebase
 import com.littlemango.stacklayoutmanager.StackLayoutManager
+import kotlinx.coroutines.*
 import java.util.ArrayList
 
 
@@ -28,6 +35,7 @@ class DashboardFragment : Fragment(), IDiaryRVAdapter {
     lateinit var numberofpage: TextView
     lateinit var Page: String
     lateinit var args: Bundle
+    lateinit var db: FirebaseFirestore
 
     private val dashBoardViewModel: DashBoardViewModel by lazy {
         ViewModelProvider(this).get(
@@ -45,6 +53,7 @@ class DashboardFragment : Fragment(), IDiaryRVAdapter {
         )
         binding.dashboardviewModel = dashBoardViewModel
         binding.lifecycleOwner = this
+        db = FirebaseFirestore.getInstance()
 
         args = Bundle()
         numberofpage = binding.numberofpage
@@ -65,8 +74,8 @@ class DashboardFragment : Fragment(), IDiaryRVAdapter {
 
         viewModel.allNotes.observe(viewLifecycleOwner, { list ->
             list?.let {
-                adapter.updateList(it)
                 allNote.addAll(it)
+                adapter.updateList(it)
             }
             manager.setItemChangedListener(object : StackLayoutManager.ItemChangedListener {
                 override fun onItemChanged(position: Int) {
@@ -76,10 +85,13 @@ class DashboardFragment : Fragment(), IDiaryRVAdapter {
                 }
             })
         })
-
-
-
         onActionPerform()
+
+        GlobalScope.launch {
+
+            insertdatatoFirebase()
+
+        }
         return binding.root
     }
 
@@ -129,6 +141,42 @@ class DashboardFragment : Fragment(), IDiaryRVAdapter {
 
     fun numberofPage(CurrentPage: Int, TotalPage: Int) {
         numberofpage.text = "Page - $CurrentPage of $TotalPage"
+    }
+
+    suspend fun insertdatatoFirebase() {
+        withContext(Dispatchers.IO) {
+
+
+
+ //           viewModel.getAllNote().
+
+            viewModel.getUnSyncData(false)
+
+//
+
+                Log.d("callcorouting125355", "callllllllllll")
+//                Log.d("callcorouting125355", allNote[0].text)
+                for (i in 0 until allNote.size) {
+                    val isSync = allNote[i].isSync
+                    if (!isSync) {
+                        val note = allNote[i].text
+                        val color = allNote[i].color
+                        val id = allNote[i].id
+                        val user: MutableMap<String, Any> = HashMap()
+                        user["note"] = note
+                        user["color"] = color
+                        user["id"] = id
+                        db.collection(FirebaseAuth.getInstance().uid.toString())
+                            .add(user)
+                        viewModel.updateData(DiaryData(id, note, color, false))
+                        Log.d("callcorouting1issync", isSync.toString())
+                    }
+//                val isSync = allNote[i].isSync
+                }
+
+
+        }
+
     }
 
 
