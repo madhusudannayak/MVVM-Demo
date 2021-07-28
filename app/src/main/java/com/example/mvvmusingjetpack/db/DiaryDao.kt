@@ -28,8 +28,8 @@ interface DiaryDao {
     @Update
     suspend fun updateData(diaryData: DiaryData)
 
-//    @Query("Select * from Diary_table WHERE isSync=:isSync ")
-//    suspend fun getUnSyncData(isSync :Boolean) : LiveData<List<DiaryData>>
+    @Query("Select * from Diary_table WHERE isSync=:isSync ")
+    suspend fun getDataListBySyncStatus(isSync :Boolean) : LiveData<List<DiaryData>>
 
 
 

@@ -40,9 +40,9 @@ class DiaryRepository(context: Context) {
         diaryDao.updateData(diaryData)
     }
 
-//    suspend fun getUnSyncData(isSync : Boolean) : LiveData<List<DiaryData>> {
-//      return  diaryDao.getUnSyncData(isSync)
-//    }
+    suspend fun getDataListBySyncStatus(isSync : Boolean) : LiveData<List<DiaryData>> {
+      return  diaryDao.getDataListBySyncStatus(isSync)
+    }
 
 
 
