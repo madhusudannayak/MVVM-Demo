@@ -118,7 +118,7 @@ class UpdateFragment : Fragment() {
         val color = spinner.selectedItem.toString()
 
         if (mNote.isNotEmpty()) {
-            viewModel.updateData(DiaryData(index, mNote, parseColor(color)))
+            viewModel.updateData(DiaryData(index, mNote, parseColor(color),false))
 
         }
 

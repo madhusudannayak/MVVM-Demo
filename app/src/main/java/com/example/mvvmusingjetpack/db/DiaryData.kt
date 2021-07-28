@@ -13,5 +13,7 @@ data class DiaryData(
         @PrimaryKey(autoGenerate = true)
         val id: Int,
         val text:String,
-        val color: Color
+        val color: Color,
+        val isSync : Boolean
+
 )
