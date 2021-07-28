@@ -140,13 +140,14 @@ class DashboardFragment : Fragment(), IDiaryRVAdapter {
     }
 
      fun insertdatatoFirebase() {
+         viewModel.getAllNotesUnsynced().observe(requireActivity(),{
+      Log.d("response",it.size.toString())
+  })
 
 
-    val a =  viewModel.getUnSyncDataList
 
 
 
- Log.d("aaaaaaaaaaaaa",a.toString())
 
 
 

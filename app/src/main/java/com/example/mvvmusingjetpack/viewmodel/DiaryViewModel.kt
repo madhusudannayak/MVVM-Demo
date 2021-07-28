@@ -39,20 +39,32 @@ class DiaryViewModel(application: Application) : AndroidViewModel(application) {
             repository.updateData(diaryData)
     }
 
-    val getUnSyncDataList = viewModelScope.launch(Dispatchers.IO) {
-         getDataListBySyncStatus(false)
+    //val getUnSyncDataList = getDataListBySyncStatus(false)
+
+private val itmsUnsync = MutableLiveData<List<DiaryData>>()
+     fun getAllNotesUnsynced():LiveData<List<DiaryData>> {
+         val datalist = ArrayList<DiaryData>()
+         viewModelScope.launch(Dispatchers.IO) {
+             datalist.addAll(repository.getDataListBySyncStatus(0))
+             itmsUnsync.postValue(datalist)
+         }
+
+        return itmsUnsync
     }
-
-    private suspend fun getDataListBySyncStatus(isSync: Boolean):List<DiaryData> {
-            return repository.getDataListBySyncStatus(isSync)
-
-        }
+//val diars = ArrayList<DiaryData>()
+//    fun getDataListBySyncStatus(isSync: Int):LiveData<List<DiaryData>> {
+//        val datas = MutableLiveData<List<DiaryData>>()
+//         viewModelScope.launch {
+//             repository.getDataListBySyncStatus(isSync).value?.let { diars.addAll(it) }
+//         }
+//        return datas
+//        }
 
 
 //    }
-//    suspend fun getUnSyncData(isSync: Boolean): LiveData<List<DiaryData>> {
-//        return repository.getUnSyncData(isSync)
-//    }
+    suspend fun getUnSyncData(isSync: Int): List<DiaryData> {
+        return repository.getDataListBySyncStatus(isSync)
+    }
 
 
 

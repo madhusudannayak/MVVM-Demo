@@ -14,6 +14,6 @@ data class DiaryData(
         val id: Int,
         val text:String,
         val color: Color,
-        val isSync : Boolean
+        val isSync : Int
 
 )

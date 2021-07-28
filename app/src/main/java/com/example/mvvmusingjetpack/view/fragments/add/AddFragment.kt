@@ -154,7 +154,7 @@ class addFragment : Fragment() {
 //        user["id"] = 0
 
         if (mNote.isNotEmpty()) {
-            mDiaryViewModel.insertNote(DiaryData(0, mNote, parseColor(color),false))
+            mDiaryViewModel.insertNote(DiaryData(0, mNote, parseColor(color),0))
 //            db.collection(FirebaseAuth.getInstance().uid.toString())
 //                .add(user)
 //                .addOnSuccessListener {
