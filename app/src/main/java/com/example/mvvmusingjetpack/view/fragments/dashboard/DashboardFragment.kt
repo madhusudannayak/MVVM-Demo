@@ -150,7 +150,9 @@ class DashboardFragment : Fragment(), IDiaryRVAdapter {
 
  //           viewModel.getAllNote().
 
-            viewModel.getUnSyncData(false)
+//            viewModel.getUnSyncData(false).observe(viewLifecycleOwner,{
+//                Log.d("callcorouting125355", it.size.toString())
+//            })
 
 //
 

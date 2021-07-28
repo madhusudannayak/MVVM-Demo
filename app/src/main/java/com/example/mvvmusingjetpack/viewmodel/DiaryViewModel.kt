@@ -44,9 +44,9 @@ class DiaryViewModel(application: Application) : AndroidViewModel(application) {
 //            return repository.getUnSyncData(isSync)
 //        }
 //    }
-    suspend fun getUnSyncData(isSync: Boolean):LiveData<List<DiaryData>> {
-        return repository.getUnSyncData(isSync)
-    }
+//    suspend fun getUnSyncData(isSync: Boolean): LiveData<List<DiaryData>> {
+//        return repository.getUnSyncData(isSync)
+//    }
 
 
 
