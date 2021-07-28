@@ -86,12 +86,8 @@ class DashboardFragment : Fragment(), IDiaryRVAdapter {
             })
         })
         onActionPerform()
+        insertdatatoFirebase()
 
-        GlobalScope.launch {
-
-            insertdatatoFirebase()
-
-        }
         return binding.root
     }
 
@@ -143,12 +139,28 @@ class DashboardFragment : Fragment(), IDiaryRVAdapter {
         numberofpage.text = "Page - $CurrentPage of $TotalPage"
     }
 
-    suspend fun insertdatatoFirebase() {
-        withContext(Dispatchers.IO) {
+     fun insertdatatoFirebase() {
+
+
+    val a =  viewModel.getUnSyncDataList
 
 
 
- //           viewModel.getAllNote().
+ Log.d("aaaaaaaaaaaaa",a.toString())
+
+
+
+//        s.observe(viewLifecycleOwner, { list ->
+//            list?.let {
+//                allNote.addAll(it)
+//                adapter.updateList(it)
+//            }
+
+//        list ->
+//        list?.let {
+//            allNote.addAll(it)
+//            adapter.updateList(it)
+//        }
 
 //            viewModel.getUnSyncData(false).observe(viewLifecycleOwner,{
 //                Log.d("callcorouting125355", it.size.toString())
@@ -156,28 +168,26 @@ class DashboardFragment : Fragment(), IDiaryRVAdapter {
 
 //
 
-                Log.d("callcorouting125355", "callllllllllll")
-//                Log.d("callcorouting125355", allNote[0].text)
-                for (i in 0 until allNote.size) {
-                    val isSync = allNote[i].isSync
-                    if (!isSync) {
-                        val note = allNote[i].text
-                        val color = allNote[i].color
-                        val id = allNote[i].id
-                        val user: MutableMap<String, Any> = HashMap()
-                        user["note"] = note
-                        user["color"] = color
-                        user["id"] = id
-                        db.collection(FirebaseAuth.getInstance().uid.toString())
-                            .add(user)
-                        viewModel.updateData(DiaryData(id, note, color, false))
-                        Log.d("callcorouting1issync", isSync.toString())
-                    }
-//                val isSync = allNote[i].isSync
-                }
+//        Log.d("callcorouting125355", "callllllllllll")
+////                Log.d("callcorouting125355", allNote[0].text)
+//        for (i in 0 until allNote.size) {
+//            val isSync = allNote[i].isSync
+//            if (!isSync) {
+//                val note = allNote[i].text
+//                val color = allNote[i].color
+//                val id = allNote[i].id
+//                val user: MutableMap<String, Any> = HashMap()
+//                user["note"] = note
+//                user["color"] = color
+//                user["id"] = id
+//                db.collection(FirebaseAuth.getInstance().uid.toString())
+//                    .add(user)
+//                viewModel.updateData(DiaryData(id, note, color, false))
+//                Log.d("callcorouting1issync", isSync.toString())
+//            }
+////                val isSync = allNote[i].isSync
+//        }
 
-
-        }
 
     }
 

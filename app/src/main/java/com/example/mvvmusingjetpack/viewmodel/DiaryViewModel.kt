@@ -40,10 +40,10 @@ class DiaryViewModel(application: Application) : AndroidViewModel(application) {
     }
 
     val getUnSyncDataList = viewModelScope.launch(Dispatchers.IO) {
-        getDataListBySyncStatus(false)
+         getDataListBySyncStatus(false)
     }
 
-    private suspend fun getDataListBySyncStatus(isSync: Boolean):LiveData<List<DiaryData>> {
+    private suspend fun getDataListBySyncStatus(isSync: Boolean):List<DiaryData> {
             return repository.getDataListBySyncStatus(isSync)
 
         }
