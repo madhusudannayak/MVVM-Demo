@@ -7,35 +7,54 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import android.widget.TextView
+import androidx.databinding.DataBindingUtil
+import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.fragment.findNavController
 import com.example.mvvmusingjetpack.R
+import com.example.mvvmusingjetpack.databinding.FragmentSearchBinding
+import com.example.mvvmusingjetpack.databinding.FragmentSettingBinding
+import com.example.mvvmusingjetpack.view.fragments.search.SearchViewModel
 import com.google.firebase.auth.FirebaseAuth
 
 
 class SettingFragment : Fragment() {
+    private val settingViewModel: SettingViewModel by lazy { ViewModelProvider(this).get(SettingViewModel::class.java) }
+
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
-                              savedInstanceState: Bundle?): View? {
-        // Inflate the layout for this fragment
-        val view = inflater.inflate(R.layout.fragment_setting, container, false)
-        val user = FirebaseAuth.getInstance().currentUser
-        val logout = view.findViewById<Button>(R.id.Logout)
-        val email = view.findViewById<TextView>(R.id.email)
+                              savedInstanceState: Bundle?): View {
+        val binding: FragmentSettingBinding = DataBindingUtil.inflate(inflater,
+                R.layout.fragment_setting, container, false)
+        binding.settingviewModel = settingViewModel
+        binding.lifecycleOwner = this
 
-        email.text = FirebaseAuth.getInstance().app.name
+        val logout =binding.Logout
+        val email = binding.email
+
+        email.text = FirebaseAuth.getInstance().currentUser.toString()
 
         logout.setOnClickListener {
             FirebaseAuth.getInstance().signOut()
         }
 
 
+        onActionPerform()
+
+        return binding.root;
+    }
+
+    private fun onActionPerform() {
+            settingViewModel.backToDashboardFragment.observe(requireActivity(), {
+                findNavController().navigate(R.id.action_settingFragment_to_dashboardFragment)
+
+            })
+        }
 
 
-
-        return view;
     }
 
 
-}
+
 
 
 

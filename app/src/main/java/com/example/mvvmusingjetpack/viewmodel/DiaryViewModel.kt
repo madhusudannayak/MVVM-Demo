@@ -13,51 +13,44 @@ import kotlinx.coroutines.launch
 class DiaryViewModel(application: Application) : AndroidViewModel(application) {
 
 
-
-
     //val dao = DiaryDatabase.getDatabase(application).getDiaryDao()
     //
 
-    val repository : DiaryRepository = DiaryRepository.getInstance((application.baseContext))
+    val repository: DiaryRepository = DiaryRepository.getInstance((application.baseContext))
 
-  //  val NotesByID : LiveData<List<DiaryData>> = repository.allNoteById
+    //  val NotesByID : LiveData<List<DiaryData>> = repository.allNoteById
 
     val allNotes: LiveData<List<DiaryData>> = repository.allNote
 
-    fun getNotesByID(id: String) : LiveData<List<DiaryData>>{
-        return repository.allNoteById(id)
-    }
 
-    fun deleteNode(diaryData: DiaryData)   = viewModelScope.launch(Dispatchers.IO) {
+
+    fun deleteNode(diaryData: DiaryData) = viewModelScope.launch(Dispatchers.IO) {
         repository.delete(diaryData)
     }
-    fun insertNote(diaryData: DiaryData) = viewModelScope.launch(Dispatchers.IO){
+
+    fun insertNote(diaryData: DiaryData) = viewModelScope.launch(Dispatchers.IO) {
         repository.insert(diaryData)
     }
 
     fun updateData(diaryData: DiaryData) = viewModelScope.launch(Dispatchers.IO) {
-            repository.updateData(diaryData)
+        repository.updateData(diaryData)
     }
 
 
-private val itmsUnsync = MutableLiveData<List<DiaryData>>()
+    private val itmsUnsync = MutableLiveData<List<DiaryData>>()
 
-     fun getAllNotesUnsynced():LiveData<List<DiaryData>> {
-         val datalist = ArrayList<DiaryData>()
-         viewModelScope.launch(Dispatchers.IO) {
-             datalist.addAll(repository.getDataListBySyncStatus(0))
-             itmsUnsync.postValue(datalist)
-         }
+    fun getAllNotesUnsynced(): LiveData<List<DiaryData>> {
+        val datalist = ArrayList<DiaryData>()
+        viewModelScope.launch(Dispatchers.IO) {
+            datalist.addAll(repository.getDataListBySyncStatus(0))
+            itmsUnsync.postValue(datalist)
+        }
 
         return itmsUnsync
     }
-
-
-
-
-
-
-
+    fun searchNote(searchQuery : String): LiveData<List<DiaryData>>{
+        return repository.searchNote(searchQuery)
+    }
 
 
 }

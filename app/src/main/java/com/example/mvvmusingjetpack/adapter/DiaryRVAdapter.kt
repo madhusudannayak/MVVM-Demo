@@ -30,7 +30,6 @@ class DiaryRVAdapter(val context: Context?, val listener: IDiaryRVAdapter) : Rec
         listener.size(allNote.size.toString())
         viewHolder.delete.setOnClickListener {
             listener.deleteNote(allNote[viewHolder.adapterPosition])
-         //   Toast.makeText(context,"Delete",Toast.LENGTH_SHORT).show()
         }
 
         viewHolder.textView.setOnClickListener {
@@ -47,6 +46,11 @@ class DiaryRVAdapter(val context: Context?, val listener: IDiaryRVAdapter) : Rec
         when (currentNote.color) {
             Color.WHITE -> holder.Bgcolor.setBackgroundColor(android.graphics.Color.WHITE)
             Color.BLUE -> holder.Bgcolor.setBackgroundColor(android.graphics.Color.parseColor("#87CDFF"))
+            Color.PINK -> holder.Bgcolor.setBackgroundColor(android.graphics.Color.parseColor("#F6CEE5"))
+            Color.YELLOW -> holder.Bgcolor.setBackgroundColor(android.graphics.Color.parseColor("#EAD3AC"))
+            Color.GREEN -> holder.Bgcolor.setBackgroundColor(android.graphics.Color.parseColor("#AED186"))
+            Color.GRAY -> holder.Bgcolor.setBackgroundColor(android.graphics.Color.parseColor("#CBDFF1"))
+
         }
 
     }

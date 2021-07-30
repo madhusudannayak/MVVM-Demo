@@ -1,7 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <variable
+            name="settingviewModel"
+            type="com.example.mvvmusingjetpack.view.fragments.setting.SettingViewModel" />
+    </data>
+
+    <FrameLayout
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".view.fragments.setting.SettingFragment">
@@ -17,6 +26,8 @@
             android:layout_width="40dp"
             android:layout_height="40dp"
             android:layout_gravity="center"
+            android:onClick="@{()->settingviewModel.backToDashBoardFragment()}"
+
             android:background="@null"
             android:src="@drawable/ic_baseline_arrow_back_24" />
 
@@ -50,3 +61,4 @@
 
 
 </FrameLayout>
+</layout>

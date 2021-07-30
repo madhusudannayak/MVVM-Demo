@@ -44,13 +44,14 @@
 
                 <Spinner
                     android:id="@+id/color"
-                    android:layout_width="30dp"
+                    android:layout_width="wrap_content"
                     android:layout_height="30dp"
                     android:layout_gravity="center"
                     android:layout_marginRight="15dp"
-                    android:background="@drawable/ic_baseline_color_lens_24"
-                    android:backgroundTint="@color/black"
-                    android:entries="@array/color" />
+                    android:background="@null"
+                    android:backgroundTint="@color/black" />
+
+                <!--                android:entries="@array/color"-->
 
 
                 <ImageButton
@@ -64,8 +65,7 @@
 
             </LinearLayout>
 
-            <androidx.cardview.widget.CardView
-                xmlns:android="http://schemas.android.com/apk/res/android"
+            <androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
                 xmlns:app="http://schemas.android.com/apk/res-auto"
                 android:id="@+id/bgCard"
                 android:layout_width="fill_parent"

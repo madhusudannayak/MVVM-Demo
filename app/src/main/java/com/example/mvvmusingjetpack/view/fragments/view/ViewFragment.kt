@@ -47,20 +47,20 @@ class ViewFragment : Fragment() {
         Next = binding.next
         BgCard = binding.bgCard
         viewText = binding.Viewtext
-        var index = args?.getInt("position")
-        val TotalPages = args?.getInt("TotalPages")
+        val index = args?.getInt("position")
+        val totalPages = args?.getInt("TotalPages")
         viewViewModel.currentID = index!!
-        viewViewModel.totalPage = TotalPages!!
+        viewViewModel.totalPage = totalPages!!
 
         viewModel = ViewModelProvider(this, ViewModelProvider.AndroidViewModelFactory.getInstance(requireActivity().application)).get(DiaryViewModel::class.java)
         viewModel.allNotes.observe(viewLifecycleOwner, { list ->
             list?.let {
-                val diaryId = args?.getInt("position")!!
+                val diaryId = args.getInt("position")
                 UpdatePosition = it[diaryId].id
                 UpdateNote = it[diaryId].text
                 UpdateColor = it[diaryId].color.toString()
                 viewText.text = it[diaryId].text
-                SetbackgroundColor(it[diaryId].color.toString())
+                setBackgroundColor(it[diaryId].color.toString())
                 Note.addAll(it)
             }
         })
@@ -82,7 +82,7 @@ class ViewFragment : Fragment() {
         })
 
         viewViewModel.EditNote.observe(requireActivity(), {
-            EditNote()
+            editNote()
         })
         viewViewModel.BackToDashBoardFragment.observe(requireActivity(), {
             findNavController().navigate(R.id.action_viewFragment_to_dashboardFragment)
@@ -103,19 +103,39 @@ class ViewFragment : Fragment() {
         viewText.text = Note[Position].text
         UpdatePosition = Note[Position].id
         UpdateNote = Note[Position].text
-        SetbackgroundColor(Note[Position].color.toString())
+        setBackgroundColor(Note[Position].color.toString())
     }
 
-    private fun SetbackgroundColor(s: String) {
-        if (s.equals("WHITE")) {
-            BgCard.setCardBackgroundColor(android.graphics.Color.parseColor("#FFFFFF"))
-        } else if (s.equals("BLUE")) {
-            BgCard.setCardBackgroundColor(android.graphics.Color.parseColor("#87CDFF"))
+    private fun setBackgroundColor(s: String) {
+        when (s) {
+            "WHITE" -> {
+                BgCard.setCardBackgroundColor(android.graphics.Color.parseColor("#FFFFFF"))
+            }
+            "BLUE" -> {
+                BgCard.setCardBackgroundColor(android.graphics.Color.parseColor("#87CDFF"))
+
+            }
+            "PINK" -> {
+                BgCard.setCardBackgroundColor(android.graphics.Color.parseColor("#F6CEE5"))
+
+            }
+            "YELLOW" -> {
+                BgCard.setCardBackgroundColor(android.graphics.Color.parseColor("#EAD3AC"))
+
+            }
+            "GREEN" -> {
+                BgCard.setCardBackgroundColor(android.graphics.Color.parseColor("#AED186"))
+
+            }
+            "GRAY" -> {
+                BgCard.setCardBackgroundColor(android.graphics.Color.parseColor("#CBDFF1"))
+
+            }
         }
 
     }
 
-    fun EditNote() {
+    private fun editNote() {
         Update = Bundle()
         Update.putLong("position", UpdatePosition)
         Update.putString("updateNote", UpdateNote)

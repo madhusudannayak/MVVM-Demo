@@ -7,5 +7,9 @@
     <string-array name="color">
         <item>WHITE</item>
         <item>BLUE</item>
+        <item>PINK</item>
+        <item>YELLOW</item>
+        <item>GREEN</item>
+        <item>GRAY</item>
     </string-array>
 </resources>

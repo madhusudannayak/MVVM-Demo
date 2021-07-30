@@ -11,11 +11,12 @@ import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import com.example.mvvmusingjetpack.R
+import com.example.mvvmusingjetpack.adapter.ColorSpinnerAdapter
 import com.example.mvvmusingjetpack.databinding.FragmentAddBinding
 import com.example.mvvmusingjetpack.db.Color
 import com.example.mvvmusingjetpack.db.DiaryData
+import com.example.mvvmusingjetpack.model.Colors
 import com.example.mvvmusingjetpack.viewmodel.DiaryViewModel
-import com.google.firebase.firestore.FirebaseFirestore
 
 
 class addFragment : Fragment() {
@@ -50,31 +51,49 @@ class addFragment : Fragment() {
         note = binding.note
         edit = binding.edit
         close = binding.close
-        val languages = resources.getStringArray(R.array.color)
 
 
-        spinner.adapter = activity?.let {
-            ArrayAdapter(
-                    it,
-                    R.layout.support_simple_spinner_dropdown_item,
-                    resources.getStringArray(R.array.color)
-            )
-        }
+//        spinner.adapter = activity?.let {
+//            ArrayAdapter(
+//                    it,
+//                    R.layout.support_simple_spinner_dropdown_item,
+//                    resources.getStringArray(R.array.color)
+//            )
+//        }
+//        spinner.onItemSelectedListener = object :
+//                AdapterView.OnItemSelectedListener {
+//            override fun onItemSelected(
+//                    parent: AdapterView<*>,
+//                    view: View, position: Int, id: Long
+//            ) {
+//                SetbackgroundColor(languages[position])
+//            }
+//
+//            override fun onNothingSelected(parent: AdapterView<*>) {
+//            }
+//        }
+
+        onActionPerform()
+        setupCustomSpinner()
+        return binding.root
+    }
+
+    private fun setupCustomSpinner() {
+        val color = resources.getStringArray(R.array.color)
+        val adapter = ColorSpinnerAdapter(requireContext(), Colors.list!!)
+        spinner.adapter = adapter
         spinner.onItemSelectedListener = object :
                 AdapterView.OnItemSelectedListener {
             override fun onItemSelected(
                     parent: AdapterView<*>,
                     view: View, position: Int, id: Long
             ) {
-                SetbackgroundColor(languages[position])
+                setBackgroundColor(color[position])
             }
 
             override fun onNothingSelected(parent: AdapterView<*>) {
             }
         }
-
-        onActionPerform()
-        return binding.root
     }
 
     private fun onActionPerform() {
@@ -87,40 +106,59 @@ class addFragment : Fragment() {
         activity?.let {
             addViewModel.ChangeIcon.observe(it, {
                 if (it) {
-                    DisableEdit()
+                    disableEdit()
                 } else {
-                    EnableEdit()
+                    enableEdit()
                 }
             })
         }
     }
 
-    fun DisableEdit() {
+    private fun disableEdit() {
         close.setImageResource(R.drawable.ic_baseline_arrow_back_24)
         edit.setImageResource(R.drawable.ic_baseline_edit_note_24)
-        note.setFocusable(false);
-        note.setEnabled(false);
-        note.setCursorVisible(false);
+        note.isFocusable = false
+        note.isEnabled = false
+        note.isCursorVisible = false
 
     }
 
-    fun EnableEdit() {
+    private fun enableEdit() {
         close.setImageResource(R.drawable.ic_baseline_close_24)
         edit.setImageResource(R.drawable.ic_baseline_remove_red_eye_24)
         note.isEnabled = true
-        note.setFocusable(true);
-        note.setEnabled(true);
-        note.setCursorVisible(true);
-        note.setFocusableInTouchMode(true);
+        note.isFocusable = true
+        note.isEnabled = true
+        note.isCursorVisible = true
+        note.isFocusableInTouchMode = true
 
     }
 
-    private fun SetbackgroundColor(s: String) {
-        if (s.equals("WHITE")) {
-            bgCard.setCardBackgroundColor(android.graphics.Color.parseColor("#FFFFFF"))
-        } else if (s.equals("BLUE")) {
-            bgCard.setCardBackgroundColor(android.graphics.Color.parseColor("#87CDFF"))
+    private fun setBackgroundColor(s: String) {
+        when (s) {
+            "WHITE" -> {
+                bgCard.setCardBackgroundColor(android.graphics.Color.parseColor("#FFFFFF"))
+            }
+            "BLUE" -> {
+                bgCard.setCardBackgroundColor(android.graphics.Color.parseColor("#87CDFF"))
 
+            }
+            "PINK" -> {
+                bgCard.setCardBackgroundColor(android.graphics.Color.parseColor("#F6CEE5"))
+
+            }
+            "YELLOW" -> {
+                bgCard.setCardBackgroundColor(android.graphics.Color.parseColor("#EAD3AC"))
+
+            }
+            "GREEN" -> {
+                bgCard.setCardBackgroundColor(android.graphics.Color.parseColor("#AED186"))
+
+            }
+            "GRAY" -> {
+                bgCard.setCardBackgroundColor(android.graphics.Color.parseColor("#CBDFF1"))
+
+            }
         }
 
     }
@@ -133,32 +171,51 @@ class addFragment : Fragment() {
             "BLUE" -> {
                 Color.BLUE
             }
+            "PINK" -> {
+                Color.PINK
+            }
+            "YELLOW" -> {
+                Color.YELLOW
+            }
+            "GREEN" -> {
+                Color.GREEN
+            }
+            "GRAY" -> {
+                Color.GRAY
+            }
             else -> Color.WHITE
         }
     }
 
     private fun insertDataToDb() {
 
-
         val mNote = note.text.toString()
-        val color = spinner.selectedItem.toString()
-
-//        val user: MutableMap<String, Any> = HashMap()
-//        user["note"] = mNote
-//        user["color"] = color
-//        user["id"] = 0
+        val mColor: String = when (spinner.selectedItemId.toInt()) {
+            0 -> {
+                "WHITE"
+            }
+            1 -> {
+                "BLUE"
+            }
+            2 -> {
+                "PINK"
+            }
+            3 -> {
+                "YELLOW"
+            }
+            4 -> {
+                "GREEN"
+            }
+            5 -> {
+                "GRAY"
+            }
+            else -> {
+                "WHITE"
+            }
+        }
 
         if (mNote.isNotEmpty()) {
-            mDiaryViewModel.insertNote(DiaryData(0, mNote, parseColor(color), 0))
-//            db.collection(FirebaseAuth.getInstance().uid.toString())
-//                .add(user)
-//                .addOnSuccessListener {
-//                    Toast.makeText(context, "record added successfully ", Toast.LENGTH_SHORT).show()
-//                }
-//                .addOnFailureListener {
-//                    Toast.makeText(context, "record Failed to add ", Toast.LENGTH_SHORT).show()
-//                }
-
+            mDiaryViewModel.insertNote(DiaryData(0, mNote, parseColor(mColor), 0))
         }
 
     }

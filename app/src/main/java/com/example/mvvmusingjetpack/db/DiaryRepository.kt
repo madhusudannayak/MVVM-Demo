@@ -25,8 +25,6 @@ class DiaryRepository(context: Context) {
 
     val allNote: LiveData<List<DiaryData>> = diaryDao.getAllNotes()
 
-    val allNoteById: (String) -> LiveData<List<DiaryData>> = { diaryDao.getNotesByID(it) }
-
 
     suspend fun insert(diaryData: DiaryData) {
         diaryDao.insert(diaryData)
@@ -40,11 +38,14 @@ class DiaryRepository(context: Context) {
         diaryDao.updateData(diaryData)
     }
 
-    suspend fun getDataListBySyncStatus(isSync : Int) : List<DiaryData> {
-      return  diaryDao.getDataListBySyncStatus(isSync)
+    suspend fun getDataListBySyncStatus(isSync: Int): List<DiaryData> {
+        return diaryDao.getDataListBySyncStatus(isSync)
     }
 
+    fun searchNote(SearchQuery: String): LiveData<List<DiaryData>> {
+        return diaryDao.searchNote(SearchQuery)
 
+    }
 
 
 

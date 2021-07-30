@@ -12,11 +12,12 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import com.example.mvvmusingjetpack.R
+import com.example.mvvmusingjetpack.adapter.ColorSpinnerAdapter
 import com.example.mvvmusingjetpack.databinding.FragmentUpdateBinding
 import com.example.mvvmusingjetpack.db.Color
 import com.example.mvvmusingjetpack.db.DiaryData
+import com.example.mvvmusingjetpack.model.Colors
 import com.example.mvvmusingjetpack.viewmodel.DiaryViewModel
-import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 
 class UpdateFragment : Fragment() {
@@ -27,7 +28,6 @@ class UpdateFragment : Fragment() {
     lateinit var bgCard: CardView
     lateinit var note: EditText
     lateinit var db: FirebaseFirestore
-
 
 
     override fun onCreateView(
@@ -49,43 +49,31 @@ class UpdateFragment : Fragment() {
         val Note = args?.getString("updateNote")
         val Color = args?.getString("updateColor")
         note.setText(Note.toString())
-        SetbackgroundColor(Color.toString())
-
-
-        val languages = resources.getStringArray(R.array.color)
         val updateText = args?.getString("UpdateText")
-
         fun String.toEditable(): Editable = Editable.Factory.getInstance().newEditable(this)
-
 
         if (updateText != null) {
             note.text = updateText.toEditable()
         }
-
-        spinner.adapter = activity?.let {
-            ArrayAdapter(it,
-                    R.layout.support_simple_spinner_dropdown_item,
-                    resources.getStringArray(R.array.color)
-            )
-        }
+        val color = resources.getStringArray(R.array.color)
+        val adapter = ColorSpinnerAdapter(requireContext(), Colors.list!!)
+        spinner.adapter = adapter
+        spinner.setSelection(getIndex(Color.toString()))
         spinner.onItemSelectedListener = object :
                 AdapterView.OnItemSelectedListener {
-            override fun onItemSelected(parent: AdapterView<*>,
-                                        view: View, position: Int, id: Long) {
-                spinner.setSelection(getIndex(spinner,Color.toString()))
-
-                SetbackgroundColor(languages[position])
-
+            override fun onItemSelected(
+                    parent: AdapterView<*>,
+                    view: View, position: Int, id: Long
+            ) {
+                setBackgroundColor(color[position])
             }
 
             override fun onNothingSelected(parent: AdapterView<*>) {
-
             }
         }
         onActionPerform()
         return binding.root
     }
-
 
 
     private fun onActionPerform() {
@@ -95,19 +83,38 @@ class UpdateFragment : Fragment() {
                 val index = args?.getLong("position")
                 Toast.makeText(context, "Update Done", Toast.LENGTH_SHORT).show()
                 if (index != null) {
-                    UpdateDataToDb(index)
+                    updateDataToDb(index)
                 }
                 findNavController().navigate(R.id.action_updateFragment_to_dashboardFragment)
             })
         }
     }
 
-    private fun SetbackgroundColor(s: String) {
-        if (s.equals("WHITE")) {
-            bgCard.setCardBackgroundColor(android.graphics.Color.parseColor("#FFFFFF"))
-        } else if (s.equals("BLUE")) {
-            bgCard.setCardBackgroundColor(android.graphics.Color.parseColor("#87CDFF"))
+    private fun setBackgroundColor(s: String) {
+        when (s) {
+            "WHITE" -> {
+                bgCard.setCardBackgroundColor(android.graphics.Color.parseColor("#FFFFFF"))
+            }
+            "BLUE" -> {
+                bgCard.setCardBackgroundColor(android.graphics.Color.parseColor("#87CDFF"))
 
+            }
+            "PINK" -> {
+                bgCard.setCardBackgroundColor(android.graphics.Color.parseColor("#F6CEE5"))
+
+            }
+            "YELLOW" -> {
+                bgCard.setCardBackgroundColor(android.graphics.Color.parseColor("#EAD3AC"))
+
+            }
+            "GREEN" -> {
+                bgCard.setCardBackgroundColor(android.graphics.Color.parseColor("#AED186"))
+
+            }
+            "GRAY" -> {
+                bgCard.setCardBackgroundColor(android.graphics.Color.parseColor("#CBDFF1"))
+
+            }
         }
     }
 
@@ -119,37 +126,78 @@ class UpdateFragment : Fragment() {
             "BLUE" -> {
                 Color.BLUE
             }
+            "PINK" -> {
+                Color.PINK
+            }
+            "YELLOW" -> {
+                Color.YELLOW
+            }
+            "GREEN" -> {
+                Color.GREEN
+            }
+            "GRAY" -> {
+                Color.GRAY
+            }
             else -> Color.WHITE
         }
     }
 
-    private fun UpdateDataToDb(index: Long) {
+    private fun updateDataToDb(index: Long) {
         val mNote = note.text.toString()
-        val color = spinner.selectedItem.toString()
-
+        val mColor: String = when (spinner.selectedItemId.toInt()) {
+            0 -> {
+                "WHITE"
+            }
+            1 -> {
+                "BLUE"
+            }
+            2 -> {
+                "PINK"
+            }
+            3 -> {
+                "YELLOW"
+            }
+            4 -> {
+                "GREEN"
+            }
+            5 -> {
+                "GRAY"
+            }
+            else -> {
+                "WHITE"
+            }
+        }
         if (mNote.isNotEmpty()) {
-//            db.collection(FirebaseAuth.getInstance().uid.toString())
-//                    .document().update()
-//            val user: MutableMap<String, Any> = HashMap()
-//            user["note"] = mNote
-//            user["color"] = color
-//            user["id"] = index
-//            db.collection(FirebaseAuth.getInstance().uid.toString()).document(it[i].id.toString())
-//                    .set(user)
-            viewModel.updateData(DiaryData(index, mNote, parseColor(color), 0))
-
+            viewModel.updateData(DiaryData(index, mNote, parseColor(mColor), 0))
         }
 
     }
-    private fun getIndex(spinner: Spinner, myString: String): Int {
+
+    private fun getIndex(colorName: String): Int {
         var index = 0
-        for (i in 0 until spinner.count) {
-            if (spinner.getItemAtPosition(i) == myString) {
-                index = i
+        when (colorName) {
+            "WHITE" -> {
+                index = 0
+            }
+            "BLUE" -> {
+                index = 1
+            }
+            "PINK" -> {
+                index = 2
+            }
+            "YELLOW" -> {
+                index = 3
+            }
+            "GREEN" -> {
+                index = 4
+            }
+            "GRAY" -> {
+                index = 5
+            }
+            else -> {
+                index = 0
             }
         }
         return index
     }
-
-
 }

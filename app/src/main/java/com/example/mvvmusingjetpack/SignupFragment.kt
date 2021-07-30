@@ -11,8 +11,10 @@ import android.view.ViewGroup
 import android.widget.EditText
 import android.widget.TextView
 import android.widget.Toast
+import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import com.example.mvvmusingjetpack.view.HomeActivity
+import com.example.mvvmusingjetpack.viewmodel.DiaryViewModel
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
@@ -24,6 +26,7 @@ class SignupFragment : Fragment() {
     lateinit var password: EditText
     lateinit var SignUp: FloatingActionButton
 
+
     override fun onCreateView(
             inflater: LayoutInflater, container: ViewGroup?,
             savedInstanceState: Bundle?
@@ -33,6 +36,7 @@ class SignupFragment : Fragment() {
         SignUp = view.findViewById(R.id.SignUp)
         email = view.findViewById(R.id.email_Id)
         password = view.findViewById(R.id.password)
+
 
 
         OpenLoginPage.setOnClickListener {
@@ -49,27 +53,26 @@ class SignupFragment : Fragment() {
     fun Signup() {
         var isPasswordValid: Boolean = true
         var isEmailValid: Boolean = true
-        if (password.text.length == 0) {
+        if (password.text.isEmpty()) {
             password.error = "please enter your password"
-            isPasswordValid = false;
+            isPasswordValid = false
 
         } else if (password.text.length < 8) {
             password.error = "password minimum contain 8 character"
-            isPasswordValid = false;
+            isPasswordValid = false
         }
-        if (email.text.length == 0) {
-            email.setError("please enter your email id")
-            isEmailValid = false;
+        if (email.text.isEmpty()) {
+            email.error = "please enter your email id"
+            isEmailValid = false
 
         } else if (!(Patterns.EMAIL_ADDRESS.matcher(email.text).matches())) {
-            email.setError("Invalid email id")
-            isEmailValid = false;
+            email.error = "Invalid email id"
+            isEmailValid = false
         }
         if (isPasswordValid && isEmailValid) {
             FirebaseAuth.getInstance().createUserWithEmailAndPassword(email.text.toString(), password.text.toString())
                     .addOnCompleteListener { task ->
                         if (task.isSuccessful) {
-                            val firebaseUser: FirebaseUser = task.result!!.user!!
                             Toast.makeText(this.requireContext(), "You are Registered Sucessfully", Toast.LENGTH_SHORT).show()
                             startActivity(Intent(context, HomeActivity::class.java))
                         }

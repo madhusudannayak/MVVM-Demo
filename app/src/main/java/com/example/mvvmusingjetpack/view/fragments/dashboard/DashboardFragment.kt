@@ -1,8 +1,6 @@
 package com.example.mvvmusingjetpack.view.fragments.dashboard
 
-import android.content.ContentValues.TAG
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -59,7 +57,6 @@ class DashboardFragment : Fragment(), IDiaryRVAdapter {
         binding.lifecycleOwner = this
         isEmpty = binding.isEmpty
         emptylayout = binding.isEmptylayout
-//        db = FirebaseFirestore.getInstance()
 
         args = Bundle()
         numberofpage = binding.numberofpage
@@ -113,7 +110,7 @@ class DashboardFragment : Fragment(), IDiaryRVAdapter {
 
     }
 
-    fun openAddFragment() {
+    private fun openAddFragment() {
         findNavController().navigate(R.id.action_dashboardFragment_to_addFragment)
 
     }
@@ -158,11 +155,11 @@ class DashboardFragment : Fragment(), IDiaryRVAdapter {
 
     }
 
-    fun numberofPage(CurrentPage: Int, TotalPage: Int) {
+    private fun numberofPage(CurrentPage: Int, TotalPage: Int) {
         numberofpage.text = "Page - $CurrentPage of $TotalPage"
     }
 
-    fun exportCloudFirestoreData() {
+    private fun exportCloudFirestoreData() {
         viewModel.getAllNotesUnsynced().observe(requireActivity(), {
 
             for (i in 0 until it.size) {
@@ -192,6 +189,18 @@ class DashboardFragment : Fragment(), IDiaryRVAdapter {
             }
             "BLUE" -> {
                 Color.BLUE
+            }
+            "PINK" -> {
+                Color.PINK
+            }
+            "YELLOW" -> {
+                Color.YELLOW
+            }
+            "GREEN" -> {
+                Color.GREEN
+            }
+            "GRAY" -> {
+                Color.GRAY
             }
             else -> Color.WHITE
         }
