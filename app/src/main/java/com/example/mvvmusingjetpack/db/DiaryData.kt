@@ -1,6 +1,5 @@
 package com.example.mvvmusingjetpack.db
 
-import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 
@@ -11,9 +10,9 @@ import androidx.room.PrimaryKey
 
 data class DiaryData(
         @PrimaryKey(autoGenerate = true)
-        val id: Int,
+        val id: Long,
         val text:String,
         val color: Color,
-        val isSync : Int
+        val isSync: Int
 
 )

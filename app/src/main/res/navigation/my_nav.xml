@@ -14,9 +14,6 @@
             android:id="@+id/action_dashboardFragment_to_addFragment"
             app:destination="@id/addFragment" />
         <action
-            android:id="@+id/action_dashboardFragment_to_updateFragment"
-            app:destination="@id/updateFragment" />
-        <action
             android:id="@+id/action_dashboardFragment_to_viewFragment"
             app:destination="@id/viewFragment" />
     </fragment>
@@ -47,14 +44,14 @@
             android:id="@+id/action_viewFragment_to_dashboardFragment"
             app:destination="@id/dashboardFragment" />
         <action
-            android:id="@+id/action_viewFragment_to_updateFragment"
-            app:destination="@id/updateFragment" />
+            android:id="@+id/action_viewFragment_to_settingFragment"
+            app:destination="@id/settingFragment" />
         <action
             android:id="@+id/action_viewFragment_to_searchFragment"
             app:destination="@id/searchFragment" />
         <action
-            android:id="@+id/action_viewFragment_to_settingFragment"
-            app:destination="@id/settingFragment" />
+            android:id="@+id/action_viewFragment_to_updateFragment"
+            app:destination="@id/updateFragment" />
     </fragment>
     <fragment
         android:id="@+id/searchFragment"
@@ -62,8 +59,8 @@
         android:label="fragment_search"
         tools:layout="@layout/fragment_search" >
         <action
-            android:id="@+id/action_searchFragment_to_dashboardFragment"
-            app:destination="@id/dashboardFragment" />
+            android:id="@+id/action_searchFragment_to_viewFragment"
+            app:destination="@id/viewFragment" />
     </fragment>
     <fragment
         android:id="@+id/settingFragment"

@@ -29,7 +29,8 @@ class DiaryRVAdapter(val context: Context?, val listener: IDiaryRVAdapter) : Rec
         val viewHolder = DiaryViewHolder(LayoutInflater.from(context).inflate(R.layout.item_diary, parent, false))
         listener.size(allNote.size.toString())
         viewHolder.delete.setOnClickListener {
-            Toast.makeText(context,"Delete",Toast.LENGTH_SHORT).show()
+            listener.deleteNote(allNote[viewHolder.adapterPosition])
+         //   Toast.makeText(context,"Delete",Toast.LENGTH_SHORT).show()
         }
 
         viewHolder.textView.setOnClickListener {
@@ -64,4 +65,5 @@ class DiaryRVAdapter(val context: Context?, val listener: IDiaryRVAdapter) : Rec
 interface IDiaryRVAdapter {
     fun onItemClicked(note: DiaryData, size: String)
     fun size(size: String)
+    fun deleteNote(note: DiaryData)
 }

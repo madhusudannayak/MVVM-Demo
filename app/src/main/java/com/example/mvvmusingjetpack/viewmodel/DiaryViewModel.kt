@@ -41,6 +41,7 @@ class DiaryViewModel(application: Application) : AndroidViewModel(application) {
 
 
 private val itmsUnsync = MutableLiveData<List<DiaryData>>()
+
      fun getAllNotesUnsynced():LiveData<List<DiaryData>> {
          val datalist = ArrayList<DiaryData>()
          viewModelScope.launch(Dispatchers.IO) {

@@ -2,6 +2,7 @@ package com.example.mvvmusingjetpack
 
 import android.content.Intent
 import android.os.Bundle
+import android.util.Patterns
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -9,10 +10,12 @@ import android.view.ViewGroup
 import android.widget.EditText
 import android.widget.TextView
 import android.widget.Toast
+import androidx.core.widget.doOnTextChanged
 import androidx.navigation.fragment.findNavController
 import com.example.mvvmusingjetpack.view.HomeActivity
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.google.firebase.auth.FirebaseAuth
+import java.util.regex.Pattern
 
 class LoginFragment : Fragment() {
 
@@ -31,6 +34,16 @@ class LoginFragment : Fragment() {
         password = view.findViewById(R.id.password)
         login = view.findViewById(R.id.OpenLoginPage)
 
+//        password.doOnTextChanged { text, start, count, after ->
+//            if (text!!.length>10){
+//                password.error = "max"
+//            }else
+//            {
+//                password.error = "min"
+//
+//            }
+        // }
+
         login.setOnClickListener {
             login()
         }
@@ -43,15 +56,35 @@ class LoginFragment : Fragment() {
     }
 
     fun login() {
-        if (email.text.isNotEmpty() && password.text.isNotEmpty()) {
+        var isPasswordValid: Boolean = true
+        var isEmailValid: Boolean = true
+        if (password.text.length == 0) {
+            password.error = "please enter your password"
+            isPasswordValid = false;
+
+        } else if (password.text.length < 8) {
+            password.error = "password minimum contain 8 character"
+            isPasswordValid = false;
+        }
+        if (email.text.length == 0) {
+            email.setError("please enter your email id")
+            isEmailValid = false;
+
+        } else if (!(Patterns.EMAIL_ADDRESS.matcher(email.text).matches())) {
+            email.setError("Invalid email id")
+            isEmailValid = false;
+        }
+        if (isPasswordValid && isEmailValid) {
             FirebaseAuth.getInstance().signInWithEmailAndPassword(email.text.toString(), password.text.toString())
                     .addOnCompleteListener { task ->
                         if (task.isSuccessful) {
                             Toast.makeText(this.requireContext(), "You are Logged in Sucessfully", Toast.LENGTH_SHORT).show()
                             startActivity(Intent(context, HomeActivity::class.java))
                         }
-                    }
 
+                    }.addOnFailureListener {
+                        Toast.makeText(this.requireContext(), it.message, Toast.LENGTH_SHORT).show()
+             }
         }
     }
 

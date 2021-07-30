@@ -1,6 +1,9 @@
 package com.example.mvvmusingjetpack
 
+import android.content.Intent
 import android.os.Bundle
+import android.util.Log
+import android.util.Patterns
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -9,6 +12,7 @@ import android.widget.EditText
 import android.widget.TextView
 import android.widget.Toast
 import androidx.navigation.fragment.findNavController
+import com.example.mvvmusingjetpack.view.HomeActivity
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
@@ -39,21 +43,41 @@ class SignupFragment : Fragment() {
             Signup()
         }
 
-
         return view
     }
 
     fun Signup() {
-        if (email.text.isNotEmpty() && password.text.isNotEmpty()) {
+        var isPasswordValid: Boolean = true
+        var isEmailValid: Boolean = true
+        if (password.text.length == 0) {
+            password.error = "please enter your password"
+            isPasswordValid = false;
+
+        } else if (password.text.length < 8) {
+            password.error = "password minimum contain 8 character"
+            isPasswordValid = false;
+        }
+        if (email.text.length == 0) {
+            email.setError("please enter your email id")
+            isEmailValid = false;
+
+        } else if (!(Patterns.EMAIL_ADDRESS.matcher(email.text).matches())) {
+            email.setError("Invalid email id")
+            isEmailValid = false;
+        }
+        if (isPasswordValid && isEmailValid) {
             FirebaseAuth.getInstance().createUserWithEmailAndPassword(email.text.toString(), password.text.toString())
                     .addOnCompleteListener { task ->
                         if (task.isSuccessful) {
                             val firebaseUser: FirebaseUser = task.result!!.user!!
                             Toast.makeText(this.requireContext(), "You are Registered Sucessfully", Toast.LENGTH_SHORT).show()
+                            startActivity(Intent(context, HomeActivity::class.java))
                         }
+                    }.addOnFailureListener {
+                        Toast.makeText(this.requireContext(), it.message.toString(), Toast.LENGTH_SHORT).show()
+
                     }
         }
-
 
     }
 

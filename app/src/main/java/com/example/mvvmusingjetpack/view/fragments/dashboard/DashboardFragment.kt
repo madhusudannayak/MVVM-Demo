@@ -1,11 +1,13 @@
 package com.example.mvvmusingjetpack.view.fragments.dashboard
 
+import android.content.ContentValues.TAG
 import android.os.Bundle
-import android.os.Handler
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageView
+import android.widget.LinearLayout
 import android.widget.TextView
 import android.widget.Toast
 import androidx.databinding.DataBindingUtil
@@ -14,46 +16,50 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.bumptech.glide.Glide
 import com.example.mvvmusingjetpack.R
 import com.example.mvvmusingjetpack.adapter.DiaryRVAdapter
 import com.example.mvvmusingjetpack.adapter.IDiaryRVAdapter
 import com.example.mvvmusingjetpack.databinding.FragmentDashboardBinding
+import com.example.mvvmusingjetpack.db.Color
 import com.example.mvvmusingjetpack.db.DiaryData
 import com.example.mvvmusingjetpack.viewmodel.DiaryViewModel
+import com.google.android.material.snackbar.BaseTransientBottomBar
+import com.google.android.material.snackbar.Snackbar
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
-import com.google.firebase.firestore.ktx.firestore
-import com.google.firebase.ktx.Firebase
 import com.littlemango.stacklayoutmanager.StackLayoutManager
-import kotlinx.coroutines.*
-import java.util.ArrayList
+import kotlin.collections.set
 
 
 class DashboardFragment : Fragment(), IDiaryRVAdapter {
-    val allNote = ArrayList<DiaryData>()
     lateinit var viewModel: DiaryViewModel
     lateinit var numberofpage: TextView
     lateinit var Page: String
     lateinit var args: Bundle
-    lateinit var db: FirebaseFirestore
+    var db: FirebaseFirestore = FirebaseFirestore.getInstance()
+    lateinit var isEmpty: ImageView
+    lateinit var emptylayout: LinearLayout
 
     private val dashBoardViewModel: DashBoardViewModel by lazy {
         ViewModelProvider(this).get(
-            DashBoardViewModel::class.java
+                DashBoardViewModel::class.java
         )
     }
 
     override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
+            inflater: LayoutInflater, container: ViewGroup?,
+            savedInstanceState: Bundle?
     ): View {
         val binding: FragmentDashboardBinding = DataBindingUtil.inflate(
-            inflater,
-            R.layout.fragment_dashboard, container, false
+                inflater,
+                R.layout.fragment_dashboard, container, false
         )
         binding.dashboardviewModel = dashBoardViewModel
         binding.lifecycleOwner = this
-        db = FirebaseFirestore.getInstance()
+        isEmpty = binding.isEmpty
+        emptylayout = binding.isEmptylayout
+//        db = FirebaseFirestore.getInstance()
 
         args = Bundle()
         numberofpage = binding.numberofpage
@@ -68,14 +74,19 @@ class DashboardFragment : Fragment(), IDiaryRVAdapter {
         recyclerView.layoutManager = manager
 
         viewModel = ViewModelProvider(
-            this,
-            ViewModelProvider.AndroidViewModelFactory.getInstance(requireActivity().application)
+                this,
+                ViewModelProvider.AndroidViewModelFactory.getInstance(requireActivity().application)
         ).get(DiaryViewModel::class.java)
 
         viewModel.allNotes.observe(viewLifecycleOwner, { list ->
             list?.let {
-                allNote.addAll(it)
-                adapter.updateList(it)
+                if (it.size.equals(0)) {
+                    emptyFile()
+                } else {
+                    emptylayout.visibility = View.GONE
+                    adapter.updateList(it)
+                }
+
             }
             manager.setItemChangedListener(object : StackLayoutManager.ItemChangedListener {
                 override fun onItemChanged(position: Int) {
@@ -86,8 +97,8 @@ class DashboardFragment : Fragment(), IDiaryRVAdapter {
             })
         })
         onActionPerform()
-        insertdatatoFirebase()
-
+        exportCloudFirestoreData()
+        importCloudFirestoreData()
         return binding.root
     }
 
@@ -105,19 +116,17 @@ class DashboardFragment : Fragment(), IDiaryRVAdapter {
     fun openAddFragment() {
         findNavController().navigate(R.id.action_dashboardFragment_to_addFragment)
 
-
     }
 
     fun Fragment.getNavController() {
         NavHostFragment.findNavController(this)
-            .navigate(R.id.action_dashboardFragment_to_addFragment)
+                .navigate(R.id.action_dashboardFragment_to_addFragment)
 
 
     }
 
     fun Fragment.toast(a: String) {
         Toast.makeText(this.requireContext(), a, Toast.LENGTH_SHORT).show()
-
     }
 
     override fun onItemClicked(note: DiaryData, size: String) {
@@ -127,11 +136,25 @@ class DashboardFragment : Fragment(), IDiaryRVAdapter {
     }
 
     override fun size(size: String) {
-        //  Toast.makeText(context, size.toString()+"5", Toast.LENGTH_SHORT).show();
         numberofPage(1, size.toInt())
         Page = size
         args.putInt("TotalPages", Page.toInt())
 
+    }
+
+    override fun deleteNote(note: DiaryData) {
+
+        view?.let {
+            Snackbar.make(it, "Are you sure you want to delete the note?", Snackbar.LENGTH_SHORT)
+                    .setAnimationMode(BaseTransientBottomBar.ANIMATION_MODE_SLIDE)
+                    .setBackgroundTint(android.graphics.Color.parseColor("#CBA3FF"))
+                    .setActionTextColor(android.graphics.Color.BLACK)
+                    .setAction("Delete") {
+                        Toast.makeText(context, "Done", Toast.LENGTH_SHORT).show()
+                        db.collection(FirebaseAuth.getInstance().uid.toString()).document(note.id.toString()).delete()
+                        viewModel.deleteNode(note)
+                    }.show()
+        }
 
     }
 
@@ -139,57 +162,58 @@ class DashboardFragment : Fragment(), IDiaryRVAdapter {
         numberofpage.text = "Page - $CurrentPage of $TotalPage"
     }
 
-     fun insertdatatoFirebase() {
-         viewModel.getAllNotesUnsynced().observe(requireActivity(),{
-      Log.d("response",it.size.toString())
-  })
+    fun exportCloudFirestoreData() {
+        viewModel.getAllNotesUnsynced().observe(requireActivity(), {
 
+            for (i in 0 until it.size) {
+                val note = it[i].text
+                val color = it[i].color
+                val id = it[i].id
 
+                val user: MutableMap<String, Any> = HashMap()
+                user["note"] = note
+                user["color"] = color
+                user["id"] = id
 
+                db.collection(FirebaseAuth.getInstance().uid.toString()).document(it[i].id.toString())
+                        .set(user)
+                        .addOnSuccessListener {
+                            viewModel.updateData(DiaryData(id, note, color, 1))
+                        }
 
+            }
+        })
+    }
 
+    private fun parseColor(color: String): Color {
+        return when (color) {
+            "WHITE" -> {
+                Color.WHITE
+            }
+            "BLUE" -> {
+                Color.BLUE
+            }
+            else -> Color.WHITE
+        }
+    }
 
+    fun importCloudFirestoreData() {
+        db.collection(FirebaseAuth.getInstance().uid.toString())
+                .get()
+                .addOnSuccessListener { result ->
+                    for (document in result) {
+                        val id = document.getLong("id")!!
+                        val note = document.get("note").toString()
+                        val color = document.get("color").toString()
+                        viewModel.insertNote(DiaryData(id, note, parseColor(color), 1))
+                    }
+                }
 
+    }
 
-//        s.observe(viewLifecycleOwner, { list ->
-//            list?.let {
-//                allNote.addAll(it)
-//                adapter.updateList(it)
-//            }
-
-//        list ->
-//        list?.let {
-//            allNote.addAll(it)
-//            adapter.updateList(it)
-//        }
-
-//            viewModel.getUnSyncData(false).observe(viewLifecycleOwner,{
-//                Log.d("callcorouting125355", it.size.toString())
-//            })
-
-//
-
-//        Log.d("callcorouting125355", "callllllllllll")
-////                Log.d("callcorouting125355", allNote[0].text)
-//        for (i in 0 until allNote.size) {
-//            val isSync = allNote[i].isSync
-//            if (!isSync) {
-//                val note = allNote[i].text
-//                val color = allNote[i].color
-//                val id = allNote[i].id
-//                val user: MutableMap<String, Any> = HashMap()
-//                user["note"] = note
-//                user["color"] = color
-//                user["id"] = id
-//                db.collection(FirebaseAuth.getInstance().uid.toString())
-//                    .add(user)
-//                viewModel.updateData(DiaryData(id, note, color, false))
-//                Log.d("callcorouting1issync", isSync.toString())
-//            }
-////                val isSync = allNote[i].isSync
-//        }
-
-
+    fun emptyFile() {
+        Glide.with(this).load(R.drawable.book).into(isEmpty)
+        emptylayout.visibility = View.VISIBLE
     }
 
 

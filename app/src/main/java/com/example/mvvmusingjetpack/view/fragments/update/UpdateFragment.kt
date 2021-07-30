@@ -2,14 +2,13 @@ package com.example.mvvmusingjetpack.view.fragments.update
 
 import android.os.Bundle
 import android.text.Editable
-import android.util.Log
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.*
 import androidx.cardview.widget.CardView
 import androidx.databinding.DataBindingUtil
+import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import com.example.mvvmusingjetpack.R
@@ -17,6 +16,8 @@ import com.example.mvvmusingjetpack.databinding.FragmentUpdateBinding
 import com.example.mvvmusingjetpack.db.Color
 import com.example.mvvmusingjetpack.db.DiaryData
 import com.example.mvvmusingjetpack.viewmodel.DiaryViewModel
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.firestore.FirebaseFirestore
 
 class UpdateFragment : Fragment() {
 
@@ -25,6 +26,9 @@ class UpdateFragment : Fragment() {
     lateinit var spinner: Spinner
     lateinit var bgCard: CardView
     lateinit var note: EditText
+    lateinit var db: FirebaseFirestore
+
+
 
     override fun onCreateView(
             inflater: LayoutInflater, container: ViewGroup?,
@@ -36,10 +40,12 @@ class UpdateFragment : Fragment() {
 
         binding.updateviewModel = updateViewModel
         binding.lifecycleOwner = this
+        db = FirebaseFirestore.getInstance()
         viewModel = ViewModelProvider(this, ViewModelProvider.AndroidViewModelFactory.getInstance(requireActivity().application)).get(DiaryViewModel::class.java)
         spinner = binding.color
         bgCard = binding.bgCard
         note = binding.note
+
         val Note = args?.getString("updateNote")
         val Color = args?.getString("updateColor")
         note.setText(Note.toString())
@@ -66,6 +72,8 @@ class UpdateFragment : Fragment() {
                 AdapterView.OnItemSelectedListener {
             override fun onItemSelected(parent: AdapterView<*>,
                                         view: View, position: Int, id: Long) {
+                spinner.setSelection(getIndex(spinner,Color.toString()))
+
                 SetbackgroundColor(languages[position])
 
             }
@@ -78,11 +86,13 @@ class UpdateFragment : Fragment() {
         return binding.root
     }
 
+
+
     private fun onActionPerform() {
         activity?.let {
             updateViewModel.BackToViewFragment.observe(it, {
                 val args = arguments
-                val index = args?.getInt("position")
+                val index = args?.getLong("position")
                 Toast.makeText(context, "Update Done", Toast.LENGTH_SHORT).show()
                 if (index != null) {
                     UpdateDataToDb(index)
@@ -113,15 +123,32 @@ class UpdateFragment : Fragment() {
         }
     }
 
-    private fun UpdateDataToDb(index: Int) {
+    private fun UpdateDataToDb(index: Long) {
         val mNote = note.text.toString()
         val color = spinner.selectedItem.toString()
 
         if (mNote.isNotEmpty()) {
-            viewModel.updateData(DiaryData(index, mNote, parseColor(color),0))
+//            db.collection(FirebaseAuth.getInstance().uid.toString())
+//                    .document().update()
+//            val user: MutableMap<String, Any> = HashMap()
+//            user["note"] = mNote
+//            user["color"] = color
+//            user["id"] = index
+//            db.collection(FirebaseAuth.getInstance().uid.toString()).document(it[i].id.toString())
+//                    .set(user)
+            viewModel.updateData(DiaryData(index, mNote, parseColor(color), 0))
 
         }
 
+    }
+    private fun getIndex(spinner: Spinner, myString: String): Int {
+        var index = 0
+        for (i in 0 until spinner.count) {
+            if (spinner.getItemAtPosition(i) == myString) {
+                index = i
+            }
+        }
+        return index
     }
 
 

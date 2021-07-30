@@ -27,7 +27,7 @@ class ViewFragment : Fragment() {
     lateinit var BgCard: CardView
     lateinit var Update: Bundle
     lateinit var Next: FloatingActionButton
-    var UpdatePosition: Int = 0
+    var UpdatePosition: Long = 0
     lateinit var UpdateNote: String
     lateinit var UpdateColor: String
 
@@ -117,7 +117,7 @@ class ViewFragment : Fragment() {
 
     fun EditNote() {
         Update = Bundle()
-        Update.putInt("position", UpdatePosition)
+        Update.putLong("position", UpdatePosition)
         Update.putString("updateNote", UpdateNote)
         Update.putString("updateColor", UpdateColor)
         findNavController().navigate(R.id.action_viewFragment_to_updateFragment, Update)

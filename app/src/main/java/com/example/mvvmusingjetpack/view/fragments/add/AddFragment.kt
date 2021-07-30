@@ -1,7 +1,6 @@
 package com.example.mvvmusingjetpack.view.fragments.add
 
 import android.os.Bundle
-import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -16,8 +15,6 @@ import com.example.mvvmusingjetpack.databinding.FragmentAddBinding
 import com.example.mvvmusingjetpack.db.Color
 import com.example.mvvmusingjetpack.db.DiaryData
 import com.example.mvvmusingjetpack.viewmodel.DiaryViewModel
-import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.firestore.DocumentReference
 import com.google.firebase.firestore.FirebaseFirestore
 
 
@@ -30,25 +27,23 @@ class addFragment : Fragment() {
     lateinit var edit: ImageButton
     lateinit var close: ImageButton
     lateinit var note: EditText
-    lateinit var db: FirebaseFirestore
 
 
     override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
+            inflater: LayoutInflater, container: ViewGroup?,
+            savedInstanceState: Bundle?
     ): View {
         val binding: FragmentAddBinding = DataBindingUtil.inflate(
-            inflater,
-            R.layout.fragment_add, container, false
+                inflater,
+                R.layout.fragment_add, container, false
         )
         binding.addviewModel = addViewModel
         binding.lifecycleOwner = this
-        db = FirebaseFirestore.getInstance()
 
 
         mDiaryViewModel = ViewModelProvider(
-            this,
-            ViewModelProvider.AndroidViewModelFactory.getInstance(requireActivity().application)
+                this,
+                ViewModelProvider.AndroidViewModelFactory.getInstance(requireActivity().application)
         ).get(DiaryViewModel::class.java)
         spinner = binding.color
         bgCard = binding.bgCard
@@ -60,16 +55,16 @@ class addFragment : Fragment() {
 
         spinner.adapter = activity?.let {
             ArrayAdapter(
-                it,
-                R.layout.support_simple_spinner_dropdown_item,
-                resources.getStringArray(R.array.color)
+                    it,
+                    R.layout.support_simple_spinner_dropdown_item,
+                    resources.getStringArray(R.array.color)
             )
         }
         spinner.onItemSelectedListener = object :
-            AdapterView.OnItemSelectedListener {
+                AdapterView.OnItemSelectedListener {
             override fun onItemSelected(
-                parent: AdapterView<*>,
-                view: View, position: Int, id: Long
+                    parent: AdapterView<*>,
+                    view: View, position: Int, id: Long
             ) {
                 SetbackgroundColor(languages[position])
             }
@@ -154,7 +149,7 @@ class addFragment : Fragment() {
 //        user["id"] = 0
 
         if (mNote.isNotEmpty()) {
-            mDiaryViewModel.insertNote(DiaryData(0, mNote, parseColor(color),0))
+            mDiaryViewModel.insertNote(DiaryData(0, mNote, parseColor(color), 0))
 //            db.collection(FirebaseAuth.getInstance().uid.toString())
 //                .add(user)
 //                .addOnSuccessListener {
