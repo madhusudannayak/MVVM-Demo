@@ -124,7 +124,7 @@ class ViewFragment : Fragment() {
 
             }
             "GREEN" -> {
-                BgCard.setCardBackgroundColor(android.graphics.Color.parseColor("#AED186"))
+                BgCard.setCardBackgroundColor(android.graphics.Color.parseColor("#b0dea0"))
 
             }
             "GRAY" -> {

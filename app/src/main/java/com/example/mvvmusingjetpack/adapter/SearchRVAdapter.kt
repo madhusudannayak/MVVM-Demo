@@ -39,7 +39,7 @@ class SearchRVAdapter(val context: Context?) : RecyclerView.Adapter<SearchRVAdap
         Color.BLUE -> holder.Bgcolor.setBackgroundColor(android.graphics.Color.parseColor("#87CDFF"))
         Color.PINK -> holder.Bgcolor.setBackgroundColor(android.graphics.Color.parseColor("#F6CEE5"))
         Color.YELLOW -> holder.Bgcolor.setBackgroundColor(android.graphics.Color.parseColor("#EAD3AC"))
-        Color.GREEN -> holder.Bgcolor.setBackgroundColor(android.graphics.Color.parseColor("#AED186"))
+        Color.GREEN -> holder.Bgcolor.setBackgroundColor(android.graphics.Color.parseColor("#b0dea0"))
         Color.GRAY -> holder.Bgcolor.setBackgroundColor(android.graphics.Color.parseColor("#CBDFF1"))
     }
 

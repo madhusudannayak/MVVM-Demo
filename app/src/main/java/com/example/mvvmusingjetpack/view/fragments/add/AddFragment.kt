@@ -42,10 +42,7 @@ class addFragment : Fragment() {
         binding.lifecycleOwner = this
 
 
-        mDiaryViewModel = ViewModelProvider(
-                this,
-                ViewModelProvider.AndroidViewModelFactory.getInstance(requireActivity().application)
-        ).get(DiaryViewModel::class.java)
+        mDiaryViewModel = ViewModelProvider(this, ViewModelProvider.AndroidViewModelFactory.getInstance(requireActivity().application)).get(DiaryViewModel::class.java)
         spinner = binding.color
         bgCard = binding.bgCard
         note = binding.note
@@ -84,34 +81,30 @@ class addFragment : Fragment() {
         spinner.adapter = adapter
         spinner.onItemSelectedListener = object :
                 AdapterView.OnItemSelectedListener {
-            override fun onItemSelected(
-                    parent: AdapterView<*>,
-                    view: View, position: Int, id: Long
-            ) {
+            override fun onItemSelected(parent: AdapterView<*>, view: View, position: Int, id: Long) {
+
                 setBackgroundColor(color[position])
             }
 
             override fun onNothingSelected(parent: AdapterView<*>) {
+
             }
         }
     }
 
     private fun onActionPerform() {
-        activity?.let {
-            addViewModel.closeFragment.observe(it, {
-                insertDataToDb()
-                findNavController().navigate(R.id.action_addFragment_to_dashboardFragment)
-            })
-        }
-        activity?.let {
-            addViewModel.ChangeIcon.observe(it, {
-                if (it) {
-                    disableEdit()
-                } else {
-                    enableEdit()
-                }
-            })
-        }
+        addViewModel.closeFragment.observe(requireActivity(), {
+            insertDataToDb()
+            findNavController().navigate(R.id.action_addFragment_to_dashboardFragment)
+        })
+        addViewModel.changeIcon.observe(requireActivity(), {
+            if (it) {
+                disableEdit()
+            } else {
+                enableEdit()
+            }
+        })
+
     }
 
     private fun disableEdit() {
@@ -134,8 +127,8 @@ class addFragment : Fragment() {
 
     }
 
-    private fun setBackgroundColor(s: String) {
-        when (s) {
+    private fun setBackgroundColor(color: String) {
+        when (color) {
             "WHITE" -> {
                 bgCard.setCardBackgroundColor(android.graphics.Color.parseColor("#FFFFFF"))
             }

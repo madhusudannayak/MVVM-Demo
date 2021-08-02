@@ -5,24 +5,24 @@ import androidx.lifecycle.ViewModel
 
 class AddViewModel : ViewModel() {
     val closeFragment = MutableLiveData<Boolean>()
-    val ChangeIcon = MutableLiveData<Boolean>()
+    val changeIcon = MutableLiveData<Boolean>()
     var id = 1;
 
-    fun Close()
-    {
+    fun close() {
         closeFragment.value = true
     }
 
-    fun Edit()
-    {
-        if(id.equals(1)){
-            ChangeIcon.value = true
+    fun edit() {
+        if (id == 1) {
+            changeIcon.value = true
             id = 0
 
-        }else if(id.equals(0)){
-            ChangeIcon.value = false
+        } else if (id == 0) {
+            changeIcon.value = false
             id = 1
-
         }
-     }
+    }
+    fun insertDataToRom(){
+
+    }
 }
