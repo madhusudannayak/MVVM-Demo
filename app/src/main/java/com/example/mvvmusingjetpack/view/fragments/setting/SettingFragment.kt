@@ -28,7 +28,7 @@ class SettingFragment : Fragment() {
         binding.settingviewModel = settingViewModel
         binding.lifecycleOwner = this
 
-        val logout =binding.Logout
+        val logout = binding.Logout
         val email = binding.email
 
         email.text = FirebaseAuth.getInstance().currentUser.toString()
@@ -44,14 +44,14 @@ class SettingFragment : Fragment() {
     }
 
     private fun onActionPerform() {
-            settingViewModel.backToDashboardFragment.observe(requireActivity(), {
-                findNavController().navigate(R.id.action_settingFragment_to_dashboardFragment)
+        settingViewModel.backToDashboardFragment.observe(requireActivity(), {
+            findNavController().navigate(R.id.action_settingFragment_to_dashboardFragment)
 
-            })
-        }
-
-
+        })
     }
+
+
+}
 
 
 

@@ -16,13 +16,11 @@ import com.example.mvvmusingjetpack.databinding.FragmentAddBinding
 import com.example.mvvmusingjetpack.db.Color
 import com.example.mvvmusingjetpack.db.DiaryData
 import com.example.mvvmusingjetpack.model.Colors
-import com.example.mvvmusingjetpack.viewmodel.DiaryViewModel
 
 
-class addFragment : Fragment() {
+class AddFragment : Fragment() {
 
     private val addViewModel: AddViewModel by lazy { ViewModelProvider(this).get(AddViewModel::class.java) }
-    lateinit var mDiaryViewModel: DiaryViewModel
     lateinit var spinner: Spinner
     lateinit var bgCard: CardView
     lateinit var edit: ImageButton
@@ -31,9 +29,7 @@ class addFragment : Fragment() {
 
 
     override fun onCreateView(
-            inflater: LayoutInflater, container: ViewGroup?,
-            savedInstanceState: Bundle?
-    ): View {
+            inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         val binding: FragmentAddBinding = DataBindingUtil.inflate(
                 inflater,
                 R.layout.fragment_add, container, false
@@ -41,34 +37,11 @@ class addFragment : Fragment() {
         binding.addviewModel = addViewModel
         binding.lifecycleOwner = this
 
-
-        mDiaryViewModel = ViewModelProvider(this, ViewModelProvider.AndroidViewModelFactory.getInstance(requireActivity().application)).get(DiaryViewModel::class.java)
         spinner = binding.color
         bgCard = binding.bgCard
         note = binding.note
         edit = binding.edit
         close = binding.close
-
-
-//        spinner.adapter = activity?.let {
-//            ArrayAdapter(
-//                    it,
-//                    R.layout.support_simple_spinner_dropdown_item,
-//                    resources.getStringArray(R.array.color)
-//            )
-//        }
-//        spinner.onItemSelectedListener = object :
-//                AdapterView.OnItemSelectedListener {
-//            override fun onItemSelected(
-//                    parent: AdapterView<*>,
-//                    view: View, position: Int, id: Long
-//            ) {
-//                SetbackgroundColor(languages[position])
-//            }
-//
-//            override fun onNothingSelected(parent: AdapterView<*>) {
-//            }
-//        }
 
         onActionPerform()
         setupCustomSpinner()
@@ -208,7 +181,7 @@ class addFragment : Fragment() {
         }
 
         if (mNote.isNotEmpty()) {
-            mDiaryViewModel.insertNote(DiaryData(0, mNote, parseColor(mColor), 0))
+            addViewModel.insertNote(DiaryData(0, mNote, parseColor(mColor), 0))
         }
 
     }

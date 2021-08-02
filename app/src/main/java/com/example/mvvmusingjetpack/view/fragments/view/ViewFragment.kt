@@ -14,13 +14,12 @@ import androidx.navigation.fragment.findNavController
 import com.example.mvvmusingjetpack.R
 import com.example.mvvmusingjetpack.databinding.FragmentViewBinding
 import com.example.mvvmusingjetpack.db.DiaryData
-import com.example.mvvmusingjetpack.viewmodel.DiaryViewModel
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import java.util.*
 
 class ViewFragment : Fragment() {
 
-    lateinit var viewModel: DiaryViewModel
+  //  lateinit var viewModel: DiaryViewModel
     val Note = ArrayList<DiaryData>()
     lateinit var id: String
     lateinit var viewText: TextView
@@ -52,8 +51,7 @@ class ViewFragment : Fragment() {
         viewViewModel.currentID = index!!
         viewViewModel.totalPage = totalPages!!
 
-        viewModel = ViewModelProvider(this, ViewModelProvider.AndroidViewModelFactory.getInstance(requireActivity().application)).get(DiaryViewModel::class.java)
-        viewModel.allNotes.observe(viewLifecycleOwner, { list ->
+        viewViewModel.allNotes.observe(viewLifecycleOwner, { list ->
             list?.let {
                 val diaryId = args.getInt("position")
                 UpdatePosition = it[diaryId].id
@@ -71,7 +69,7 @@ class ViewFragment : Fragment() {
 
     private fun onActionPerform() {
         var currentId = viewViewModel.currentID
-        viewViewModel.NextItem.observe(requireActivity(), {
+        viewViewModel.nextItem.observe(requireActivity(), {
             if (it) {
                 currentId++
                 nextNote(currentId)
@@ -81,10 +79,10 @@ class ViewFragment : Fragment() {
 
         })
 
-        viewViewModel.EditNote.observe(requireActivity(), {
+        viewViewModel.editNote.observe(requireActivity(), {
             editNote()
         })
-        viewViewModel.BackToDashBoardFragment.observe(requireActivity(), {
+        viewViewModel.backToDashBoardFragment.observe(requireActivity(), {
             findNavController().navigate(R.id.action_viewFragment_to_dashboardFragment)
 
         })

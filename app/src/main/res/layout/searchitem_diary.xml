@@ -13,6 +13,7 @@
         android:layout_marginBottom="35dp"
         app:cardCornerRadius="20sp"
         app:cardElevation="10dp">
+
         <LinearLayout
             android:id="@+id/color"
             android:layout_width="match_parent"
@@ -28,12 +29,6 @@
                 android:layout_weight="1"
                 android:gravity="start" />
 
-            <ImageView
-                android:id="@+id/delete"
-                android:layout_width="35dp"
-                android:layout_height="35dp"
-                android:layout_gravity="end"
-                android:src="@drawable/ic_baseline_delete_forever_24" />
         </LinearLayout>
 
     </androidx.cardview.widget.CardView>

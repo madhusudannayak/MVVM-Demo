@@ -21,7 +21,6 @@ import com.example.mvvmusingjetpack.adapter.IDiaryRVAdapter
 import com.example.mvvmusingjetpack.databinding.FragmentDashboardBinding
 import com.example.mvvmusingjetpack.db.Color
 import com.example.mvvmusingjetpack.db.DiaryData
-import com.example.mvvmusingjetpack.viewmodel.DiaryViewModel
 import com.google.android.material.snackbar.BaseTransientBottomBar
 import com.google.android.material.snackbar.Snackbar
 import com.google.firebase.auth.FirebaseAuth
@@ -31,7 +30,6 @@ import kotlin.collections.set
 
 
 class DashboardFragment : Fragment(), IDiaryRVAdapter {
-    lateinit var viewModel: DiaryViewModel
     lateinit var numberofpage: TextView
     lateinit var Page: String
     lateinit var args: Bundle
@@ -40,9 +38,7 @@ class DashboardFragment : Fragment(), IDiaryRVAdapter {
     lateinit var emptylayout: LinearLayout
 
     private val dashBoardViewModel: DashBoardViewModel by lazy {
-        ViewModelProvider(this).get(
-                DashBoardViewModel::class.java
-        )
+        ViewModelProvider(this).get(DashBoardViewModel::class.java)
     }
 
     override fun onCreateView(
@@ -70,12 +66,7 @@ class DashboardFragment : Fragment(), IDiaryRVAdapter {
         manager.setPagerFlingVelocity(3000)
         recyclerView.layoutManager = manager
 
-        viewModel = ViewModelProvider(
-                this,
-                ViewModelProvider.AndroidViewModelFactory.getInstance(requireActivity().application)
-        ).get(DiaryViewModel::class.java)
-
-        viewModel.allNotes.observe(viewLifecycleOwner, { list ->
+        dashBoardViewModel.allNotes.observe(viewLifecycleOwner, { list ->
             list?.let {
                 if (it.size.equals(0)) {
                     emptyFile()
@@ -100,12 +91,10 @@ class DashboardFragment : Fragment(), IDiaryRVAdapter {
     }
 
     private fun onActionPerform() {
-        activity?.let {
-            dashBoardViewModel.OpenAddFragment.observe(it, {
-                openAddFragment()
+        dashBoardViewModel.openAddFragment.observe(requireActivity(), {
+            openAddFragment()
 
-            })
-        }
+        })
 
 
     }
@@ -149,7 +138,7 @@ class DashboardFragment : Fragment(), IDiaryRVAdapter {
                     .setAction("Delete") {
                         Toast.makeText(context, "Done", Toast.LENGTH_SHORT).show()
                         db.collection(FirebaseAuth.getInstance().uid.toString()).document(note.id.toString()).delete()
-                        viewModel.deleteNode(note)
+                        dashBoardViewModel.deleteNode(note)
                     }.show()
         }
 
@@ -160,9 +149,9 @@ class DashboardFragment : Fragment(), IDiaryRVAdapter {
     }
 
     private fun exportCloudFirestoreData() {
-        viewModel.getAllNotesUnsynced().observe(requireActivity(), {
+        dashBoardViewModel.getAllNotesUnsynced().observe(requireActivity(), {
 
-            for (i in 0 until it.size) {
+            for (i in it.indices) {
                 val note = it[i].text
                 val color = it[i].color
                 val id = it[i].id
@@ -175,7 +164,7 @@ class DashboardFragment : Fragment(), IDiaryRVAdapter {
                 db.collection(FirebaseAuth.getInstance().uid.toString()).document(it[i].id.toString())
                         .set(user)
                         .addOnSuccessListener {
-                            viewModel.updateData(DiaryData(id, note, color, 1))
+                            dashBoardViewModel.updateData(DiaryData(id, note, color, 1))
                         }
 
             }
@@ -206,7 +195,7 @@ class DashboardFragment : Fragment(), IDiaryRVAdapter {
         }
     }
 
-    fun importCloudFirestoreData() {
+    private fun importCloudFirestoreData() {
         db.collection(FirebaseAuth.getInstance().uid.toString())
                 .get()
                 .addOnSuccessListener { result ->
@@ -214,13 +203,13 @@ class DashboardFragment : Fragment(), IDiaryRVAdapter {
                         val id = document.getLong("id")!!
                         val note = document.get("note").toString()
                         val color = document.get("color").toString()
-                        viewModel.insertNote(DiaryData(id, note, parseColor(color), 1))
+                        dashBoardViewModel.insertNote(DiaryData(id, note, parseColor(color), 1))
                     }
                 }
 
     }
 
-    fun emptyFile() {
+    private fun emptyFile() {
         Glide.with(this).load(R.drawable.book).into(isEmpty)
         emptylayout.visibility = View.VISIBLE
     }

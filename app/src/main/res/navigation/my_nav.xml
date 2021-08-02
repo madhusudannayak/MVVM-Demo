@@ -19,7 +19,7 @@
     </fragment>
     <fragment
         android:id="@+id/addFragment"
-        android:name="com.example.mvvmusingjetpack.view.fragments.add.addFragment"
+        android:name="com.example.mvvmusingjetpack.view.fragments.add.AddFragment"
         android:label="fragment_add"
         tools:layout="@layout/fragment_add" >
         <action

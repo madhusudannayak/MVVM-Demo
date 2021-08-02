@@ -1,9 +1,16 @@
 package com.example.mvvmusingjetpack.view.fragments.add
 
+import android.app.Application
+import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
+import com.example.mvvmusingjetpack.db.DiaryData
+import com.example.mvvmusingjetpack.db.DiaryRepository
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 
-class AddViewModel : ViewModel() {
+class AddViewModel(application: Application) : AndroidViewModel(application) {
     val closeFragment = MutableLiveData<Boolean>()
     val changeIcon = MutableLiveData<Boolean>()
     var id = 1;
@@ -22,7 +29,12 @@ class AddViewModel : ViewModel() {
             id = 1
         }
     }
-    fun insertDataToRom(){
 
+    private val repository: DiaryRepository = DiaryRepository.getInstance((application.baseContext))
+
+    fun insertNote(diaryData: DiaryData) = viewModelScope.launch(Dispatchers.IO) {
+        repository.insert(diaryData)
     }
+
+
 }

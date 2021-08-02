@@ -1,4 +1,4 @@
-package com.example.mvvmusingjetpack
+package com.example.mvvmusingjetpack.view.fragments.login
 
 import android.content.Intent
 import android.os.Bundle
@@ -10,21 +10,17 @@ import android.view.ViewGroup
 import android.widget.EditText
 import android.widget.TextView
 import android.widget.Toast
-import androidx.core.widget.doOnTextChanged
-import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
+import com.example.mvvmusingjetpack.R
 import com.example.mvvmusingjetpack.view.HomeActivity
-import com.example.mvvmusingjetpack.viewmodel.DiaryViewModel
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.google.firebase.auth.FirebaseAuth
-import java.util.regex.Pattern
 
 class LoginFragment : Fragment() {
 
     lateinit var email: EditText
     lateinit var password: EditText
     lateinit var login: FloatingActionButton
-    lateinit var viewModel: DiaryViewModel
 
 
     override fun onCreateView(
@@ -32,30 +28,25 @@ class LoginFragment : Fragment() {
             savedInstanceState: Bundle?
     ): View? {
         val view = inflater.inflate(R.layout.fragment_login, container, false)
-        val signup = view.findViewById<TextView>(R.id.OpenSignUpPage)
+        val signUp = view.findViewById<TextView>(R.id.OpenSignUpPage)
 
         email = view.findViewById(R.id.email_Id)
         password = view.findViewById(R.id.password)
         login = view.findViewById(R.id.OpenLoginPage)
-
-//        viewModel = ViewModelProvider(
-//                this,
-//                ViewModelProvider.AndroidViewModelFactory.getInstance(requireActivity().application)
-//        ).get(DiaryViewModel::class.java)
 
 
         login.setOnClickListener {
             login()
         }
 
-        signup.setOnClickListener {
+        signUp.setOnClickListener {
             findNavController().navigate(R.id.action_loginFragment_to_signupFragment)
         }
 
         return view
     }
 
-    fun login() {
+    private fun login() {
         var isPasswordValid: Boolean = true
         var isEmailValid: Boolean = true
         if (password.text.isEmpty()) {
@@ -79,13 +70,12 @@ class LoginFragment : Fragment() {
                     .addOnCompleteListener { task ->
                         if (task.isSuccessful) {
                             Toast.makeText(this.requireContext(), "You are Logged in Sucessfully", Toast.LENGTH_SHORT).show()
-                          //  viewModel.deleteAllNote
                             startActivity(Intent(context, HomeActivity::class.java))
                         }
 
                     }.addOnFailureListener {
                         Toast.makeText(this.requireContext(), it.message, Toast.LENGTH_SHORT).show()
-             }
+                    }
         }
     }
 

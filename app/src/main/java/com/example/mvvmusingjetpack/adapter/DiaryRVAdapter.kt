@@ -14,9 +14,9 @@ import com.example.mvvmusingjetpack.db.Color
 import com.example.mvvmusingjetpack.db.DiaryData
 import java.util.ArrayList
 
-class DiaryRVAdapter(val context: Context?, val listener: IDiaryRVAdapter) : RecyclerView.Adapter<DiaryRVAdapter.DiaryViewHolder>() {
+class DiaryRVAdapter(val context: Context?, private val listener: IDiaryRVAdapter) : RecyclerView.Adapter<DiaryRVAdapter.DiaryViewHolder>() {
 
-    val allNote = ArrayList<DiaryData>()
+    private val allNote = ArrayList<DiaryData>()
 
     inner class DiaryViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         val textView = itemView.findViewById<TextView>(R.id.note)
@@ -42,15 +42,14 @@ class DiaryRVAdapter(val context: Context?, val listener: IDiaryRVAdapter) : Rec
         val currentNote = allNote[position]
         holder.textView.text = currentNote.text
 
-
-        when (currentNote.color) {
+        when (currentNote.color)
+        {
             Color.WHITE -> holder.Bgcolor.setBackgroundColor(android.graphics.Color.WHITE)
             Color.BLUE -> holder.Bgcolor.setBackgroundColor(android.graphics.Color.parseColor("#87cdff"))
             Color.PINK -> holder.Bgcolor.setBackgroundColor(android.graphics.Color.parseColor("#F6CEE5"))
             Color.YELLOW -> holder.Bgcolor.setBackgroundColor(android.graphics.Color.parseColor("#EAD3AC"))
             Color.GREEN -> holder.Bgcolor.setBackgroundColor(android.graphics.Color.parseColor("#b0dea0"))
             Color.GRAY -> holder.Bgcolor.setBackgroundColor(android.graphics.Color.parseColor("#CBDFF1"))
-
         }
 
     }

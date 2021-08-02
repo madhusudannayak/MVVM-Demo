@@ -14,7 +14,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="#F6F6F6"
-        tools:context=".view.fragments.add.addFragment">
+        tools:context=".view.fragments.add.AddFragment">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -67,6 +67,7 @@
 
             <androidx.cardview.widget.CardView
                 android:id="@+id/bgCard"
+
                 android:layout_width="fill_parent"
                 android:layout_height="match_parent"
                 android:layout_marginLeft="20dp"

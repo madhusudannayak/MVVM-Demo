@@ -17,13 +17,11 @@ import com.example.mvvmusingjetpack.databinding.FragmentUpdateBinding
 import com.example.mvvmusingjetpack.db.Color
 import com.example.mvvmusingjetpack.db.DiaryData
 import com.example.mvvmusingjetpack.model.Colors
-import com.example.mvvmusingjetpack.viewmodel.DiaryViewModel
 import com.google.firebase.firestore.FirebaseFirestore
 
 class UpdateFragment : Fragment() {
 
     private val updateViewModel: UpdateViewModel by lazy { ViewModelProvider(this).get(UpdateViewModel::class.java) }
-    lateinit var viewModel: DiaryViewModel
     lateinit var spinner: Spinner
     lateinit var bgCard: CardView
     lateinit var note: EditText
@@ -41,7 +39,6 @@ class UpdateFragment : Fragment() {
         binding.updateviewModel = updateViewModel
         binding.lifecycleOwner = this
         db = FirebaseFirestore.getInstance()
-        viewModel = ViewModelProvider(this, ViewModelProvider.AndroidViewModelFactory.getInstance(requireActivity().application)).get(DiaryViewModel::class.java)
         spinner = binding.color
         bgCard = binding.bgCard
         note = binding.note
@@ -78,7 +75,7 @@ class UpdateFragment : Fragment() {
 
     private fun onActionPerform() {
         activity?.let {
-            updateViewModel.BackToViewFragment.observe(it, {
+            updateViewModel.backToViewFragment.observe(it, {
                 val args = arguments
                 val index = args?.getLong("position")
                 Toast.makeText(context, "Update Done", Toast.LENGTH_SHORT).show()
@@ -168,7 +165,7 @@ class UpdateFragment : Fragment() {
             }
         }
         if (mNote.isNotEmpty()) {
-            viewModel.updateData(DiaryData(index, mNote, parseColor(mColor), 0))
+            updateViewModel.updateData(DiaryData(index, mNote, parseColor(mColor), 0))
         }
 
     }

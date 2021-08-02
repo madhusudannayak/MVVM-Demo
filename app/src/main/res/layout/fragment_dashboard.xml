@@ -61,7 +61,7 @@
                 android:layout_gravity="end"
                 android:layout_margin="10dp"
                 android:background="@null"
-                android:onClick="@{()->dashboardviewModel.AddItem()}"
+                android:onClick="@{()->dashboardviewModel.addItem()}"
                 android:src="@drawable/ic_add" />
 
             <RelativeLayout
@@ -82,7 +82,7 @@
                 android:layout_height="wrap_content"
                 android:gravity="center"
                 android:padding="5dp"
-                android:text="@={dashboardviewModel.PageCount}"
+                android:text="@={dashboardviewModel.pageCount}"
                 android:textColor="#631ABF"
                 android:textStyle="bold" />
         </LinearLayout>

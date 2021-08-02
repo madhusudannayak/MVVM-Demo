@@ -15,7 +15,7 @@ import java.util.ArrayList
 
 class SearchRVAdapter(val context: Context?) : RecyclerView.Adapter<SearchRVAdapter.DiaryViewHolder>() {
 
-    val allNote = ArrayList<DiaryData>()
+    private val allNote = ArrayList<DiaryData>()
 
     class DiaryViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         val textView = itemView.findViewById<TextView>(R.id.note)
@@ -24,30 +24,30 @@ class SearchRVAdapter(val context: Context?) : RecyclerView.Adapter<SearchRVAdap
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): DiaryViewHolder {
-        val viewHolder = DiaryViewHolder(LayoutInflater.from(context).inflate(R.layout.searchitem_diary, parent, false))
-        return viewHolder
+        return DiaryViewHolder(LayoutInflater.from(context).inflate(R.layout.searchitem_diary, parent, false))
     }
 
     override fun onBindViewHolder(holder: DiaryViewHolder, position: Int) {
 
-    val currentNote = allNote[position]
-    holder.textView.text = currentNote.text
+        val currentNote = allNote[position]
+        holder.textView.text = currentNote.text
 
 
-    when (currentNote.color) {
-        Color.WHITE -> holder.Bgcolor.setBackgroundColor(android.graphics.Color.WHITE)
-        Color.BLUE -> holder.Bgcolor.setBackgroundColor(android.graphics.Color.parseColor("#87CDFF"))
-        Color.PINK -> holder.Bgcolor.setBackgroundColor(android.graphics.Color.parseColor("#F6CEE5"))
-        Color.YELLOW -> holder.Bgcolor.setBackgroundColor(android.graphics.Color.parseColor("#EAD3AC"))
-        Color.GREEN -> holder.Bgcolor.setBackgroundColor(android.graphics.Color.parseColor("#b0dea0"))
-        Color.GRAY -> holder.Bgcolor.setBackgroundColor(android.graphics.Color.parseColor("#CBDFF1"))
-    }
+        when (currentNote.color) {
+            Color.WHITE -> holder.Bgcolor.setBackgroundColor(android.graphics.Color.WHITE)
+            Color.BLUE -> holder.Bgcolor.setBackgroundColor(android.graphics.Color.parseColor("#87CDFF"))
+            Color.PINK -> holder.Bgcolor.setBackgroundColor(android.graphics.Color.parseColor("#F6CEE5"))
+            Color.YELLOW -> holder.Bgcolor.setBackgroundColor(android.graphics.Color.parseColor("#EAD3AC"))
+            Color.GREEN -> holder.Bgcolor.setBackgroundColor(android.graphics.Color.parseColor("#b0dea0"))
+            Color.GRAY -> holder.Bgcolor.setBackgroundColor(android.graphics.Color.parseColor("#CBDFF1"))
+        }
 
     }
 
     override fun getItemCount(): Int {
         return allNote.size
     }
+
     fun updateList(newList: List<DiaryData>) {
         allNote.clear()
         allNote.addAll(newList)

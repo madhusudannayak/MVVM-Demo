@@ -1,13 +1,18 @@
 package com.example.mvvmusingjetpack.view.fragments.view
 
+import android.app.Application
+import androidx.lifecycle.AndroidViewModel
+import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import com.example.mvvmusingjetpack.db.DiaryData
+import com.example.mvvmusingjetpack.db.DiaryRepository
 
-class ViewViewModel : ViewModel() {
+class ViewViewModel (application: Application) : AndroidViewModel(application)  {
 
-    val NextItem = MutableLiveData<Boolean>()
-    val BackToDashBoardFragment = MutableLiveData<Boolean>()
-    val EditNote = MutableLiveData<Boolean>()
+    val nextItem = MutableLiveData<Boolean>()
+    val backToDashBoardFragment = MutableLiveData<Boolean>()
+    val editNote = MutableLiveData<Boolean>()
     val openSettingFragment = MutableLiveData<Boolean>()
     val openSearchFragment = MutableLiveData<Boolean>()
 
@@ -17,15 +22,15 @@ class ViewViewModel : ViewModel() {
 
     fun NextItem() {
         if (currentID.equals(totalPage - 1)) {
-            NextItem.value = false
+            nextItem.value = false
         } else {
-            NextItem.value = true
+            nextItem.value = true
             currentID++
         }
     }
 
     fun EditNote() {
-        EditNote.value = true
+        editNote.value = true
     }
 
     fun searchNote() {
@@ -40,11 +45,17 @@ class ViewViewModel : ViewModel() {
 
 
     fun BackToDashBoard() {
-        BackToDashBoardFragment.value = true
+        backToDashBoardFragment.value = true
     }
 
 
     fun nextItemId(): Int = currentID
+
+    val repository: DiaryRepository = DiaryRepository.getInstance((application.baseContext))
+
+
+    val allNotes: LiveData<List<DiaryData>> = repository.allNote
+
 
 
 }

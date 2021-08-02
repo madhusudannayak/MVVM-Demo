@@ -6,20 +6,22 @@ import androidx.lifecycle.LiveData
 
 
 class DiaryRepository(context: Context) {
-    val diaryDao = DiaryDatabase.getDatabase(context).getDiaryDao()
 
+    private val diaryDao = DiaryDatabase.getDatabase(context).getDiaryDao()
 
     companion object {
         var instance: DiaryRepository? = null
 
-        var getInstance: (Context) -> DiaryRepository = {
-            if (instance != null) {
-                instance!!
-            } else {
-                instance = DiaryRepository(it)
-                instance!!
-            }
-        }
+        var getInstance: (Context) -> DiaryRepository =
+
+                {
+                    if (instance != null) {
+                        instance!!
+                    } else {
+                        instance = DiaryRepository(it)
+                        instance!!
+                    }
+                }
     }
 
 
@@ -46,7 +48,6 @@ class DiaryRepository(context: Context) {
         return diaryDao.searchNote(SearchQuery)
 
     }
-
 
 
 }
