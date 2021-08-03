@@ -7,7 +7,7 @@
 
     <fragment
         android:id="@+id/dashboardFragment"
-        android:name="com.example.mvvmusingjetpack.view.fragments.dashboard.DashboardFragment"
+        android:name="com.example.mvvmusingjetpack.ui.dashboard.view.DashboardFragment"
         android:label="fragment_dashboard"
         tools:layout="@layout/fragment_dashboard" >
         <action
@@ -19,7 +19,7 @@
     </fragment>
     <fragment
         android:id="@+id/addFragment"
-        android:name="com.example.mvvmusingjetpack.view.fragments.add.AddFragment"
+        android:name="com.example.mvvmusingjetpack.ui.add.AddFragment"
         android:label="fragment_add"
         tools:layout="@layout/fragment_add" >
         <action
@@ -28,7 +28,7 @@
     </fragment>
     <fragment
         android:id="@+id/updateFragment"
-        android:name="com.example.mvvmusingjetpack.view.fragments.update.UpdateFragment"
+        android:name="com.example.mvvmusingjetpack.ui.update.UpdateFragment"
         android:label="fragment_update"
         tools:layout="@layout/fragment_update" >
         <action
@@ -37,7 +37,7 @@
     </fragment>
     <fragment
         android:id="@+id/viewFragment"
-        android:name="com.example.mvvmusingjetpack.view.fragments.view.ViewFragment"
+        android:name="com.example.mvvmusingjetpack.ui.view.ViewFragment"
         android:label="fragment_view"
         tools:layout="@layout/fragment_view" >
         <action
@@ -55,7 +55,7 @@
     </fragment>
     <fragment
         android:id="@+id/searchFragment"
-        android:name="com.example.mvvmusingjetpack.view.fragments.search.SearchFragment"
+        android:name="com.example.mvvmusingjetpack.ui.search.view.SearchFragment"
         android:label="fragment_search"
         tools:layout="@layout/fragment_search" >
         <action
@@ -64,7 +64,7 @@
     </fragment>
     <fragment
         android:id="@+id/settingFragment"
-        android:name="com.example.mvvmusingjetpack.view.fragments.setting.SettingFragment"
+        android:name="com.example.mvvmusingjetpack.ui.setting.SettingFragment"
         android:label="fragment_setting"
         tools:layout="@layout/fragment_setting" >
         <action

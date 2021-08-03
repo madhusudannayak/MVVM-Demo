@@ -1,4 +1,4 @@
-package com.example.mvvmusingjetpack.adapter
+package com.example.mvvmusingjetpack.ui.dashboard.adapter
 
 import android.content.Context
 import android.view.LayoutInflater
@@ -7,7 +7,6 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.TextView
-import android.widget.Toast
 import androidx.recyclerview.widget.RecyclerView
 import com.example.mvvmusingjetpack.R
 import com.example.mvvmusingjetpack.db.Color

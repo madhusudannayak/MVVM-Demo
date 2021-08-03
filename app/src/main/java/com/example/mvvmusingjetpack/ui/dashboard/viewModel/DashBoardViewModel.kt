@@ -1,4 +1,4 @@
-package com.example.mvvmusingjetpack.view.fragments.dashboard
+package com.example.mvvmusingjetpack.ui.dashboard.viewModel
 
 import android.app.Application
 import androidx.lifecycle.*

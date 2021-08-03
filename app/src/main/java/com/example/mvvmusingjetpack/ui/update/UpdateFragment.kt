@@ -1,4 +1,4 @@
-package com.example.mvvmusingjetpack.view.fragments.update
+package com.example.mvvmusingjetpack.ui.update
 
 import android.os.Bundle
 import android.text.Editable

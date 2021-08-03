@@ -1,4 +1,4 @@
-package com.example.mvvmusingjetpack.view.fragments.add
+package com.example.mvvmusingjetpack.ui.add
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment

@@ -1,4 +1,4 @@
-package com.example.mvvmusingjetpack.view.fragments.search
+package com.example.mvvmusingjetpack.ui.search.view
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment
@@ -12,8 +12,9 @@ import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.mvvmusingjetpack.R
-import com.example.mvvmusingjetpack.adapter.SearchRVAdapter
+import com.example.mvvmusingjetpack.ui.search.adapter.SearchRVAdapter
 import com.example.mvvmusingjetpack.databinding.FragmentSearchBinding
+import com.example.mvvmusingjetpack.ui.search.viewModel.SearchViewModel
 import com.littlemango.stacklayoutmanager.StackLayoutManager
 
 
@@ -22,7 +23,8 @@ class SearchFragment : Fragment() {
     lateinit var adapter: SearchRVAdapter
 
 
-    private val seachViewModel: SearchViewModel by lazy { ViewModelProvider(this).get(SearchViewModel::class.java) }
+    private val seachViewModel: SearchViewModel by lazy { ViewModelProvider(this).get(
+        SearchViewModel::class.java) }
 
     override fun onCreateView(
             inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {

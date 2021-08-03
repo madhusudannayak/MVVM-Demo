@@ -1,4 +1,4 @@
-package com.example.mvvmusingjetpack.view.fragments.dashboard
+package com.example.mvvmusingjetpack.ui.dashboard.view
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -16,11 +16,12 @@ import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.bumptech.glide.Glide
 import com.example.mvvmusingjetpack.R
-import com.example.mvvmusingjetpack.adapter.DiaryRVAdapter
-import com.example.mvvmusingjetpack.adapter.IDiaryRVAdapter
 import com.example.mvvmusingjetpack.databinding.FragmentDashboardBinding
+import com.example.mvvmusingjetpack.ui.dashboard.adapter.DiaryRVAdapter
+import com.example.mvvmusingjetpack.ui.dashboard.adapter.IDiaryRVAdapter
 import com.example.mvvmusingjetpack.db.Color
 import com.example.mvvmusingjetpack.db.DiaryData
+import com.example.mvvmusingjetpack.ui.dashboard.viewModel.DashBoardViewModel
 import com.google.android.material.snackbar.BaseTransientBottomBar
 import com.google.android.material.snackbar.Snackbar
 import com.google.firebase.auth.FirebaseAuth
@@ -68,7 +69,7 @@ class DashboardFragment : Fragment(), IDiaryRVAdapter {
 
         dashBoardViewModel.allNotes.observe(viewLifecycleOwner, { list ->
             list?.let {
-                if (it.size.equals(0)) {
+                if (it.isEmpty()) {
                     emptyFile()
                 } else {
                     emptylayout.visibility = View.GONE

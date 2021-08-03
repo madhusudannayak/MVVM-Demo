@@ -1,10 +1,9 @@
-package com.example.mvvmusingjetpack.view.fragments.view
+package com.example.mvvmusingjetpack.ui.view
 
 import android.app.Application
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
 import com.example.mvvmusingjetpack.db.DiaryData
 import com.example.mvvmusingjetpack.db.DiaryRepository
 

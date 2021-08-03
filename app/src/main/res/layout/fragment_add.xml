@@ -7,14 +7,14 @@
 
         <variable
             name="addviewModel"
-            type="com.example.mvvmusingjetpack.view.fragments.add.AddViewModel" />
+            type="com.example.mvvmusingjetpack.ui.add.AddViewModel" />
     </data>
 
     <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="#F6F6F6"
-        tools:context=".view.fragments.add.AddFragment">
+        tools:context=".ui.add.AddFragment">
 
         <LinearLayout
             android:layout_width="match_parent"

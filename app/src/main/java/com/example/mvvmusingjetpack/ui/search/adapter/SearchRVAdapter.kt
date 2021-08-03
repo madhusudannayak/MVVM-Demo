@@ -1,4 +1,4 @@
-package com.example.mvvmusingjetpack.adapter
+package com.example.mvvmusingjetpack.ui.search.adapter
 
 import android.content.Context
 import android.view.LayoutInflater

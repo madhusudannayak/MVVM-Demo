@@ -1,4 +1,4 @@
-package com.example.mvvmusingjetpack.view.fragments.signup
+package com.example.mvvmusingjetpack.auth.login
 
 import android.content.Intent
 import android.os.Bundle
@@ -16,40 +16,39 @@ import com.example.mvvmusingjetpack.view.HomeActivity
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.google.firebase.auth.FirebaseAuth
 
-
-class SignupFragment : Fragment() {
+class LoginFragment : Fragment() {
 
     lateinit var email: EditText
     lateinit var password: EditText
-    lateinit var signUp: FloatingActionButton
+    lateinit var login: FloatingActionButton
 
 
     override fun onCreateView(
             inflater: LayoutInflater, container: ViewGroup?,
             savedInstanceState: Bundle?
     ): View? {
-        val view = inflater.inflate(R.layout.fragment_signup, container, false)
-        val openLoginPage = view.findViewById<TextView>(R.id.OpenLoginPage)
-        signUp = view.findViewById(R.id.SignUp)
+        val view = inflater.inflate(R.layout.fragment_login, container, false)
+        val signUp = view.findViewById<TextView>(R.id.OpenSignUpPage)
+
         email = view.findViewById(R.id.email_Id)
         password = view.findViewById(R.id.password)
+        login = view.findViewById(R.id.OpenLoginPage)
 
 
-
-        openLoginPage.setOnClickListener {
-            findNavController().navigate(R.id.action_signupFragment_to_loginFragment)
-
+        login.setOnClickListener {
+            login()
         }
+
         signUp.setOnClickListener {
-            signUp()
+            findNavController().navigate(R.id.action_loginFragment_to_signupFragment)
         }
 
         return view
     }
 
-    private fun signUp() {
-        var isPasswordValid = true
-        var isEmailValid = true
+    private fun login() {
+        var isPasswordValid: Boolean = true
+        var isEmailValid: Boolean = true
         if (password.text.isEmpty()) {
             password.error = "please enter your password"
             isPasswordValid = false
@@ -67,18 +66,18 @@ class SignupFragment : Fragment() {
             isEmailValid = false
         }
         if (isPasswordValid && isEmailValid) {
-            FirebaseAuth.getInstance().createUserWithEmailAndPassword(email.text.toString(), password.text.toString())
+            FirebaseAuth.getInstance().signInWithEmailAndPassword(email.text.toString(), password.text.toString())
                     .addOnCompleteListener { task ->
                         if (task.isSuccessful) {
-                            Toast.makeText(this.requireContext(), "You are Registered Sucessfully", Toast.LENGTH_SHORT).show()
+                            Toast.makeText(this.requireContext(), "You are Logged in Sucessfully", Toast.LENGTH_SHORT).show()
                             startActivity(Intent(context, HomeActivity::class.java))
                         }
+
                     }.addOnFailureListener {
-                        Toast.makeText(this.requireContext(), it.message.toString(), Toast.LENGTH_SHORT).show()
-
-             }
+                        Toast.makeText(this.requireContext(), it.message, Toast.LENGTH_SHORT).show()
+                    }
         }
-
     }
+
 
 }

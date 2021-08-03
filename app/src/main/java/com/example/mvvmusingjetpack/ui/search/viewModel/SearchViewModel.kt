@@ -1,4 +1,4 @@
-package com.example.mvvmusingjetpack.view.fragments.search
+package com.example.mvvmusingjetpack.ui.search.viewModel
 
 import android.app.Application
 import androidx.lifecycle.AndroidViewModel

@@ -1,4 +1,4 @@
-package com.example.mvvmusingjetpack.view.fragments.view
+package com.example.mvvmusingjetpack.ui.view
 
 import android.os.Bundle
 import android.view.LayoutInflater
