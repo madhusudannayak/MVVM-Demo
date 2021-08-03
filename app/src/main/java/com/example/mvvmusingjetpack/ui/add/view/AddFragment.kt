@@ -1,4 +1,4 @@
-package com.example.mvvmusingjetpack.ui.add
+package com.example.mvvmusingjetpack.ui.add.view
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment
@@ -16,6 +16,7 @@ import com.example.mvvmusingjetpack.databinding.FragmentAddBinding
 import com.example.mvvmusingjetpack.db.Color
 import com.example.mvvmusingjetpack.db.DiaryData
 import com.example.mvvmusingjetpack.model.Colors
+import com.example.mvvmusingjetpack.ui.add.viewModel.AddViewModel
 
 
 class AddFragment : Fragment() {

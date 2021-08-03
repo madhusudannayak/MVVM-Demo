@@ -1,4 +1,4 @@
-package com.example.mvvmusingjetpack.ui.add
+package com.example.mvvmusingjetpack.ui.add.viewModel
 
 import android.app.Application
 import androidx.lifecycle.AndroidViewModel
