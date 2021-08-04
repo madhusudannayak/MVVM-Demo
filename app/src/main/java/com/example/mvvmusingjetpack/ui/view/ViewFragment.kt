@@ -15,11 +15,12 @@ import com.example.mvvmusingjetpack.R
 import com.example.mvvmusingjetpack.databinding.FragmentViewBinding
 import com.example.mvvmusingjetpack.db.DiaryData
 import com.google.android.material.floatingactionbutton.FloatingActionButton
+import org.koin.android.ext.android.inject
+import org.koin.androidx.viewmodel.ext.android.viewModel
 import java.util.*
 
 class ViewFragment : Fragment() {
 
-  //  lateinit var viewModel: DiaryViewModel
     val Note = ArrayList<DiaryData>()
     lateinit var id: String
     lateinit var viewText: TextView
@@ -32,6 +33,8 @@ class ViewFragment : Fragment() {
 
 
     private val viewViewModel: ViewViewModel by lazy { ViewModelProvider(this).get(ViewViewModel::class.java) }
+
+  //  private val viewViewModel: ViewViewModel by inject()
 
     override fun onCreateView(
             inflater: LayoutInflater, container: ViewGroup?,

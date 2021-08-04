@@ -65,7 +65,9 @@ class DiaryRVAdapter(val context: Context?, private val listener: IDiaryRVAdapte
 }
 
 interface IDiaryRVAdapter {
+
     fun onItemClicked(note: DiaryData, size: String)
     fun size(size: String)
     fun deleteNote(note: DiaryData)
+
 }
