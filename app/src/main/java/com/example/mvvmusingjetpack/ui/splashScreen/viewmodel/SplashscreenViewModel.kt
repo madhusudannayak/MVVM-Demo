@@ -4,10 +4,10 @@ import android.content.Context
 import android.content.Intent
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.example.mvvmusingjetpack.view.MainActivity
+import com.example.mvvmusingjetpack.ui.MainActivity
 import android.os.Handler
 import android.util.Log
-import com.example.mvvmusingjetpack.view.HomeActivity
+import com.example.mvvmusingjetpack.ui.HomeActivity
 import com.google.firebase.auth.FirebaseAuth
 
 class SplashscreenViewModel : ViewModel() {

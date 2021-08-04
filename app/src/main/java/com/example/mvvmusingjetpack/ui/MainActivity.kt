@@ -1,4 +1,4 @@
-package com.example.mvvmusingjetpack.view
+package com.example.mvvmusingjetpack.ui
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle

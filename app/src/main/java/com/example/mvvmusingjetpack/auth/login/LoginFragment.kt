@@ -12,7 +12,7 @@ import android.widget.TextView
 import android.widget.Toast
 import androidx.navigation.fragment.findNavController
 import com.example.mvvmusingjetpack.R
-import com.example.mvvmusingjetpack.view.HomeActivity
+import com.example.mvvmusingjetpack.ui.HomeActivity
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.google.firebase.auth.FirebaseAuth
 

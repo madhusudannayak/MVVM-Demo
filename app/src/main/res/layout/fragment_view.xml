@@ -7,7 +7,7 @@
 
         <variable
             name="viewviewModel"
-            type="com.example.mvvmusingjetpack.view.fragments.view.ViewViewModel" />
+            type="com.example.mvvmusingjetpack.ui.view.ViewViewModel" />
     </data>
 
     <FrameLayout
@@ -33,7 +33,7 @@
                     android:layout_width="40dp"
                     android:layout_height="40dp"
                     android:background="@null"
-                    android:onClick="@{()->viewviewModel.BackToDashBoard()}"
+                    android:onClick="@{()->viewviewModel.backToDashBoard()}"
                     android:src="@drawable/ic_baseline_arrow_back_24" />
 
                 <View
@@ -58,7 +58,7 @@
                     android:layout_height="40dp"
                     android:layout_marginRight="10dp"
                     android:background="@null"
-                    android:onClick="@{()->viewviewModel.EditNote()}"
+                    android:onClick="@{()->viewviewModel.editNote()}"
                     android:src="@drawable/ic_baseline_edit_note_24" />
 
                 <ImageButton
@@ -111,7 +111,7 @@
             android:layout_marginRight="8dp"
             android:layout_marginBottom="8dp"
             android:clickable="true"
-            android:onClick="@{()->viewviewModel.NextItem()}"
+            android:onClick="@{()->viewviewModel.nextItem()}"
             android:src="@drawable/ic_vector" />
 
     </FrameLayout>

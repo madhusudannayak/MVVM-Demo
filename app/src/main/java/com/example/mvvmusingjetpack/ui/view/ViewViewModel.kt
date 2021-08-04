@@ -19,7 +19,7 @@ class ViewViewModel (application: Application) : AndroidViewModel(application)  
     var totalPage: Int = 0
 
 
-    fun NextItem() {
+    fun nextItem() {
         if (currentID.equals(totalPage - 1)) {
             nextItem.value = false
         } else {
@@ -28,7 +28,7 @@ class ViewViewModel (application: Application) : AndroidViewModel(application)  
         }
     }
 
-    fun EditNote() {
+    fun editNote() {
         editNote.value = true
     }
 
@@ -43,7 +43,7 @@ class ViewViewModel (application: Application) : AndroidViewModel(application)  
     }
 
 
-    fun BackToDashBoard() {
+    fun backToDashBoard() {
         backToDashBoardFragment.value = true
     }
 

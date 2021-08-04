@@ -7,7 +7,7 @@
 
         <variable
             name="updateviewModel"
-            type="com.example.mvvmusingjetpack.view.fragments.update.UpdateViewModel" />
+            type="com.example.mvvmusingjetpack.ui.update.UpdateViewModel" />
     </data>
 
     <FrameLayout
