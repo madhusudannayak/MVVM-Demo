@@ -27,5 +27,6 @@ abstract class DiaryDatabase : RoomDatabase() {
     }
 
 
+
 }
 
