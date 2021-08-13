@@ -5,7 +5,7 @@
     android:id="@+id/content_id"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ui.HomeActivity">
+    tools:context=".dashboard.view.HomeActivity">
 
     <fragment
         android:id="@+id/navHostFragment"

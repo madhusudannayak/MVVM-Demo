@@ -7,13 +7,13 @@
 
         <variable
             name="updateviewModel"
-            type="com.example.mvvmusingjetpack.ui.update.UpdateViewModel" />
+            type="com.example.mvvmusingjetpack.add.viewmodel.UpdateViewModel" />
     </data>
 
     <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context=".ui.update.UpdateFragment">
+        tools:context=".add.view.UpdateFragment">
 
         <LinearLayout
             android:layout_width="match_parent"

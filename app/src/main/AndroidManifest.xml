@@ -10,9 +10,9 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.MVVMUsingJetpack">
-        <activity android:name=".ui.HomeActivity" />
-        <activity android:name=".ui.MainActivity" />
-        <activity android:name=".ui.splashScreen.view.SplashscreenActivity">
+        <activity android:name=".dashboard.view.HomeActivity" />
+        <activity android:name=".dashboard.view.MainActivity" />
+        <activity android:name=".dashboard.view.SplashscreenActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

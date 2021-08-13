@@ -10,17 +10,20 @@ import android.view.ViewGroup
 import android.widget.EditText
 import android.widget.Toast
 import androidx.databinding.DataBindingUtil
-import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import com.example.mvvmusingjetpack.R
 import com.example.mvvmusingjetpack.auth.viewmodel.LoginViewModel
 import com.example.mvvmusingjetpack.databinding.FragmentLoginBinding
-import com.example.mvvmusingjetpack.ui.HomeActivity
+import com.example.mvvmusingjetpack.dashboard.view.HomeActivity
 import com.google.firebase.auth.FirebaseAuth
+import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class LoginFragment : Fragment() {
 
-    private val loginViewModel: LoginViewModel by lazy { ViewModelProvider(this).get(LoginViewModel::class.java) }
+   // private val loginViewModel: LoginViewModel by lazy { ViewModelProvider(this).get(LoginViewModel::class.java) }
+
+    private val loginViewModel: LoginViewModel by viewModel()
+
 
     lateinit var email: EditText
     lateinit var password: EditText

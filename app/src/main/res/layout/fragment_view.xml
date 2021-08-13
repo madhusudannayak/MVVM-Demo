@@ -7,13 +7,13 @@
 
         <variable
             name="viewviewModel"
-            type="com.example.mvvmusingjetpack.ui.view.ViewViewModel" />
+            type="com.example.mvvmusingjetpack.dashboard.viewmodel.ViewViewModel" />
     </data>
 
     <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context=".ui.view.ViewFragment">
+        tools:context=".dashboard.view.ViewFragment">
 
         <LinearLayout
             android:layout_width="match_parent"

@@ -5,24 +5,24 @@ import android.util.Log
 import androidx.lifecycle.LiveData
 
 
-class DiaryRepository(context: Context) {
+class DiaryRepository(private val diaryDao: DiaryDao) {
 
-    private val diaryDao = DiaryDatabase.getDatabase(context).getDiaryDao()
-
-    companion object {
-        var instance: DiaryRepository? = null
-
-        var getInstance: (Context) -> DiaryRepository =
-
-                {
-                    if (instance != null) {
-                        instance!!
-                    } else {
-                        instance = DiaryRepository(it)
-                        instance!!
-                    }
-                }
-    }
+//    private val diaryDao = DiaryDatabase.getDatabase(context).getDiaryDao()
+//
+//    companion object {
+//        var instance: DiaryRepository? = null
+//
+//        var getInstance: (Context) -> DiaryRepository =
+//
+//                {
+//                    if (instance != null) {
+//                        instance!!
+//                    } else {
+//                        instance = DiaryRepository(it)
+//                        instance!!
+//                    }
+//                }
+//    }
 
 
     val allNote: LiveData<List<DiaryData>> = diaryDao.getAllNotes()

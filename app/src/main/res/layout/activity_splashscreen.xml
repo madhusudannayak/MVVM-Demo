@@ -7,14 +7,14 @@
 
         <variable
             name="splashviewModel"
-            type="com.example.mvvmusingjetpack.ui.splashScreen.viewmodel.SplashscreenViewModel" />
+            type="com.example.mvvmusingjetpack.dashboard.viewmodel.SplashscreenViewModel" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="@drawable/ic_splash"
-        tools:context=".ui.splashScreen.view.SplashscreenActivity">
+        tools:context=".dashboard.view.SplashscreenActivity">
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
