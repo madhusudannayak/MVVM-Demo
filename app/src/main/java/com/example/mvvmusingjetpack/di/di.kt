@@ -2,6 +2,7 @@ package com.example.mvvmusingjetpack.di
 
 import android.app.Application
 import androidx.room.Room
+import com.example.mvvmusingjetpack.add.viewmodel.AddViewModel
 import com.example.mvvmusingjetpack.auth.viewmodel.LoginViewModel
 import com.example.mvvmusingjetpack.auth.viewmodel.SignupViewModel
 import com.example.mvvmusingjetpack.db.DiaryDao
@@ -42,6 +43,7 @@ val repositoryModule = module {
 
 val viewModelModule = module {
     viewModel { DashBoardViewModel(get()) }
+    viewModel { AddViewModel(get()) }
     viewModel { SearchViewModel(get()) }
     viewModel { UpdateViewModel(get()) }
     viewModel { ViewViewModel(get()) }
@@ -49,5 +51,6 @@ val viewModelModule = module {
     viewModel { SignupViewModel() }
     viewModel { SplashscreenViewModel() }
     viewModel { SettingViewModel() }
+
 
 }

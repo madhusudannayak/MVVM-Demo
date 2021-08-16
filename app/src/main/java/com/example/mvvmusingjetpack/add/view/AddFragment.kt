@@ -17,11 +17,13 @@ import com.example.mvvmusingjetpack.db.Color
 import com.example.mvvmusingjetpack.db.DiaryData
 import com.example.mvvmusingjetpack.add.model.Colors
 import com.example.mvvmusingjetpack.add.viewmodel.AddViewModel
+import org.koin.androidx.viewmodel.ext.android.viewModel
 
 
 class AddFragment : Fragment() {
 
-    private val addViewModel: AddViewModel by lazy { ViewModelProvider(this).get(AddViewModel::class.java) }
+    private val addViewModel: AddViewModel by viewModel()
+    
     lateinit var spinner: Spinner
     lateinit var bgCard: CardView
     lateinit var edit: ImageButton
