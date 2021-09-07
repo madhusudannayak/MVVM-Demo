@@ -9,6 +9,7 @@ class LoginViewModel : ViewModel() {
     val password = MutableLiveData<String>()
 
     val login = MutableLiveData<Boolean>()
+    val loadingAnim = MutableLiveData<Boolean>()
     val openSignupFragment = MutableLiveData<Boolean>()
 
 
@@ -25,4 +26,7 @@ class LoginViewModel : ViewModel() {
     }
 
 
+    fun loadAnimation() {
+        loadingAnim.value = true
+    }
 }

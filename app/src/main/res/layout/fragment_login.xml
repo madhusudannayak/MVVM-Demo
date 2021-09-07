@@ -62,12 +62,23 @@
                 android:id="@+id/OpenLoginPage"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginEnd="16dp"
-                android:layout_marginRight="16dp"
-                android:layout_marginBottom="16dp"
+                android:layout_marginEnd="20dp"
+                android:layout_marginRight="20dp"
+                android:layout_marginBottom="20dp"
                 android:backgroundTint="#B88AF3"
                 android:onClick="@{()->loginviewModel.login()}"
                 android:src="@drawable/ic_vector"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent" />
+
+            <com.airbnb.lottie.LottieAnimationView
+                android:id="@+id/lottie2"
+                android:layout_width="100dp"
+                android:layout_height="100dp"
+                android:layout_marginEnd="-10dp"
+                android:layout_marginRight="-10dp"
+                android:layout_marginBottom="-10dp"
+                android:onClick="@{()->loginviewModel.loadAnimation()}"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent" />
 
@@ -97,10 +108,10 @@
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/email_Id"
-                    android:text="@={loginviewModel.emailId}"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:inputType="textEmailAddress" />
+                    android:inputType="textEmailAddress"
+                    android:text="@={loginviewModel.emailId}" />
             </com.google.android.material.textfield.TextInputLayout>
 
             <com.google.android.material.textfield.TextInputLayout
@@ -128,10 +139,10 @@
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/password"
-                    android:text="@={loginviewModel.password}"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:inputType="textPassword" />
+                    android:inputType="textPassword"
+                    android:text="@={loginviewModel.password}" />
             </com.google.android.material.textfield.TextInputLayout>
 
             <!--            android:text="@={loginviewModel.loginLiveData}"-->
@@ -161,8 +172,8 @@
                     android:id="@+id/OpenSignUpPage"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text=" Register"
                     android:onClick="@{()->loginviewModel.openSignUpPage()}"
+                    android:text=" Register"
                     android:textStyle="bold"
                     app:layout_constraintBottom_toBottomOf="@+id/textView4"
                     app:layout_constraintEnd_toEndOf="parent"
