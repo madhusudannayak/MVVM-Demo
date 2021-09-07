@@ -47,14 +47,14 @@ class LoginFragment : Fragment() {
 
         onActionPerform()
 
-        binding.lottie2.addAnimatorListener(object : Animator.AnimatorListener {
+        binding.lottie.addAnimatorListener(object : Animator.AnimatorListener {
             override fun onAnimationStart(animation: Animator?) {
                 binding.OpenLoginPage.visibility = View.GONE
 
             }
 
             override fun onAnimationEnd(animation: Animator?) {
-                binding.lottie2.visibility = View.GONE
+                binding.lottie.visibility = View.GONE
                 binding.OpenLoginPage.visibility = View.VISIBLE
             }
 
@@ -128,15 +128,15 @@ class LoginFragment : Fragment() {
     }
 
     fun successAnim() {
-        binding.lottie2.setAnimation("success.json")
-        binding.lottie2.visibility = View.VISIBLE
-        binding.lottie2.playAnimation()
+        binding.lottie.setAnimation("success.json")
+        binding.lottie.visibility = View.VISIBLE
+        binding.lottie.playAnimation()
     }
 
     fun errorAnim() {
-        binding.lottie2.setAnimation("error.json")
-        binding.lottie2.visibility = View.VISIBLE
-        binding.lottie2.playAnimation()
+        binding.lottie.setAnimation("error.json")
+        binding.lottie.visibility = View.VISIBLE
+        binding.lottie.playAnimation()
     }
 
 
